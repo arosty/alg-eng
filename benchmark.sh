@@ -99,7 +99,7 @@ run_ce_solver()
 }
 
 
-PROGRAMM_NAME="java -jar ClusterEditingSolver.jar"  	# insert your program here
+PROGRAMM_NAME="python3 vertex_cover_solver.py"  	# insert your program here
 LOG=log.txt									# specify the name of the log file
 maxSec=10800									# overall allowed time for the whole script
 maxSecPerInstance=300							# allowed time (in seconds) for one instance
