@@ -13,4 +13,4 @@ def get_data():
             edges[counter-1] = current_edge
     return edges
 
-read_data()
+get_data()
