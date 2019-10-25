@@ -8,9 +8,9 @@ def read_data():
             num_of_edges = int(line.split()[1])
             edges = np.empty(num_of_edges, dtype=np.ndarray)
         else:
-            current_edge = list(map(int, line.split()))
-            current_edge = np.asarray(current_edge)       # TODO: maybe convert later to int (in np)
+            current_edge = list(map(int, line.split()))     # TODO: maybe convert later to int (in np)
+            current_edge = np.asarray(current_edge)
             edges[counter-1] = current_edge
-    print(list(edges))
+    return edges
 
 read_data()
