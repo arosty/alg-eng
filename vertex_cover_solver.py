@@ -2,6 +2,7 @@ import sys
 import numpy as np
 
 def read_data():
-    print(sys.stdin)
+    for line in sys.stdin:
+        print(line)
 
 read_data()
