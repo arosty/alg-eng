@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 
-def read_data():
+def get_data():
     input_data = sys.stdin
     for counter, line in enumerate(input_data):
         if counter == 0:
