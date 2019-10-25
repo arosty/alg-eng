@@ -10,6 +10,7 @@ def read_data():
         else:
             current_edge = np.asarray(map(int, line.split()))       # TODO: maybe convert later to int (in np)
             edges[counter-1] = current_edge
-    print(edges)
+    for edge in edges:
+        print(edge)
 
 read_data()
