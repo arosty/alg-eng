@@ -25,4 +25,18 @@ def get_data():
     # Return array of edges:
     return edges
 
-get_data()
+edges = get_data()
+
+def del_vert(tab,v):
+    """
+    ##### INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
+    del_vert returns a new tab without the edges containing v
+    ##### OUTPUT: a new graph like tab but without the edges containing v
+    ###   /!\ np.delete returns a copy of the tab without the specified indexes, it doesn't delete on the tab
+    """
+    size = tab.shape[0]
+    idx_2_del = []
+    for i in range(size):
+        if v in tab[i]:
+            idx_2_del.append(i)
+    return(np.delete(tab,idx_2_del,0))
