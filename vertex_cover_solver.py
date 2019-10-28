@@ -29,10 +29,10 @@ edges = get_data()
 
 def del_vert(tab,v):
     """
-    ##### INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
+    INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
     del_vert returns a new tab without the edges containing v
-    ##### OUTPUT: a new graph like tab but without the edges containing v
-    ###   /!\ np.delete returns a copy of the tab without the specified indexes, it doesn't delete on the tab
+    OUTPUT: a new graph like tab but without the edges containing v
+       /!\ np.delete returns a copy of the tab without the specified indexes, it doesn't delete on the tab
     """
     size = tab.shape[0]
     idx_2_del = []
@@ -40,3 +40,46 @@ def del_vert(tab,v):
         if v in tab[i]:
             idx_2_del.append(i)
     return(np.delete(tab,idx_2_del,0))
+
+
+def is_edgeless (tab):
+    """
+    INPUT: tab is np.array of shape (nb_edges,2)
+    for a Graph in tab form returns True if the graph doesn't have any edge
+    OUTPUT: True if edgeless
+    """
+    return(tab.shape[0] == 0) #not sure it's the best way, what do you think?
+
+
+
+    def select_1st_edge (tab):
+    """
+    INPUT: tab is a Graph as np.array of shape (nb_edges,2)
+    for a Graph in tab form returns the couple (u,v) : 2 vertices of the first edge written in tab
+    OUTPUT: True if edgeless False if there's at least an edge
+    """
+    #will only be used if is_edgeless (tab) == False so there's at least one edge in tab
+    
+    return((tab[0,0],tab[0,1]))
+
+
+
+    def vc_branch (tab, k):
+    """
+    INPUT: tab is a Graph as np.array of shape (nb_edges,2) , k is an integer
+    gives a vertex cover of size k if it exists in this graph
+    OUTPUT: A vertex cover (np.array) of size at most k, 
+            or none if there is no vertex cover of size k.
+    """
+    if k<0:
+        return(None)
+    if is_edgeless(tab):
+        return(np.array([],dtype = np.int32))
+    (u,v) = select_1st_edge(tab)
+    Su = vc_branch(del_vert(tab,u),k-1)
+    if Su is not None:
+        return (np.append(Su,u))
+    Sv = vc_branch(del_vert(tab,v),k-1)
+    if Sv is not None:
+        return (np.append(Sv,v))
+    return(None)
