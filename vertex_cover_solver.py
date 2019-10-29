@@ -17,7 +17,7 @@ def get_data():
             edges = np.empty(num_of_edges, dtype=np.ndarray)
         else:
             # Get current edge and convert it to int:
-            current_edge = list(map(np.uint32, line.split()))     # TODO: maybe convert later to int (in np)
+            current_edge = list(map(np.uint32, line.split()))
             # Convert edge to numpy array:
             current_edge = np.asarray(current_edge)
             # Add edge to array of all edges:
