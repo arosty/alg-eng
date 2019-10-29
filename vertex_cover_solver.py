@@ -28,5 +28,3 @@ def get_data():
 def print_result(vertices):
     for vertex in vertices:
         print(vertex)
-
-print_result(np.asarray([1, 2]))
