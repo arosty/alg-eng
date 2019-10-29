@@ -34,6 +34,8 @@ def print_result(vertices):
     for vertex in vertices:
         print(vertex)
 
+
+
 def del_vert(tab,v):
     """
     INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
