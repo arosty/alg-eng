@@ -43,11 +43,15 @@ def del_vert(edges, vertex):
     OUTPUT: np.array of shape (nb_edges_after_del,2)
        /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
     """
+    # Get number of edges:
     size = edges.shape[0]
+    # Initialize list of indices which will be deleted
     idx_del = []
     for i in range(size):
-        if v in edges[i]:
+        # If edge contains vertex append the index to list
+        if vertex in edges[i]:
             idx_del.append(i)
+    # Return array of edges without the ones deleted:
     return np.delete(edges, idx_del, 0)
 
 
@@ -68,13 +72,19 @@ def vc_branch(edges, k):
     """
     if k < 0:
         return None
+    # Return empty array if no edges are given:
     if is_edgeless(edges):
         return np.array([], dtype = np.uint32)
+    # Get vertices of first edge:
     [u,v] = edges[0]
+    # Call function without first vertex
     Su = vc_branch(del_vert(edges, u), k-1)
+    # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su,u)
+    # Call function without second vertex:
     Sv = vc_branch(del_vert(edges, v), k-1)
+    # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv,v)
     return None
