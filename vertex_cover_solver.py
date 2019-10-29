@@ -48,34 +48,33 @@ def del_vert(edges, vertex):
     for i in range(size):
         if v in edges[i]:
             idx_del.append(i)
-    return(np.delete(edges,idx_del,0))
+    return np.delete(edges, idx_del, 0)
 
 
-def is_edgeless (edges):
+def is_edgeless(edges):
     """
     INPUT: edges is np.array of shape (nb_edges,2)
-    for a Graph in edges form returns True if the graph doesn't have any edge
-    OUTPUT: True if edgeless
+    is_edgeless returns True if the graph doesn't have any edges and False otherwise
+    OUTPUT: True or False
     """
-    return(edges.shape[0] == 0) #not sure it's the best way, what do you think?
+    return edges.shape[0] == 0
 
 
-def vc_branch (edges, k):
+def vc_branch(edges, k):
     """
-    INPUT: edges is a Graph as np.array of shape (nb_edges,2) , k is an integer
-    gives a vertex cover of size k if it exists in this graph
-    OUTPUT: A vertex cover (np.array) of size at most k, 
-            or none if there is no vertex cover of size k.
+    INPUT: edges is np.array of shape (nb_edges,2), k is int
+    vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
+    OUTPUT: np.array of shape at most (k,) or None
     """
-    if k<0:
-        return(None)
+    if k < 0:
+        return None
     if is_edgeless(edges):
-        return(np.array([],dtype = np.uint32))
+        return np.array([], dtype = np.uint32)
     [u,v] = edges[0]
-    Su = vc_branch(del_vert(edges,u),k-1)
+    Su = vc_branch(del_vert(edges, u), k-1)
     if Su is not None:
-        return (np.append(Su,u))
-    Sv = vc_branch(del_vert(edges,v),k-1)
+        return np.append(Su,u)
+    Sv = vc_branch(del_vert(edges, v), k-1)
     if Sv is not None:
-        return (np.append(Sv,v))
-    return(None)
+        return np.append(Sv,v)
+    return None
