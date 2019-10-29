@@ -26,5 +26,10 @@ def get_data():
     return edges
 
 def print_result(vertices):
+    """
+    INPUT: vertices is np.array of shape (nb_vertices,)
+    print_result prints every given vertex in a new line
+    OUTPUT: None
+    """
     for vertex in vertices:
         print(vertex)
