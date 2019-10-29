@@ -25,6 +25,7 @@ def get_data():
     # Return array of edges:
     return edges
 
+
 def print_result(vertices):
     """
     INPUT: vertices is np.array of shape (nb_vertices,)
@@ -34,8 +35,7 @@ def print_result(vertices):
     for vertex in vertices:
         print(vertex)
 
-
-
+        
 def del_vert(tab,v):
     """
     INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
@@ -58,7 +58,6 @@ def is_edgeless (tab):
     OUTPUT: True if edgeless
     """
     return(tab.shape[0] == 0) #not sure it's the best way, what do you think?
-
 
 
 def vc_branch (tab, k):
