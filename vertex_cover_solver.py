@@ -4,8 +4,8 @@ import numpy as np
 def get_data():
     """
     INPUT: None
-    Function reads standard input
-    OUTPUT: array of all edges
+    get_data reads standard input and returns the given edges
+    OUTPUT: np.array of shape (nb_edges,2)
     """
     # Get standard input:
     input_data = sys.stdin
@@ -25,7 +25,14 @@ def get_data():
     # Return array of edges:
     return edges
 
-edges = get_data()
+def print_result(vertices):
+    """
+    INPUT: vertices is np.array of shape (nb_vertices,)
+    print_result prints every given vertex in a new line
+    OUTPUT: None
+    """
+    for vertex in vertices:
+        print(vertex)
 
 def del_vert(tab,v):
     """
