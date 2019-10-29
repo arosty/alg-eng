@@ -52,19 +52,7 @@ def is_edgeless (tab):
 
 
 
-    def select_1st_edge (tab):
-    """
-    INPUT: tab is a Graph as np.array of shape (nb_edges,2)
-    for a Graph in tab form returns the couple (u,v) : 2 vertices of the first edge written in tab
-    OUTPUT: True if edgeless False if there's at least an edge
-    """
-    #will only be used if is_edgeless (tab) == False so there's at least one edge in tab
-    
-    return((tab[0,0],tab[0,1]))
-
-
-
-    def vc_branch (tab, k):
+def vc_branch (tab, k):
     """
     INPUT: tab is a Graph as np.array of shape (nb_edges,2) , k is an integer
     gives a vertex cover of size k if it exists in this graph
@@ -74,8 +62,8 @@ def is_edgeless (tab):
     if k<0:
         return(None)
     if is_edgeless(tab):
-        return(np.array([],dtype = np.int32))
-    (u,v) = select_1st_edge(tab)
+        return(np.array([],dtype = np.uint32))
+    [u,v] = tab[0]
     Su = vc_branch(del_vert(tab,u),k-1)
     if Su is not None:
         return (np.append(Su,u))
