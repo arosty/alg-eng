@@ -36,46 +36,46 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertices, vertex):
+def del_vert(edges, vertex):
     """
-    INPUT: vertices is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
-    del_vert returns a new vertices without the edges containing vertex
-    OUTPUT: a new graph like vertices but without the edges containing vertex
-       /!\ np.delete returns a copy of the vertices without the specified indexes, it doesn't delete on the vertices
+    INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
+    del_vert returns all edges except the ones containing vertex
+    OUTPUT: np.array of shape (nb_edges_after_del,2)
+       /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
     """
-    size = vertices.shape[0]
-    idx_2_del = []
+    size = edges.shape[0]
+    idx_del = []
     for i in range(size):
-        if v in vertices[i]:
-            idx_2_del.append(i)
-    return(np.delete(vertices,idx_2_del,0))
+        if v in edges[i]:
+            idx_del.append(i)
+    return(np.delete(edges,idx_del,0))
 
 
-def is_edgeless (vertices):
+def is_edgeless (edges):
     """
-    INPUT: vertices is np.array of shape (nb_edges,2)
-    for a Graph in vertices form returns True if the graph doesn't have any edge
+    INPUT: edges is np.array of shape (nb_edges,2)
+    for a Graph in edges form returns True if the graph doesn't have any edge
     OUTPUT: True if edgeless
     """
-    return(vertices.shape[0] == 0) #not sure it's the best way, what do you think?
+    return(edges.shape[0] == 0) #not sure it's the best way, what do you think?
 
 
-def vc_branch (vertices, k):
+def vc_branch (edges, k):
     """
-    INPUT: vertices is a Graph as np.array of shape (nb_edges,2) , k is an integer
+    INPUT: edges is a Graph as np.array of shape (nb_edges,2) , k is an integer
     gives a vertex cover of size k if it exists in this graph
     OUTPUT: A vertex cover (np.array) of size at most k, 
             or none if there is no vertex cover of size k.
     """
     if k<0:
         return(None)
-    if is_edgeless(vertices):
+    if is_edgeless(edges):
         return(np.array([],dtype = np.uint32))
-    [u,v] = vertices[0]
-    Su = vc_branch(del_vert(vertices,u),k-1)
+    [u,v] = edges[0]
+    Su = vc_branch(del_vert(edges,u),k-1)
     if Su is not None:
         return (np.append(Su,u))
-    Sv = vc_branch(del_vert(vertices,v),k-1)
+    Sv = vc_branch(del_vert(edges,v),k-1)
     if Sv is not None:
         return (np.append(Sv,v))
     return(None)
