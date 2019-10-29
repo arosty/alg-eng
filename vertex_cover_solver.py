@@ -36,46 +36,46 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(tab,v):
+def del_vert(vertices, vertex):
     """
-    INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
-    del_vert returns a new tab without the edges containing v
-    OUTPUT: a new graph like tab but without the edges containing v
-       /!\ np.delete returns a copy of the tab without the specified indexes, it doesn't delete on the tab
+    INPUT: vertices is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
+    del_vert returns a new vertices without the edges containing vertex
+    OUTPUT: a new graph like vertices but without the edges containing vertex
+       /!\ np.delete returns a copy of the vertices without the specified indexes, it doesn't delete on the vertices
     """
-    size = tab.shape[0]
+    size = vertices.shape[0]
     idx_2_del = []
     for i in range(size):
-        if v in tab[i]:
+        if v in vertices[i]:
             idx_2_del.append(i)
-    return(np.delete(tab,idx_2_del,0))
+    return(np.delete(vertices,idx_2_del,0))
 
 
-def is_edgeless (tab):
+def is_edgeless (vertices):
     """
-    INPUT: tab is np.array of shape (nb_edges,2)
-    for a Graph in tab form returns True if the graph doesn't have any edge
+    INPUT: vertices is np.array of shape (nb_edges,2)
+    for a Graph in vertices form returns True if the graph doesn't have any edge
     OUTPUT: True if edgeless
     """
-    return(tab.shape[0] == 0) #not sure it's the best way, what do you think?
+    return(vertices.shape[0] == 0) #not sure it's the best way, what do you think?
 
 
-def vc_branch (tab, k):
+def vc_branch (vertices, k):
     """
-    INPUT: tab is a Graph as np.array of shape (nb_edges,2) , k is an integer
+    INPUT: vertices is a Graph as np.array of shape (nb_edges,2) , k is an integer
     gives a vertex cover of size k if it exists in this graph
     OUTPUT: A vertex cover (np.array) of size at most k, 
             or none if there is no vertex cover of size k.
     """
     if k<0:
         return(None)
-    if is_edgeless(tab):
+    if is_edgeless(vertices):
         return(np.array([],dtype = np.uint32))
-    [u,v] = tab[0]
-    Su = vc_branch(del_vert(tab,u),k-1)
+    [u,v] = vertices[0]
+    Su = vc_branch(del_vert(vertices,u),k-1)
     if Su is not None:
         return (np.append(Su,u))
-    Sv = vc_branch(del_vert(tab,v),k-1)
+    Sv = vc_branch(del_vert(vertices,v),k-1)
     if Sv is not None:
         return (np.append(Sv,v))
     return(None)
