@@ -25,4 +25,8 @@ def get_data():
     # Return array of edges:
     return edges
 
+def print_result(vertices):
+    for vertex in vertices:
+        print(vertex)
+
 get_data()
