@@ -101,7 +101,7 @@ def vc (edges):
         S = vc_branch(edges,k)
         if S is not None:
             print_result(S)
-            return()
+            return
 
 
 vc(get_data())
