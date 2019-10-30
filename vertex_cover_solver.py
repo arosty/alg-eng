@@ -96,7 +96,9 @@ def vc (edges):
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
+    #kmax is the upper bound for k
     kmax = int(edges.shape[0]/2) + 1
+    #try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
         S = vc_branch(edges,k)
         if S is not None:
