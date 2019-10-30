@@ -13,7 +13,7 @@ for line in history_file:
     # with open(current_path + current_history_file + "csv", "a") as sheet:
     #     writer = csv.writer(sheet)
     #     writer.writerow("test")
-    with open(current_path + current_history_file + 'csv', 'a') as sheet:
+    with open(current_path + current_history_file + 'csv', 'a', newline='') as sheet:
         sheet.write("test")
 
 
