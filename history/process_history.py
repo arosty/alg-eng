@@ -1,4 +1,5 @@
 import sys
+import csv
 
 current_path = sys.path[0] + "/"
 current_history_file = "201910302031_run_history."
@@ -10,11 +11,11 @@ for line in history_file:
     print(line)
     # if line starts with random, snap or dimacs
     # line.split()
-    # with open(current_path + current_history_file + "csv", "a") as sheet:
-    #     writer = csv.writer(sheet)
-    #     writer.writerow("test")
-    with open(current_path + current_history_file + 'csv', 'a', newline='') as sheet:
-        sheet.write("test")
+    with open(current_path + current_history_file + 'csv', 'a') as sheet:
+        writer = csv.writer(sheet)
+        writer.writerow(["test", "reihe"])
+    # with open(current_path + current_history_file + 'csv', 'a', newline='') as sheet:
+    #     sheet.write("test")
 
 
 # history_file.close()
