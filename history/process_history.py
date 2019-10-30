@@ -1,6 +1,6 @@
 import sys
 
-current_path = sys.path[0] + "/history/"
+current_path = sys.path[0] + "/"
 current_history_file = "201910302031_run_history."
 
 history_file = open(current_path + current_history_file + "txt", "r")
