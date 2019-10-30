@@ -88,3 +88,17 @@ def vc_branch(edges, k):
     if Sv is not None:
         return np.append(Sv,v)
     return None
+
+
+def vc (edges):
+    """
+    INPUT: edges is np.array of shape (nb_edges,2)
+    function to call to find and print the vertex cover in a benchmark understandable way
+    OUTPUT:None, prints directly in the console
+    """
+    kmax = int(edges.shape[0]/2) + 1
+    for k in range (kmax + 1):
+        S = vc_branch(edges,k)
+        if S is not None:
+            print_result(S)
+            return()
