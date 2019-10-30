@@ -99,9 +99,9 @@ def vc (edges):
     """
     #kmax is the upper bound for k
     kmax = int(edges.shape[0]/2) + 1
+    vc_branch.counter = 0
     #try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        vc_branch.counter = 0
         S = vc_branch(edges,k)
         if S is not None:
             print_result(S)
