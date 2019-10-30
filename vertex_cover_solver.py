@@ -17,7 +17,7 @@ def get_data():
             edges = np.empty(num_of_edges, dtype=np.ndarray)
         else:
             # Get current edge and convert it to int:
-            current_edge = list(map(np.uint32, line.split()))     # TODO: maybe convert later to int (in np)
+            current_edge = list(map(np.uint32, line.split()))
             # Convert edge to numpy array:
             current_edge = np.asarray(current_edge)
             # Add edge to array of all edges:
@@ -36,46 +36,55 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(tab,v):
+def del_vert(edges, vertex):
     """
-    INPUT: tab is np.array of shape (nb_edges,2), v is int : vertex to 'delete'
-    del_vert returns a new tab without the edges containing v
-    OUTPUT: a new graph like tab but without the edges containing v
-       /!\ np.delete returns a copy of the tab without the specified indexes, it doesn't delete on the tab
+    INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
+    del_vert returns all edges except the ones containing vertex
+    OUTPUT: np.array of shape (nb_edges_after_del,2)
+       /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
     """
-    size = tab.shape[0]
-    idx_2_del = []
+    # Get number of edges:
+    size = edges.shape[0]
+    # Initialize list of indices which will be deleted
+    idx_del = []
     for i in range(size):
-        if v in tab[i]:
-            idx_2_del.append(i)
-    return(np.delete(tab,idx_2_del,0))
+        # If edge contains vertex append the index to list
+        if vertex in edges[i]:
+            idx_del.append(i)
+    # Return array of edges without the ones deleted:
+    return np.delete(edges, idx_del, 0)
 
 
-def is_edgeless (tab):
+def is_edgeless(edges):
     """
-    INPUT: tab is np.array of shape (nb_edges,2)
-    for a Graph in tab form returns True if the graph doesn't have any edge
-    OUTPUT: True if edgeless
+    INPUT: edges is np.array of shape (nb_edges,2)
+    is_edgeless returns True if the graph doesn't have any edges and False otherwise
+    OUTPUT: True or False
     """
-    return(tab.shape[0] == 0) #not sure it's the best way, what do you think?
+    return edges.shape[0] == 0
 
 
-def vc_branch (tab, k):
+def vc_branch(edges, k):
     """
-    INPUT: tab is a Graph as np.array of shape (nb_edges,2) , k is an integer
-    gives a vertex cover of size k if it exists in this graph
-    OUTPUT: A vertex cover (np.array) of size at most k, 
-            or none if there is no vertex cover of size k.
+    INPUT: edges is np.array of shape (nb_edges,2), k is int
+    vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
+    OUTPUT: np.array of shape at most (k,) or None
     """
-    if k<0:
-        return(None)
-    if is_edgeless(tab):
-        return(np.array([],dtype = np.uint32))
-    [u,v] = tab[0]
-    Su = vc_branch(del_vert(tab,u),k-1)
+    if k < 0:
+        return None
+    # Return empty array if no edges are given:
+    if is_edgeless(edges):
+        return np.array([], dtype = np.uint32)
+    # Get vertices of first edge:
+    [u,v] = edges[0]
+    # Call function without first vertex
+    Su = vc_branch(del_vert(edges, u), k-1)
+    # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        return (np.append(Su,u))
-    Sv = vc_branch(del_vert(tab,v),k-1)
+        return np.append(Su,u)
+    # Call function without second vertex:
+    Sv = vc_branch(del_vert(edges, v), k-1)
+    # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return (np.append(Sv,v))
-    return(None)
+        return np.append(Sv,v)
+    return None
