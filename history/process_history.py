@@ -11,4 +11,4 @@ for line in history_file:
     # if line starts with random, snap or dimacs
     # line.split()
     with open(current_path + current_history_file + "csv", "a") as sheet:
-        sheet.write(line.split())
+        sheet.write('test')
