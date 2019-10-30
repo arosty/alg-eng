@@ -1,4 +1,4 @@
 # TIMESTAMP = $(date +"%Y%m%d%H%M")
 # TIMESTAMP="test"
-timestamp=$(date +%Y%m%d%H%M)
-echo $(timestamp)_run_history.txt
+time_stamp=$(date +%Y%m%d%H%M)
+echo $time_stamp-run_history.txt
