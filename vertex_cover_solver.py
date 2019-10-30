@@ -102,3 +102,6 @@ def vc (edges):
         if S is not None:
             print_result(S)
             return()
+
+
+vc(get_data())
