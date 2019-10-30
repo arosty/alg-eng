@@ -14,7 +14,7 @@ for line in history_file:
     #     writer = csv.writer(sheet)
     #     writer.writerow("test")
     with open(current_path + current_history_file + 'csv', 'a') as sheet:
-        sheet.write(line.split())
+        sheet.write("test")
 
 
 # history_file.close()
