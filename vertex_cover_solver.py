@@ -64,30 +64,30 @@ def is_edgeless(edges):
     return edges.shape[0] == 0
 
 
-def vc_branch(edges, k):
+def vc_branch(edges, k, rec_step = 0):
     """
     INPUT: edges is np.array of shape (nb_edges,2), k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: np.array of shape at most (k,) or None
     """
     if k < 0:
-        return None
+        return [None, rec_step]
     # Return empty array if no edges are given:
     if is_edgeless(edges):
-        return np.array([], dtype = np.uint32)
+        return [np.array([], dtype = np.uint32), rec_step]
     # Get vertices of first edge:
     [u,v] = edges[0]
     # Call function without first vertex
-    Su = vc_branch(del_vert(edges, u), k-1)
+    [Su, rec_step] = vc_branch(del_vert(edges, u), k-1, rec_step + 1)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        return np.append(Su,u)
+        return [np.append(Su, u), rec_step]
     # Call function without second vertex:
-    Sv = vc_branch(del_vert(edges, v), k-1)
+    [Sv, rec_step] = vc_branch(del_vert(edges, v), k-1, rec_step + 1)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return np.append(Sv,v)
-    return None
+        return [np.append(Sv, v), rec_step]
+    return [None, rec_step]
 
 
 def vc (edges):
@@ -98,10 +98,12 @@ def vc (edges):
     """
     kmax = int(edges.shape[0]/2) + 1
     for k in range (kmax + 1):
-        S = vc_branch(edges,k)
+        [S, rec_step] = vc_branch(edges,k)
         if S is not None:
             print_result(S)
+            print("#recursive steps: %s" % rec_step)
             return None
+
 
 
 vc(get_data())
