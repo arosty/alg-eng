@@ -70,7 +70,7 @@ def vc_branch(edges, k):
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: np.array of shape at most (k,) or None
     """
-    vc_branch.counter +=1
+    vc_branch.counter += 1
     if k < 0:
         return None
     # Return empty array if no edges are given:
@@ -82,27 +82,27 @@ def vc_branch(edges, k):
     Su = vc_branch(del_vert(edges, u), k-1)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        return np.append(Su,u)
+        return np.append(Su, u)
     # Call function without second vertex:
     Sv = vc_branch(del_vert(edges, v), k-1)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return np.append(Sv,v)
+        return np.append(Sv, v)
     return None
 
 
-def vc (edges):
+def vc(edges):
     """
     INPUT: edges is np.array of shape (nb_edges,2)
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
     #kmax is the upper bound for k
-    kmax = int(edges.shape[0]/2) + 1
+    kmax = int(edges.shape[0] / 2) + 1
     vc_branch.counter = 0
     #try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        S = vc_branch(edges,k)
+        S = vc_branch(edges, k)
         if S is not None:
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
