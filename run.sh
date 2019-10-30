@@ -1,3 +1,3 @@
-TIMESTAMP = $(date +"%Y%m%d%H%M")
-
-echo $TIMESTAMP
+# TIMESTAMP = $(date +"%Y%m%d%H%M")
+# TIMESTAMP="test"
+echo $(date +"%Y%m%d%H%M")
