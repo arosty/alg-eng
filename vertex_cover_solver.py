@@ -64,30 +64,31 @@ def is_edgeless(edges):
     return edges.shape[0] == 0
 
 
-def vc_branch(edges, k, rec_step = 0):
+def vc_branch(edges, k):
     """
     INPUT: edges is np.array of shape (nb_edges,2), k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: np.array of shape at most (k,) or None
     """
+    vc_branch.counter +=1
     if k < 0:
-        return [None, rec_step]
+        return None
     # Return empty array if no edges are given:
     if is_edgeless(edges):
-        return [np.array([], dtype = np.uint32), rec_step]
+        return np.array([], dtype = np.uint32)
     # Get vertices of first edge:
     [u,v] = edges[0]
     # Call function without first vertex
-    [Su, rec_step] = vc_branch(del_vert(edges, u), k-1, rec_step + 1)
+    Su = vc_branch(del_vert(edges, u), k-1)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        return [np.append(Su, u), rec_step]
+        return np.append(Su,u)
     # Call function without second vertex:
-    [Sv, rec_step] = vc_branch(del_vert(edges, v), k-1, rec_step + 1)
+    Sv = vc_branch(del_vert(edges, v), k-1)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return [np.append(Sv, v), rec_step]
-    return [None, rec_step]
+        return np.append(Sv,v)
+    return None
 
 
 def vc (edges):
@@ -96,14 +97,16 @@ def vc (edges):
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
+    #kmax is the upper bound for k
     kmax = int(edges.shape[0]/2) + 1
+    #try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        [S, rec_step] = vc_branch(edges,k)
+        vc_branch.counter = 0
+        S = vc_branch(edges,k)
         if S is not None:
             print_result(S)
-            print("#recursive steps: %s" % rec_step)
+            print("#recursive steps: %s" % vc_branch.counter)
             return None
-
 
 
 vc(get_data())
