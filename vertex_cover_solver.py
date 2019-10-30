@@ -76,6 +76,8 @@ def vc_branch(edges, k):
     # Return empty array if no edges are given:
     if is_edgeless(edges):
         return np.array([], dtype = np.uint32)
+    elif k == 0:
+        return None
     # Get vertices of first edge:
     [u,v] = edges[0]
     # Call function without first vertex
