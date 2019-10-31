@@ -23,6 +23,3 @@ def transfer_data(current_history_file):
                 break
 
 transfer_data(current_history_file)
-
-# standard input
-# being called automatically
