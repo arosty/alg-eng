@@ -2,7 +2,7 @@ import sys
 import csv
 
 current_path = sys.path[0] + "/"
-current_history_file = current_path + "201910302257_run_history."
+current_history_file = current_path + input() + '.csv'
 
 def get_file_name():
     """
@@ -14,14 +14,13 @@ def get_file_name():
 
 print(get_file_name())
 
-def transfer_data():
+def transfer_data(current_history_file):
     """
     INPUT: None
     transfer_data converts data of txt file and writes it into csv file
     (txt and csv file must have same names)
     OUTPUT: None
     """
-    current_history_file = sys.path[0] + '/' + get_file_name() + '.csv'
     print("<----- HERE ----->")
     print(current_history_file)
     # Iterate through every line of txt file:
@@ -35,7 +34,7 @@ def transfer_data():
                     writer.writerow(line.split())
                 break
 
-transfer_data()
+transfer_data(current_history_file)
 
 # standard input
 # being called automatically
