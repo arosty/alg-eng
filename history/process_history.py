@@ -4,16 +4,6 @@ import csv
 current_path = sys.path[0] + "/"
 current_history_file = current_path + input() + '.csv'
 
-def get_file_name():
-    """
-    INPUT: None
-    get_file_name returns first line of stdin
-    OUTPUT: string
-    """
-    return input()
-
-print(get_file_name())
-
 def transfer_data(current_history_file):
     """
     INPUT: None
@@ -21,8 +11,6 @@ def transfer_data(current_history_file):
     (txt and csv file must have same names)
     OUTPUT: None
     """
-    print("<----- HERE ----->")
-    print(current_history_file)
     # Iterate through every line of txt file:
     for line in sys.stdin:
         for starter in ["random/", "dimacs/", "snap/"]:
