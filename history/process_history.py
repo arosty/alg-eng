@@ -31,7 +31,10 @@ def transfer_data(current_history_file):
                 # Write data in csv file:
                 with open(current_history_file, 'a') as sheet:
                     writer = csv.writer(sheet)
-                    writer.writerow(line.split())
+                    line_values = line.split()
+                    if len(line_values) < len(header):
+                        line_values.insert(3,'')
+                    writer.writerow(line_values)
                 break
 
 transfer_data(current_history_file)
