@@ -22,6 +22,7 @@ def transfer_data():
     OUTPUT: None
     """
     current_history_file = sys.path[0] + '/' + get_file_name() + '.csv'
+    print(current_history_file)
     # Iterate through every line of txt file:
     for line in sys.stdin:
         for starter in ["random/", "dimacs/", "snap/"]:
