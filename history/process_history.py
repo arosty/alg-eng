@@ -10,10 +10,7 @@ def get_file_name():
     get_file_name returns first line of stdin
     OUTPUT: string
     """
-    print("<----- HERE ----->")
-    print(input())
-    print(type(input()))
-    return sys.stdin.readline()
+    return input()
 
 print(get_file_name())
 
@@ -25,6 +22,7 @@ def transfer_data():
     OUTPUT: None
     """
     current_history_file = sys.path[0] + '/' + get_file_name() + '.csv'
+    print("<----- HERE ----->")
     print(current_history_file)
     # Iterate through every line of txt file:
     for line in sys.stdin:
