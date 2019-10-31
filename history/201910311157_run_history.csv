@@ -1,0 +1,4 @@
+file,time_in_seconds,solution_size,recursive_steps,finished,solution_size_verified
+random/000002_000000000002.input,0.97s,0,1,1,correct
+random/000002_000000000006.input,0.14s,1,5,1,correct
+random/000002_000000000012.input,0.13s,2,13,1,correct
