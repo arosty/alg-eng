@@ -12,7 +12,7 @@ def get_file_name():
     """
     return sys.stdin.readline()
 
-print(get_file_name)
+print(get_file_name())
 
 def transfer_data():
     """
