@@ -10,6 +10,7 @@ def get_file_name():
     get_file_name returns first line of stdin
     OUTPUT: string
     """
+    print("<----- HERE ----->")
     print(input())
     print(type(input()))
     return sys.stdin.readline()
