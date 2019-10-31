@@ -7,34 +7,33 @@ current_history_file = current_path + "201910302257_run_history."
 def get_file_name():
     """
     INPUT: None
-    get_data reads standard input and returns the given edges
-    OUTPUT: np.array of shape (nb_edges,2)
+    get_file_name returns first line of stdin
+    OUTPUT: string
     """
     return input()
 
 print(get_file_name)
 
-def transfer_data(current_history_file):
+def transfer_data():
     """
-    INPUT: current_history_file is string
+    INPUT: None
     transfer_data converts data of txt file and writes it into csv file
     (txt and csv file must have same names)
     OUTPUT: None
     """
-    # Read txt file:
-    history_file = open(current_history_file + 'txt', 'r')
+    current_history_file = sys.path[0] + '/' + get_file_name() + '.csv'
     # Iterate through every line of txt file:
-    for line in history_file:
+    for line in sys.stdin:
         for starter in ["random/", "dimacs/", "snap/"]:
             # If row contains statistics:
             if line.startswith(starter):
                 # Write data in csv file:
-                with open(current_history_file + 'csv', 'a') as sheet:
+                with open(current_history_file, 'a') as sheet:
                     writer = csv.writer(sheet)
                     writer.writerow(line.split())
                 break
 
-# transfer_data(current_history_file)
+transfer_data()
 
 # standard input
 # being called automatically
