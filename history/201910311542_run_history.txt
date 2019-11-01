@@ -1,0 +1,17 @@
+201910311542_run_history
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+random/000002_000000000002.input	0.18s	0	1	1	correct
+random/000002_000000000006.input	0.12s	1	8	1	correct
+random/000002_000000000012.input	0.12s	2	20	1	correct
+random/000002_000000000020.input	0.12s	2	23	1	correct
+random/000004_000000000004.input	0.18s	0	1	1	correct
+random/000004_000000000012.input	0.12s	4	95	1	correct
+random/000004_000000000024.input	0.13s	4	117	1	correct
+random/000004_000000000040.input	0.13s	4	117	1	correct
+random/000006_000000000007.input	0.18s	1	5	1	correct
+random/000006_000000000018.input	0.13s	4	110	1	correct
+random/000006_000000000036.input	0.13s	4	114	1	correct
+random/000006_000000000060.input	0.15s	5	244	1	correct
+random/000008_000000000009.input	0.12s	1	5	1	correct
+random/000008_000000000024.input	0.23s	5	241	1	correct
+random/000008_000000000048.input	0.43s	7	1007	1	correct
