@@ -8,6 +8,7 @@ The following command needs to be run in the "alg-eng-rosty-binetruy-1" director
 
 ```bash
 curl -O http://fpt.akt.tu-berlin.de/alg-eng-data/data.zip
+unzip data.zip
 ```
 
 ## Usage
