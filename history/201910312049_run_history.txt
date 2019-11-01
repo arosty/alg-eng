@@ -54,14 +54,14 @@ random/000026_000000000156.input	s	0		0
 random/000026_000000000260.input	s	0		0	
 11 instances not solved. Script aborted.
 run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
-dimacs/karate.graph.dimacs	37.04s	14	66044	1	correct
-dimacs/dolphins.graph.dimacs	s	0		0	
-dimacs/chesapeake.graph.dimacs	s	0		0	
-dimacs/adjnoun.graph.dimacs	s	0		0	
-dimacs/polbooks.graph.dimacs	s	0		0	
-dimacs/football.graph.dimacs	s	0		0	
-dimacs/celegans_metabolic.graph.dimacs	s	0		0	
-dimacs/jazz.graph.dimacs	s	0		0	
-dimacs/netscience.graph.dimacs	s	0		0	
-dimacs/email.graph.dimacs	s	0		0	
-dimacs/add20.graph.dimacs	s	0		0	
+# dimacs/karate.graph.dimacs	37.04s	14	66044	1	correct
+# dimacs/dolphins.graph.dimacs	s	0		0	
+# dimacs/chesapeake.graph.dimacs	s	0		0	
+# dimacs/adjnoun.graph.dimacs	s	0		0	
+# dimacs/polbooks.graph.dimacs	s	0		0	
+# dimacs/football.graph.dimacs	s	0		0	
+# dimacs/celegans_metabolic.graph.dimacs	s	0		0	
+# dimacs/jazz.graph.dimacs	s	0		0	
+# dimacs/netscience.graph.dimacs	s	0		0	
+# dimacs/email.graph.dimacs	s	0		0	
+# dimacs/add20.graph.dimacs	s	0		0	
