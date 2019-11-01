@@ -11,7 +11,7 @@ elif current_user == 1:
 current_path += 'alg-eng/history/'
     
 # PUT IN THE TIMESTAMPS OF THE FILES THAT YOU WANT TO COMPARE:
-timestamps = ['201910311157', '201910311239']
+timestamps = ['201910311525', '201910311853']
 # CHOOSE THE COLORS FOR THE PLOTTER:
 colors = ['red', 'green']
 
