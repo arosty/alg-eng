@@ -68,7 +68,16 @@ def is_edgeless(edges):
 
 
 def get_vertex():
-    # TODO
+    """
+    INPUT: None
+    get_vertex returns the first edge
+    OUTPUT: list of length 2
+    """
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] > 0:
+            for adj_vert in g[vertex][2]:
+                if not g[adj_vert][0]:
+                    return [vertex, adj_vert]
 
 
 def vc_branch(k):
