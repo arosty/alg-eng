@@ -58,13 +58,24 @@ def un_del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] += 1
 
-def is_edgeless(edges):
+# def is_edgeless(edges):
+#     """
+#     INPUT: edges is np.array of shape (nb_edges,2)
+#     is_edgeless returns True if the graph doesn't have any edges and False otherwise
+#     OUTPUT: True or False
+#     """
+#     return edges.shape[0] == 0
+
+def is_edgeless():
     """
-    INPUT: edges is np.array of shape (nb_edges,2)
+    INPUT: None
     is_edgeless returns True if the graph doesn't have any edges and False otherwise
     OUTPUT: True or False
     """
-    return edges.shape[0] == 0
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] > 0:
+            return False
+    return True
 
 
 def get_edge():
