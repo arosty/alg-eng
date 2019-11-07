@@ -132,5 +132,5 @@ def vc():
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
-g = get_date()
+g = get_data()
 vc()
