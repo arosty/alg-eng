@@ -47,6 +47,16 @@ def del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] -= 1
 
+def un_del_vert(vertex):
+    """
+    INPUT: vertex is int : vertex to 'undelete'
+    un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
+    """
+    # 'Delete' vertex:
+    g[vertex][0] = False
+    # Update number of edges on adjacent vertices:
+    for adj_vert in g[vertex][2]:
+        g[adj_vert][1] += 1
 
 def is_edgeless(edges):
     """
