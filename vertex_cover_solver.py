@@ -36,23 +36,16 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(edges, vertex):
+def del_vert(vertex):
     """
-    INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
-    del_vert returns all edges except the ones containing vertex
-    OUTPUT: np.array of shape (nb_edges_after_del,2)
-       /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
+    INPUT: vertex is int : vertex to 'delete'
+    del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # Get number of edges:
-    size = edges.shape[0]
-    # Initialize list of indices which will be deleted
-    idx_del = []
-    for i in range(size):
-        # If edge contains vertex append the index to list
-        if vertex in edges[i]:
-            idx_del.append(i)
-    # Return array of edges without the ones deleted:
-    return np.delete(edges, idx_del, 0)
+    # 'Delete' vertex:
+    g[vertex][0] = True
+    # Update number of edges on adjacent vertices:
+    for adj_vert in g[vertex][2]:
+        g[adj_vert][1] -= 1
 
 
 def is_edgeless(edges):
