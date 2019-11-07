@@ -67,9 +67,13 @@ def is_edgeless(edges):
     return edges.shape[0] == 0
 
 
-def vc_branch(edges, k):
+def get_vertex():
+    # TODO
+
+
+def vc_branch(k):
     """
-    INPUT: edges is np.array of shape (nb_edges,2), k is int
+    INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: np.array of shape at most (k,) or None
     """
@@ -80,14 +84,22 @@ def vc_branch(edges, k):
     if is_edgeless(edges):
         return np.array([], dtype = np.uint32)
     # Get vertices of first edge:
-    [u,v] = edges[0]
-    # Call function without first vertex
-    Su = vc_branch(del_vert(edges, u), k-1)
+    [u,v] = get_vertex()
+    # 'Delete' first vertex from graph:
+    del_vert(u)
+    # Call function recursively:
+    Su = vc_branch(k-1)
+    # 'Undelete' first vertex from graph:
+    un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
-    # Call function without second vertex:
-    Sv = vc_branch(del_vert(edges, v), k-1)
+    # 'Delete' second vertex from graph:
+    del_vert(v)
+    # Call function recursively:
+    Sv = vc_branch(k-1)
+    # 'Undelete' second vertex from graph:
+    un_del_vert(v)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
@@ -100,10 +112,10 @@ def vc(edges):
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
-    #kmax is the upper bound for k
+    # kmax is the upper bound for k
     kmax = int(edges.shape[0] / 2) + 1
     vc_branch.counter = 0
-    #try the recursive function for every k until it gives a result or k>kmax
+    # Try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
         S = vc_branch(edges, k)
         if S is not None:
