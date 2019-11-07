@@ -1,7 +1,0 @@
-201910311127_run_history
-run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
-random/000002_000000000002.input	1.46s	0	1	1	correct
-random/000002_000000000006.input	0.13s	1	5	1	correct
-random/000002_000000000012.input	0.12s	2	13	1	correct
-run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
-run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
