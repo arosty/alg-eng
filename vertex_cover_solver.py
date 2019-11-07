@@ -67,10 +67,10 @@ def is_edgeless(edges):
     return edges.shape[0] == 0
 
 
-def get_vertex():
+def get_edge():
     """
     INPUT: None
-    get_vertex returns the first edge
+    get_edge returns the first edge
     OUTPUT: list of length 2
     """
     for vertex in g:
@@ -90,10 +90,10 @@ def vc_branch(k):
     if k < 0:
         return None
     # Return empty array if no edges are given:
-    if is_edgeless(edges):
+    if is_edgeless():
         return np.array([], dtype = np.uint32)
     # Get vertices of first edge:
-    [u,v] = get_vertex()
+    [u,v] = get_edge()
     # 'Delete' first vertex from graph:
     del_vert(u)
     # Call function recursively:
@@ -115,22 +115,22 @@ def vc_branch(k):
     return None
 
 
-def vc(edges):
+def vc():
     """
     INPUT: edges is np.array of shape (nb_edges,2)
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
-    # kmax is the upper bound for k
-    kmax = int(edges.shape[0] / 2) + 1
+    # Set upper bound for k:
+    kmax = len(g) // 2 + 1
     vc_branch.counter = 0
     # Try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        S = vc_branch(edges, k)
+        S = vc_branch(k)
         if S is not None:
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
-
-vc(get_data())
+g = get_date()
+vc()
