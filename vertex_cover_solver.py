@@ -132,4 +132,6 @@ def vc():
 
 
 edges = get_data()
+print('------->>>>>')
+print(edges)
 vc()
