@@ -14,14 +14,12 @@ def get_data():
             # Extract number of edges from first line:
             num_of_edges = np.uint32(line.split()[1])
             # Initialize array of edges:
-            edges = np.empty(num_of_edges, dtype=np.ndarray)
+            edges = np.empty(num_of_edges, dtype=list)
         else:
             # Get current edge and convert it to int:
             current_edge = list(map(np.uint32, line.split()))
-            # Convert edge to numpy array:
-            current_edge = np.asarray(current_edge)
             # Add edge to array of all edges:
-            edges[counter-1] = current_edge
+            edges[counter-1] = [current_edge, False]
     # Return array of edges:
     return edges
 
