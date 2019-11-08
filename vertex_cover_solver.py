@@ -84,7 +84,9 @@ def get_edge():
     get_edge returns the first edge
     OUTPUT: list of length 2
     """
+    # Iterate through graph:
     for vertex in g:
+        # If vertex not deleted and has edges, then take first adjacent vertex and return it:
         if (not g[vertex][0]) and g[vertex][1] > 0:
             for adj_vert in g[vertex][2]:
                 if not g[adj_vert][0]:
