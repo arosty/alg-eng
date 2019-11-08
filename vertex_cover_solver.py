@@ -18,8 +18,9 @@ def get_data():
         else:
             # Get current edge and convert it to int:
             current_edge = list(map(np.uint32, line.split()))
+            current_edge.append(False)
             # Add edge to array of all edges:
-            edges[counter-1] = [current_edge, False]
+            edges[counter-1] = current_edge
     # Return array of edges:
     return edges
 
