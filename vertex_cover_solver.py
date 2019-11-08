@@ -92,20 +92,20 @@ def vc_branch(k):
     if k < 0:
         return None
     # Return empty array if no edges are given:
-    if is_edgeless(edges):
+    if is_edgeless():
         return np.array([], dtype = np.uint32)
     # Get vertices of first edge:
-    [u,v] = edges[0]
+    [u,v] = get_edge()
     # Call function without first vertex
     del_vert(u)
-    Su = vc_branch(del_vert(edges, u), k-1)
+    Su = vc_branch(k-1)
     un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
     # Call function without second vertex:
     del_vert(v)
-    Sv = vc_branch(del_vert(edges, v), k-1)
+    Sv = vc_branch(k-1)
     un_del_vert(v)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
