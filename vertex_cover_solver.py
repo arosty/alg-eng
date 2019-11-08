@@ -43,26 +43,46 @@ def del_vert(vertex):
     """
     # Get number of edges:
     size = edges.shape[0]
-    # Initialize list of indices which will be deleted
-    idx_del = []
     for i in range(size):
         # If edge contains vertex append the index to list
         if vertex in edges[i]:
-            idx_del.append(i)
-    # Return array of edges without the ones deleted:
-    edges = np.delete(edges, idx_del, 0)
+            edges[i][2] = True
 
 
-def is_edgeless(edges):
+def un_del_vert(vertex):
+    """
+    INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
+    del_vert returns all edges except the ones containing vertex
+    OUTPUT: np.array of shape (nb_edges_after_del,2)
+       /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
+    """
+    # Get number of edges:
+    size = edges.shape[0]
+    for i in range(size):
+        # If edge contains vertex append the index to list
+        if vertex in edges[i]:
+            edges[i][2] = False
+
+
+def is_edgeless():
     """
     INPUT: edges is np.array of shape (nb_edges,2)
     is_edgeless returns True if the graph doesn't have any edges and False otherwise
     OUTPUT: True or False
     """
-    return edges.shape[0] == 0
+    for edge in edges:
+        if not edge[2]
+            return False
+    return True
 
 
-def vc_branch(edges, k):
+def get_edge():
+    for edge in edges:
+        if not edge[2]:
+            return edge[0:2]
+
+
+def vc_branch(k):
     """
     INPUT: edges is np.array of shape (nb_edges,2), k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
@@ -77,19 +97,23 @@ def vc_branch(edges, k):
     # Get vertices of first edge:
     [u,v] = edges[0]
     # Call function without first vertex
+    del_vert(u)
     Su = vc_branch(del_vert(edges, u), k-1)
+    un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
     # Call function without second vertex:
+    del_vert(v)
     Sv = vc_branch(del_vert(edges, v), k-1)
+    un_del_vert(v)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
     return None
 
 
-def vc(edges):
+def vc():
     """
     INPUT: edges is np.array of shape (nb_edges,2)
     function to call to find and print the vertex cover in a benchmark understandable way
@@ -100,7 +124,7 @@ def vc(edges):
     vc_branch.counter = 0
     #try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        S = vc_branch(edges, k)
+        S = vc_branch(k)
         if S is not None:
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
