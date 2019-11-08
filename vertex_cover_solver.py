@@ -36,7 +36,7 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(edges, vertex):
+def del_vert(vertex):
     """
     INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
     del_vert returns all edges except the ones containing vertex
@@ -52,7 +52,7 @@ def del_vert(edges, vertex):
         if vertex in edges[i]:
             idx_del.append(i)
     # Return array of edges without the ones deleted:
-    return np.delete(edges, idx_del, 0)
+    edges = np.delete(edges, idx_del, 0)
 
 
 def is_edgeless(edges):
@@ -109,4 +109,5 @@ def vc(edges):
             return None
 
 
-vc(get_data())
+edges = get_data()
+vc()
