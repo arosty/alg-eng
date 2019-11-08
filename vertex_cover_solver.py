@@ -71,7 +71,7 @@ def is_edgeless():
     OUTPUT: True or False
     """
     for edge in edges:
-        if not edge[2]
+        if not edge[2]:
             return False
     return True
 
