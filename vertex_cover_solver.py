@@ -12,6 +12,7 @@ def get_data():
     # Initialize incidence list:
     G = {}
     for counter, line in enumerate(input_data):
+        print (counter, line)
         if counter == 0:
             # Extract number of edges from first line:
             num_of_edges = np.uint32(line.split()[1])
