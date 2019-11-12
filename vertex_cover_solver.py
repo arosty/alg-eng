@@ -4,27 +4,37 @@ import numpy as np
 def get_data():
     """
     INPUT: None
-    get_data reads standard input and returns the given edges
-    OUTPUT: np.array of shape (nb_edges,2)
+    get_data reads standard input and returns the incidence list
+    OUTPUT: dictionary like {vertex : neighbour vertices}
     """
     # Get standard input:
     input_data = sys.stdin
+    # Initialize incidence list:
+    G = {}
     for counter, line in enumerate(input_data):
         if counter == 0:
             # Extract number of edges from first line:
             num_of_edges = np.uint32(line.split()[1])
-            # Initialize array of edges:
-            edges = np.empty(num_of_edges, dtype=np.ndarray)
         else:
-            # Get current edge and convert it to int:
-            current_edge = list(map(np.uint32, line.split()))
-            # Convert edge to numpy array:
-            current_edge = np.asarray(current_edge)
-            # Add edge to array of all edges:
-            edges[counter-1] = current_edge
-    # Return array of edges:
-    return edges
+            # Get current edge and convert it to int list:
+            [u,v] = list(map(np.uint32, line.split()))
+            #insert vertices where needed
+            try:
+                G[u][1] +=1
+                G[u][2].append(v)
+            except :
+                G[u] = [False,1,[v]]
 
+            try:
+                G[v][1] +=1
+                G[v][2].append(u)
+            except :
+                G[v] = [False,1,[u]]
+            
+    # Return incidence list:
+    return (G,num_of_edges) 
+
+print(get_data()) 
 
 def print_result(vertices):
     """
@@ -109,4 +119,4 @@ def vc(edges):
             return None
 
 
-vc(get_data())
+#vc(get_data())
