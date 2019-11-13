@@ -1,6 +1,20 @@
 import sys
 import numpy as np
 
+def add_vertex(g, vertex):
+    g[vertex] = [False, 0, []]
+    return g
+
+def add_edge(g, edge):
+    for vertex in edge:
+        if not vertex in g.keys():
+            g = add_vertex(g, vertex)
+        g[vertex][1] += 1
+    g[edge[0]][2].append(edge[1])
+    g[edge[1]][2].append(edge[0])
+    return g
+
+
 def get_data():
     """
     INPUT: None
@@ -9,21 +23,15 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
+    g = {}
     for counter, line in enumerate(input_data):
-        if counter == 0:
-            # Extract number of edges from first line:
-            num_of_edges = np.uint32(line.split()[1])
-            # Initialize array of edges:
-            edges = np.empty(num_of_edges, dtype=np.ndarray)
-        else:
+        if counter > 0:
             # Get current edge and convert it to int:
-            current_edge = list(map(np.uint32, line.split()))
-            # Convert edge to numpy array:
-            current_edge = np.asarray(current_edge)
-            # Add edge to array of all edges:
-            edges[counter-1] = current_edge
+            # current_edge = list(map(np.uint32, line.split()))
+            current_edge = line.split()
+            g = add_edge(g, current_edge)
     # Return array of edges:
-    return edges
+    return g
 
 
 def print_result(vertices):
@@ -36,37 +44,66 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(edges, vertex):
+def del_vert(vertex):
     """
-    INPUT: edges is np.array of shape (nb_edges,2), vertex is int : vertex to 'delete'
-    del_vert returns all edges except the ones containing vertex
-    OUTPUT: np.array of shape (nb_edges_after_del,2)
-       /!\ np.delete returns a copy of the edges without the specified indexes, it doesn't delete on the edges
+    INPUT: vertex is int : vertex to 'delete'
+    del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # Get number of edges:
-    size = edges.shape[0]
-    # Initialize list of indices which will be deleted
-    idx_del = []
-    for i in range(size):
-        # If edge contains vertex append the index to list
-        if vertex in edges[i]:
-            idx_del.append(i)
-    # Return array of edges without the ones deleted:
-    return np.delete(edges, idx_del, 0)
+    # 'Delete' vertex:
+    g[vertex][0] = True
+    # Update number of edges on adjacent vertices:
+    for adj_vert in g[vertex][2]:
+        g[adj_vert][1] -= 1
 
-
-def is_edgeless(edges):
+def un_del_vert(vertex):
     """
-    INPUT: edges is np.array of shape (nb_edges,2)
+    INPUT: vertex is int : vertex to 'undelete'
+    un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
+    """
+    # 'Delete' vertex:
+    g[vertex][0] = False
+    # Update number of edges on adjacent vertices:
+    for adj_vert in g[vertex][2]:
+        g[adj_vert][1] += 1
+
+# def is_edgeless(edges):
+#     """
+#     INPUT: edges is np.array of shape (nb_edges,2)
+#     is_edgeless returns True if the graph doesn't have any edges and False otherwise
+#     OUTPUT: True or False
+#     """
+#     return edges.shape[0] == 0
+
+def is_edgeless():
+    """
+    INPUT: None
     is_edgeless returns True if the graph doesn't have any edges and False otherwise
     OUTPUT: True or False
     """
-    return edges.shape[0] == 0
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] > 0:
+            return False
+    return True
 
 
-def vc_branch(edges, k):
+def get_edge():
     """
-    INPUT: edges is np.array of shape (nb_edges,2), k is int
+    INPUT: None
+    get_edge returns the first edge
+    OUTPUT: list of length 2
+    """
+    # Iterate through graph:
+    for vertex in g:
+        # If vertex not deleted and has edges, then take first adjacent vertex and return it:
+        if (not g[vertex][0]) and g[vertex][1] > 0:
+            for adj_vert in g[vertex][2]:
+                if not g[adj_vert][0]:
+                    return [vertex, adj_vert]
+
+
+def vc_branch(k):
+    """
+    INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: np.array of shape at most (k,) or None
     """
@@ -74,39 +111,47 @@ def vc_branch(edges, k):
     if k < 0:
         return None
     # Return empty array if no edges are given:
-    if is_edgeless(edges):
+    if is_edgeless():
         return np.array([], dtype = np.uint32)
     # Get vertices of first edge:
-    [u,v] = edges[0]
-    # Call function without first vertex
-    Su = vc_branch(del_vert(edges, u), k-1)
+    [u,v] = get_edge()
+    # 'Delete' first vertex from graph:
+    del_vert(u)
+    # Call function recursively:
+    Su = vc_branch(k-1)
+    # 'Undelete' first vertex from graph:
+    un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
-    # Call function without second vertex:
-    Sv = vc_branch(del_vert(edges, v), k-1)
+    # 'Delete' second vertex from graph:
+    del_vert(v)
+    # Call function recursively:
+    Sv = vc_branch(k-1)
+    # 'Undelete' second vertex from graph:
+    un_del_vert(v)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
     return None
 
 
-def vc(edges):
+def vc():
     """
     INPUT: edges is np.array of shape (nb_edges,2)
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
-    #kmax is the upper bound for k
-    kmax = int(edges.shape[0] / 2) + 1
+    # Set upper bound for k:
+    kmax = len(g) // 2 + 1
     vc_branch.counter = 0
-    #try the recursive function for every k until it gives a result or k>kmax
+    # Try the recursive function for every k until it gives a result or k>kmax
     for k in range (kmax + 1):
-        S = vc_branch(edges, k)
+        S = vc_branch(k)
         if S is not None:
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
-
-vc(get_data())
+g = get_data()
+vc()
