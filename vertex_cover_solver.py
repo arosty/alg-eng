@@ -1,6 +1,18 @@
 import sys
 import numpy as np
 
+def add_vertex(vertex):
+    g[vertex] = [False, 0, []]
+
+def add_edge(edge):
+    for vertex in edge:
+        if not vertex in g.keys():
+            add_vertex(vertex)
+        g[vertex][1] += 1
+    g[edge[0]][2].append(edge[1])
+    g[edge[1]][2].append(edge[0])
+
+
 def get_data():
     """
     INPUT: None
@@ -9,19 +21,13 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
+    g = {}
     for counter, line in enumerate(input_data):
-        if counter == 0:
-            # Extract number of edges from first line:
-            num_of_edges = np.uint32(line.split()[1])
-            # Initialize array of edges:
-            edges = np.empty(num_of_edges, dtype=np.ndarray)
-        else:
+        if counter > 0:
             # Get current edge and convert it to int:
-            current_edge = list(map(np.uint32, line.split()))
-            # Convert edge to numpy array:
-            current_edge = np.asarray(current_edge)
-            # Add edge to array of all edges:
-            edges[counter-1] = current_edge
+            # current_edge = list(map(np.uint32, line.split()))
+            current_edge = line.split()
+            add_edge(current_edge)
     # Return array of edges:
     return edges
 
@@ -145,5 +151,5 @@ def vc():
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
-g = get_data()
-vc()
+# g = get_data()
+# vc()
