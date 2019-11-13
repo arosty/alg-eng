@@ -86,19 +86,45 @@ def is_edgeless():
     return True
 
 
-def get_edge():
+# def get_edge():
+#     """
+#     INPUT: None
+#     get_edge returns the first edge
+#     OUTPUT: list of length 2
+#     """
+#     # Iterate through graph:
+#     for vertex in g:
+#         # If vertex not deleted and has edges, then take first adjacent vertex and return it:
+#         if (not g[vertex][0]) and g[vertex][1] > 0:
+#             for adj_vert in g[vertex][2]:
+#                 if not g[adj_vert][0]:
+#                     return [vertex, adj_vert]
+
+def  highest_degree_vertex():
     """
     INPUT: None
-    get_edge returns the first edge
-    OUTPUT: list of length 2
+    highest_degree_vertex returns the key to the highest degree vertex, and the list of all it's neigbours which aren't deleted
+    OUTPUT: key to index the dictionary, list of neighbours' key 
     """
-    # Iterate through graph:
-    for vertex in g:
-        # If vertex not deleted and has edges, then take first adjacent vertex and return it:
-        if (not g[vertex][0]) and g[vertex][1] > 0:
-            for adj_vert in g[vertex][2]:
-                if not g[adj_vert][0]:
-                    return [vertex, adj_vert]
+    key = None
+    neighbours = []
+    degree_max = -1
+    #For every vertex in the dic, we remember its key and neighbours if it has the best degree yet
+    for k in g.keys():
+        if not g[k][0]:
+            if g[k][1]>degree_max:
+                degree_max = g[k][1]
+                key = k
+                neighbours = g[k][2]
+    #We have to get rid of the neighbours who have been deleted
+    neigh_vert = None
+    for i in range (len(neighbours)):
+        #pop the first neigbour vertex in the list
+        neigh_vert = neighbours.pop(0)
+        #if it hasn't been deleted we reinsert it at the end
+        if not g[neigh_vert][0]:
+            neighbours.append(neigh_vert)
+    return(key,neighbours)
 
 
 def vc_branch(k):
