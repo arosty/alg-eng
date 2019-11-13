@@ -29,7 +29,7 @@ def get_data():
             current_edge = line.split()
             add_edge(current_edge)
     # Return array of edges:
-    return edges
+    return g
 
 
 def print_result(vertices):
