@@ -110,7 +110,7 @@ def vc_branch(k):
     """
     INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
-    OUTPUT: list of shape at most (k,) or None
+    OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
     if k < 0:
