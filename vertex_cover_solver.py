@@ -40,7 +40,7 @@ def get_data():
             # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
-    # Return array of edges:
+    # Return graph:
     return g
 
 
