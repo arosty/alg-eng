@@ -34,14 +34,12 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
-    g = {}
+    global g = {}
     for counter, line in enumerate(input_data):
         if counter > 0:
             # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
-    # Return array of edges:
-    return g
 
 
 def print_result(vertices):
@@ -159,5 +157,5 @@ def vc():
             return None
 
 
-g = get_data()
+get_data()
 vc()
