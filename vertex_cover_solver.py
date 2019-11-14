@@ -2,10 +2,21 @@ import sys
 import numpy as np
 
 def add_vertex(g, vertex):
+    """
+    INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
+    add_vertex adds a new vertex with default values
+    OUTPUT: dict with each value list of 3 (boolean, int, list)
+    """
     g[vertex] = [False, 0, []]
     return g
 
+
 def add_edge(g, edge):
+    """
+    INPUT: g is dict with each value list of length 3 (boolean, int, list), edge is list of length 2
+    add_vertex adds a new edge to the graph and returns this graph
+    OUTPUT: dict with each value list of 3 (boolean, int, list)
+    """
     for vertex in edge:
         if not vertex in g.keys():
             g = add_vertex(g, vertex)
@@ -18,7 +29,7 @@ def add_edge(g, edge):
 def get_data():
     """
     INPUT: None
-    get_data reads standard input and returns the given edges
+    get_data reads standard input and returns the given graph
     OUTPUT: np.array of shape (nb_edges,2)
     """
     # Get standard input:
@@ -26,8 +37,7 @@ def get_data():
     g = {}
     for counter, line in enumerate(input_data):
         if counter > 0:
-            # Get current edge and convert it to int:
-            # current_edge = list(map(np.uint32, line.split()))
+            # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
     # Return array of edges:
@@ -55,6 +65,7 @@ def del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] -= 1
 
+
 def un_del_vert(vertex):
     """
     INPUT: vertex is int : vertex to 'undelete'
@@ -66,20 +77,14 @@ def un_del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] += 1
 
-# def is_edgeless(edges):
-#     """
-#     INPUT: edges is np.array of shape (nb_edges,2)
-#     is_edgeless returns True if the graph doesn't have any edges and False otherwise
-#     OUTPUT: True or False
-#     """
-#     return edges.shape[0] == 0
 
 def is_edgeless():
     """
     INPUT: None
-    is_edgeless returns True if the graph doesn't have any edges and False otherwise
+    is_edgeless returns True if the graph doesn't have any undeleted edges and False otherwise
     OUTPUT: True or False
     """
+    # For every vertex in the graph, check if it has adjacent vertices that are undeleted:
     for vertex in g:
         if (not g[vertex][0]) and g[vertex][1] > 0:
             return False
@@ -152,6 +157,7 @@ def vc():
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
             return None
+
 
 g = get_data()
 vc()
