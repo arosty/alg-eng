@@ -105,6 +105,14 @@ def get_edge():
                 if not g[adj_vert][0]:
                     return [vertex, adj_vert]
 
+def get_degree_vertices(degree):
+    vertices = []
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] == degree:
+            vertices.append(vertex)
+    return vertices
+
+
 
 def vc_branch(k):
     """
@@ -117,7 +125,23 @@ def vc_branch(k):
         return None
     # Return empty array if no edges are given:
     if is_edgeless():
-        return np.array([], dtype = np.uint32)
+        return np.array([], dtype = np.str)
+    # Get list of vertices of degree 1:
+    vertices_degree_one = get_degree_vertices(1)
+    # add adjacent vertices to vertex cover
+    vertices_to_add = add_adj_vertices(vertices_degree_one)
+     = np.array([], dtype = np.str)
+    for vertex in vertices_degree_one:
+        if vertex not in vertices_to_add:
+            for adj_vert in g[vertex][2]:
+                if not g[adj_vert][0]:
+                    np.append(vertices_to_add, vertex)
+                    break
+    if vertices_to_add.size != 0:
+        Su = vertices_to_add
+        for vertex in vertices:
+            del_vert(vertex)
+    # delete list of vertices of degree 1 from graph
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
@@ -128,6 +152,7 @@ def vc_branch(k):
     un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
+        # TODO: undelete list of vertices of degree 1
         return np.append(Su, u)
     # 'Delete' second vertex from graph:
     del_vert(v)
@@ -135,6 +160,7 @@ def vc_branch(k):
     Sv = vc_branch(k-1)
     # 'Undelete' second vertex from graph:
     un_del_vert(v)
+    # TODO: undelete list of vertices of degree 1
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
