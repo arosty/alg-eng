@@ -120,7 +120,7 @@ def get_degree_one_adj_vertices():
         if (not g[vertex][0]) and g[vertex][1] == 1 and (vertex not in vertices):
             adj_vertex = get_adj_vertex(vertex)
             if adj_vertex not in vertices:
-                np.append(vertices, adj_vertex)
+                vertices = np.append(vertices, adj_vertex)
     return vertices
 
 
@@ -140,26 +140,25 @@ def vc_branch(k):
     del_vert(degree_one_adj_vertices)
     if is_edgeless():
         return degree_one_adj_vertices
-    k -= degree_one_adj_vertices.size()
+    k -= degree_one_adj_vertices.size
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
-    del_vert(u)
+    del_vert([u])
     # Call function recursively:
     Su = vc_branch(k-1)
     # 'Undelete' first vertex from graph:
-    un_del_vert(u)
+    un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         un_del_vert(degree_one_adj_vertices)
         return np.append(Su, np.append(degree_one_adj_vertices, u))
-    else if 
     # 'Delete' second vertex from graph:
-    del_vert(v)
+    del_vert([v])
     # Call function recursively:
     Sv = vc_branch(k-1)
     # 'Undelete' second vertex from graph:
-    un_del_vert(v)
+    un_del_vert([v])
     # TODO: undelete list of vertices of degree 1
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
