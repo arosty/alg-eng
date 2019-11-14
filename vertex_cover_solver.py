@@ -56,8 +56,8 @@ def print_result(vertices):
         
 def del_vert(vertices):
     """
-    INPUT: vertex is int : vertex to 'delete'
-    del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'delete'
+    del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
     for vertex in vertices:
         # 'Delete' vertex:
@@ -69,8 +69,8 @@ def del_vert(vertices):
 
 def un_del_vert(vertices):
     """
-    INPUT: vertex is int : vertex to 'undelete'
-    un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'undelete'
+    un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
     for vertex in vertices:
         # 'Delete' vertex:
