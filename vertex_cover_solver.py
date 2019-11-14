@@ -138,6 +138,8 @@ def vc_branch(k):
         return np.array([], dtype = np.str)
     degree_one_adj_vertices = get_degree_one_adj_vertices()
     del_vert(degree_one_adj_vertices)
+    if is_edgeless():
+        return degree_one_adj_vertices
     k -= degree_one_adj_vertices.size()
     # Get vertices of first edge:
     [u,v] = get_edge()
