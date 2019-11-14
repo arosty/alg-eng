@@ -54,28 +54,30 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertex):
+def del_vert(vertices):
     """
-    INPUT: vertex is int : vertex to 'delete'
-    del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'delete'
+    del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = True
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] -= 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = True
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] -= 1
 
 
-def un_del_vert(vertex):
+def un_del_vert(vertices):
     """
-    INPUT: vertex is int : vertex to 'undelete'
-    un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'undelete'
+    un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = False
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] += 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = False
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] += 1
 
 
 def is_edgeless():
@@ -121,20 +123,20 @@ def vc_branch(k):
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
-    del_vert(u)
+    del_vert([u])
     # Call function recursively:
     Su = vc_branch(k-1)
     # 'Undelete' first vertex from graph:
-    un_del_vert(u)
+    un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
     # 'Delete' second vertex from graph:
-    del_vert(v)
+    del_vert([v])
     # Call function recursively:
     Sv = vc_branch(k-1)
     # 'Undelete' second vertex from graph:
-    un_del_vert(v)
+    un_del_vert([v])
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
