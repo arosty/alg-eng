@@ -32,7 +32,8 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
-    global g = {}
+    global g
+    g = {}
     for counter, line in enumerate(input_data):
         if counter > 0:
             # Get current edge and add it to the graph:
