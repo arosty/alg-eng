@@ -110,14 +110,14 @@ def vc_branch(k):
     """
     INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
-    OUTPUT: np.array of shape at most (k,) or None
+    OUTPUT: list of shape at most (k,) or None
     """
     vc_branch.counter += 1
     if k < 0:
         return None
-    # Return empty array if no edges are given:
+    # Return empty list if no edges are given:
     if is_edgeless():
-        return np.array([], dtype = np.uint32)
+        return []
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
@@ -128,7 +128,8 @@ def vc_branch(k):
     un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        return np.append(Su, u)
+        Su.append(u)
+        return Su
     # 'Delete' second vertex from graph:
     del_vert(v)
     # Call function recursively:
@@ -137,13 +138,14 @@ def vc_branch(k):
     un_del_vert(v)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return np.append(Sv, v)
+        Sv.append(v)
+        return Sv
     return None
 
 
 def vc():
     """
-    INPUT: edges is np.array of shape (nb_edges,2)
+    INPUT: None
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
