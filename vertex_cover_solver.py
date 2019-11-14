@@ -5,6 +5,7 @@ def add_vertex(g, vertex):
     g[vertex] = [False, 0, []]
     return g
 
+
 def add_edge(g, edge):
     for vertex in edge:
         if not vertex in g.keys():
@@ -55,6 +56,7 @@ def del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] -= 1
 
+
 def un_del_vert(vertex):
     """
     INPUT: vertex is int : vertex to 'undelete'
@@ -66,13 +68,6 @@ def un_del_vert(vertex):
     for adj_vert in g[vertex][2]:
         g[adj_vert][1] += 1
 
-# def is_edgeless(edges):
-#     """
-#     INPUT: edges is np.array of shape (nb_edges,2)
-#     is_edgeless returns True if the graph doesn't have any edges and False otherwise
-#     OUTPUT: True or False
-#     """
-#     return edges.shape[0] == 0
 
 def is_edgeless():
     """
@@ -152,6 +147,7 @@ def vc():
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
             return None
+
 
 g = get_data()
 vc()
