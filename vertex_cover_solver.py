@@ -123,20 +123,20 @@ def vc_branch(k):
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
-    del_vert(u)
+    del_vert([u])
     # Call function recursively:
     Su = vc_branch(k-1)
     # 'Undelete' first vertex from graph:
-    un_del_vert(u)
+    un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         return np.append(Su, u)
     # 'Delete' second vertex from graph:
-    del_vert(v)
+    del_vert([v])
     # Call function recursively:
     Sv = vc_branch(k-1)
     # 'Undelete' second vertex from graph:
-    un_del_vert(v)
+    un_del_vert([v])
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         return np.append(Sv, v)
