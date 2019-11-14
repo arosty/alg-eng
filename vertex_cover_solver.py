@@ -8,7 +8,6 @@ def add_vertex(g, vertex):
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
     g[vertex] = [False, 0, []]
-    return g
 
 
 def add_edge(g, edge):
@@ -19,11 +18,10 @@ def add_edge(g, edge):
     """
     for vertex in edge:
         if not vertex in g.keys():
-            g = add_vertex(g, vertex)
+            add_vertex(g, vertex)
         g[vertex][1] += 1
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
-    return g
 
 
 def get_data():
@@ -39,7 +37,7 @@ def get_data():
         if counter > 0:
             # Get current edge and add it to the graph:
             current_edge = line.split()
-            g = add_edge(g, current_edge)
+            add_edge(g, current_edge)
 
 
 def print_result(vertices):
