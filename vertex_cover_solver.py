@@ -1,17 +1,16 @@
 import sys
 import numpy as np
 
-def add_vertex(g, vertex):
+def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
     add_vertex adds a new vertex with default values
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
     g[vertex] = [False, 0, []]
-    return g
 
 
-def add_edge(g, edge):
+def add_edge(edge):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), edge is list of length 2
     add_vertex adds a new edge to the graph and returns this graph
@@ -23,7 +22,6 @@ def add_edge(g, edge):
         g[vertex][1] += 1
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
-    return g
 
 
 def get_data():
@@ -34,14 +32,13 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
+    global g
     g = {}
     for counter, line in enumerate(input_data):
         if counter > 0:
             # Get current edge and add it to the graph:
             current_edge = line.split()
-            g = add_edge(g, current_edge)
-    # Return graph:
-    return g
+            g = add_edge(current_edge)
 
 
 def print_result(vertices):
