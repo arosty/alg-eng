@@ -54,28 +54,30 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertex):
+def del_vert(vertices):
     """
     INPUT: vertex is int : vertex to 'delete'
     del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = True
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] -= 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = True
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] -= 1
 
 
-def un_del_vert(vertex):
+def un_del_vert(vertices):
     """
     INPUT: vertex is int : vertex to 'undelete'
     un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = False
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] += 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = False
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] += 1
 
 
 def is_edgeless():
