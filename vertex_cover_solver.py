@@ -54,28 +54,30 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertex):
+def del_vert(vertices):
     """
     INPUT: vertex is int : vertex to 'delete'
     del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = True
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] -= 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = True
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] -= 1
 
 
-def un_del_vert(vertex):
+def un_del_vert(vertices):
     """
     INPUT: vertex is int : vertex to 'undelete'
     un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
     """
-    # 'Delete' vertex:
-    g[vertex][0] = False
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] += 1
+    for vertex in vertices:
+        # 'Delete' vertex:
+        g[vertex][0] = False
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            g[adj_vert][1] += 1
 
 
 def is_edgeless():
@@ -105,13 +107,21 @@ def get_edge():
                 if not g[adj_vert][0]:
                     return [vertex, adj_vert]
 
-def get_degree_vertices(degree):
-    vertices = []
-    for vertex in g:
-        if (not g[vertex][0]) and g[vertex][1] == degree:
-            vertices.append(vertex)
-    return vertices
 
+def get_adj_vertex(vertex):
+    for adj_vertex in g[vertex][2]:
+        if not g[adj_vertex][0]:
+            return adj_vertex
+
+
+def get_degree_one_adj_vertices():
+    vertices = np.array([], dtype = np.str)
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] == 1 and (vertex not in vertices):
+            adj_vertex = get_adj_vertex(vertex)
+            if adj_vertex not in vertices:
+                np.append(vertices, adj_vertex)
+    return vertices
 
 
 def vc_branch(k):
@@ -126,22 +136,9 @@ def vc_branch(k):
     # Return empty array if no edges are given:
     if is_edgeless():
         return np.array([], dtype = np.str)
-    # Get list of vertices of degree 1:
-    vertices_degree_one = get_degree_vertices(1)
-    # add adjacent vertices to vertex cover
-    vertices_to_add = add_adj_vertices(vertices_degree_one)
-     = np.array([], dtype = np.str)
-    for vertex in vertices_degree_one:
-        if vertex not in vertices_to_add:
-            for adj_vert in g[vertex][2]:
-                if not g[adj_vert][0]:
-                    np.append(vertices_to_add, vertex)
-                    break
-    if vertices_to_add.size != 0:
-        Su = vertices_to_add
-        for vertex in vertices:
-            del_vert(vertex)
-    # delete list of vertices of degree 1 from graph
+    degree_one_adj_vertices = get_degree_one_adj_vertices()
+    del_vert(degree_one_adj_vertices)
+    k -= degree_one_adj_vertices.size()
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
@@ -152,8 +149,9 @@ def vc_branch(k):
     un_del_vert(u)
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        # TODO: undelete list of vertices of degree 1
-        return np.append(Su, u)
+        un_del_vert(degree_one_adj_vertices)
+        return np.append(Su, np.append(degree_one_adj_vertices, u))
+    else if 
     # 'Delete' second vertex from graph:
     del_vert(v)
     # Call function recursively:
@@ -163,7 +161,8 @@ def vc_branch(k):
     # TODO: undelete list of vertices of degree 1
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        return np.append(Sv, v)
+        un_del_vert(degree_one_adj_vertices)
+        return np.append(Sv, np.append(degree_one_adj_vertices, u))
     return None
 
 
