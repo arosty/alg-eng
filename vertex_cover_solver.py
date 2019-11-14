@@ -160,5 +160,5 @@ def vc():
             return None
 
 
-g = get_data()
+get_data()
 vc()
