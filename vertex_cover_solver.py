@@ -18,7 +18,7 @@ def add_edge(edge):
     """
     for vertex in edge:
         if not vertex in g.keys():
-            add_vertex(g, vertex)
+            add_vertex(vertex)
         g[vertex][1] += 1
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
