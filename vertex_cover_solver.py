@@ -2,10 +2,21 @@ import sys
 import numpy as np
 
 def add_vertex(g, vertex):
+    """
+    INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
+    add_vertex adds a new vertex with default values
+    OUTPUT: dict with each value list of 3 (boolean, int, list)
+    """
     g[vertex] = [False, 0, []]
     return g
 
+
 def add_edge(g, edge):
+    """
+    INPUT: g is dict with each value list of length 3 (boolean, int, list), edge is list of length 2
+    add_vertex adds a new edge to the graph and returns this graph
+    OUTPUT: dict with each value list of 3 (boolean, int, list)
+    """
     for vertex in edge:
         if not vertex in g.keys():
             g = add_vertex(g, vertex)
@@ -18,7 +29,7 @@ def add_edge(g, edge):
 def get_data():
     """
     INPUT: None
-    get_data reads standard input and returns the given edges
+    get_data reads standard input and returns the given graph
     OUTPUT: np.array of shape (nb_edges,2)
     """
     # Get standard input:
@@ -26,11 +37,10 @@ def get_data():
     g = {}
     for counter, line in enumerate(input_data):
         if counter > 0:
-            # Get current edge and convert it to int:
-            # current_edge = list(map(np.uint32, line.split()))
+            # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
-    # Return array of edges:
+    # Return graph:
     return g
 
 
@@ -44,32 +54,10 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertex):
+def del_vert(vertices):
     """
-    INPUT: vertex is int : vertex to 'delete'
-    del_vert 'deletes' the given vertex and updates the number of edges of all adjacent vertices
-    """
-    # 'Delete' vertex:
-    g[vertex][0] = True
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] -= 1
-
-def un_del_vert(vertex):
-    """
-    INPUT: vertex is int : vertex to 'undelete'
-    un_del_vert 'undeletes' the given vertex and updates the number of edges of all adjacent vertices
-    """
-    # 'Delete' vertex:
-    g[vertex][0] = False
-    # Update number of edges on adjacent vertices:
-    for adj_vert in g[vertex][2]:
-        g[adj_vert][1] += 1
-
-def del_vert_list(vertices):
-    """
-    INPUT: list of vertices to delete 
-    del_vert_list 'deletes' the given vertices and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'delete'
+    del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
     for vertex in vertices:
         # 'Delete' vertex:
@@ -78,10 +66,11 @@ def del_vert_list(vertices):
         for adj_vert in g[vertex][2]:
             g[adj_vert][1] -= 1
 
-def un_del_vert_list(vertices):
+
+def un_del_vert(vertices):
     """
-    INPUT: list of vertices to 'undelete'
-    un_del_vert_list 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
+    INPUT: vertices is list : vertices to 'undelete'
+    un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
     for vertex in vertices:
         # 'Delete' vertex:
@@ -90,20 +79,14 @@ def un_del_vert_list(vertices):
         for adj_vert in g[vertex][2]:
             g[adj_vert][1] += 1
 
-# def is_edgeless(edges):
-#     """
-#     INPUT: edges is np.array of shape (nb_edges,2)
-#     is_edgeless returns True if the graph doesn't have any edges and False otherwise
-#     OUTPUT: True or False
-#     """
-#     return edges.shape[0] == 0
 
 def is_edgeless():
     """
     INPUT: None
-    is_edgeless returns True if the graph doesn't have any edges and False otherwise
+    is_edgeless returns True if the graph doesn't have any undeleted edges and False otherwise
     OUTPUT: True or False
     """
+    # For every vertex in the graph, check if it has adjacent vertices that are undeleted:
     for vertex in g:
         if (not g[vertex][0]) and g[vertex][1] > 0:
             return False
@@ -128,59 +111,60 @@ def  highest_degree_vertex():
     """
     INPUT: None
     highest_degree_vertex returns the key to the highest degree vertex, and the list of all it's neigbours which aren't deleted
-    OUTPUT: key to index the dictionary, list of neighbours' key 
+    OUTPUT: highest degree vertex as index of the dictionary, list of neighbours' key 
     """
-    key = None
+    best_vertex = None
     neighbours = []
     degree_max = -1
     #For every vertex in the dic, we remember its key and neighbours if it has the best degree yet
-    for k in g.keys():
+    for k in g:
         if not g[k][0]:
             if g[k][1]>degree_max:
                 degree_max = g[k][1]
-                key = k
-                neighbours = g[k][2]
+                best_vertex = k
     #We have to get rid of the neighbours who have been deleted
     neigh_vert = None
+    neighbours = g[best_vertex][2]
     for i in range (len(neighbours)):
         #pop the first neigbour vertex in the list
         neigh_vert = neighbours.pop(0)
         #if it hasn't been deleted we reinsert it at the end
         if not g[neigh_vert][0]:
             neighbours.append(neigh_vert)
-    return key,neighbours
+    return best_vertex,neighbours
+
 
 
 def vc_branch(k):
     """
     INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
-    OUTPUT: list of shape at most (k,) or None
+    OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
     if k < 0:
         return None
-    # Return empty array if no edges are given:
+    # Return empty list if no edges are given:
     if is_edgeless():
         return []
-    # Get highest degree vertex and its neighbors:
+    # Get vertices of first edge:
     u,neighbours = highest_degree_vertex()
     # 'Delete' first vertex from graph:
-    del_vert(u)
+    del_vert([u])
     # Call function recursively:
     Su = vc_branch(k-1)
     # 'Undelete' first vertex from graph:
-    un_del_vert(u)
+    un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
         Su.append(u)
         return Su
     # 'Delete' second vertex from graph:
-    del_vert_list(neighbours)
+    del_vert(neighbours)
     # Call function recursively:
     Sv = vc_branch(k-len(neighbours))
     # 'Undelete' second vertex from graph:
-    un_del_vert_list(neighbours)
+    un_del_vert(neighbours)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         for v in neighbours:
@@ -195,16 +179,15 @@ def vc():
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
-    # Set upper bound for k:
-    kmax = len(g) // 2 + 1
     vc_branch.counter = 0
     # Try the recursive function for every k until it gives a result or k>kmax
-    for k in range (kmax + 1):
+    for k in range(len(g)):
         S = vc_branch(k)
         if S is not None:
             print_result(S)
             print("#recursive steps: %s" % vc_branch.counter)
             return None
+
 
 g = get_data()
 vc()
