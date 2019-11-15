@@ -109,6 +109,9 @@ def get_edge():
 
 
 def get_neighbor(vertex):
+    """
+    
+    """
     for neighbor in g[vertex][2]:
         if not g[neighbor][0]:
             return neighbor
@@ -141,7 +144,7 @@ def vc_branch(k):
     # 'Delete' neighbors of degree one vertices:
     del_vert(degree_one_neighbors)
     # Reduce k according to new vertices:
-    k -= degree_one_neighbors.size
+    k -= len(degree_one_neighbors)
     # Return one degree neighbors list if no edges left:
     if is_edgeless():
         # 'Undelete' neighbors of degree one vertices:
