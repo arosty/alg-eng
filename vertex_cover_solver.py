@@ -110,7 +110,9 @@ def get_edge():
 
 def get_neighbor(vertex):
     """
-    
+    INPUT: vertex is str
+    get_neighbor returns the first neighbor
+    OUTPUT: str
     """
     for neighbor in g[vertex][2]:
         if not g[neighbor][0]:
@@ -118,6 +120,12 @@ def get_neighbor(vertex):
 
 
 def get_degree_one_neighbors():
+    """
+    INPUT: None
+    get_degree_one_neighbors return the neighbors of all vertices of degree one
+    (if two vertices of degree one are adjacent to each other, it choses one of them)
+    OUTPUT: list
+    """
     neighbors = []
     for vertex in g:
         if (not g[vertex][0]) and g[vertex][1] == 1 and (vertex not in neighbors):
