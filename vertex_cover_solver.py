@@ -108,6 +108,10 @@ def get_edge():
                     return [vertex, adj_vert]
 
 
+def get_degree_one_neighbors():
+    # TODO
+
+
 def vc_branch(k):
     """
     INPUT: k is int
@@ -120,6 +124,19 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless():
         return []
+    # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+    degree_one_neighbors = get_degree_one_neighbors()
+    # 'Delete' neighbors of degree one vertices:
+    del_vert(degree_one_neighbors)
+    # Reduce k according to new vertices:
+    k -= degree_one_neighbors.size
+    # Return one degree neighbors list if no edges left:
+    if is_edgeless():
+        # 'Undelete' neighbors of degree one vertices:
+        un_del_vert(degree_one_neighbors)
+        if k < 0:
+            return None
+        return degree_one_neighbors
     # Get vertices of first edge:
     [u,v] = get_edge()
     # 'Delete' first vertex from graph:
@@ -130,6 +147,7 @@ def vc_branch(k):
     un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
+        un_del_vert(degree_one_neighbors)
         Su.append(u)
         return Su
     # 'Delete' second vertex from graph:
@@ -140,6 +158,7 @@ def vc_branch(k):
     un_del_vert([v])
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
+        un_del_vert(degree_one_neighbors)
         Sv.append(v)
         return Sv
     return None
