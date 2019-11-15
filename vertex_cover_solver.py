@@ -162,4 +162,4 @@ def vc():
 
 
 g = get_data()
-vc()
+print('OVER AND OUT')
