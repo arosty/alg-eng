@@ -108,8 +108,20 @@ def get_edge():
                     return [vertex, adj_vert]
 
 
+def get_neighbor(vertex):
+    for neighbor in g[vertex][2]:
+        if not g[neighbor][0]:
+            return neighbor
+
+
 def get_degree_one_neighbors():
-    # TODO
+    neighbors = []
+    for vertex in g:
+        if (not g[vertex][0]) and g[vertex][1] == 1 and (vertex not in neighbors):
+            neighbor = get_neighbor(vertex)
+            if neighbor not in neighbors:
+                neighbors.append(neighbor)
+    return neighbors
 
 
 def vc_branch(k):
