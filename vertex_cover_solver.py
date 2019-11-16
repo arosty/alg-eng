@@ -55,6 +55,9 @@ def get_data():
     return g,degree_list,max_degree
 
 
+g,degree_list,max_degree = get_data()
+
+
 def print_result(vertices):
     """
     INPUT: vertices is np.array of shape (nb_vertices,)
@@ -193,5 +196,4 @@ def vc():
             return None
 
 
-g,degree_list,max_degree = get_data()
 vc()
