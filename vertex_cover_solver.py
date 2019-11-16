@@ -148,11 +148,9 @@ def vc():
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
-    # Set upper bound for k:
-    kmax = len(g) // 2 + 1
     vc_branch.counter = 0
     # Try the recursive function for every k until it gives a result or k>kmax
-    for k in range (kmax + 1):
+    for k in range(len(g)):
         S = vc_branch(k)
         if S is not None:
             print_result(S)
