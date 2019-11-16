@@ -58,7 +58,7 @@ def get_data():
     
     for vertex in g:
         degree = g[vertex][1]
-        print(vertex,'° vertex has degree: ',degree)
+        #print(vertex,'° vertex has degree: ',degree)
         #append vertex to the list located at its degree in degree_list
         (degree_list[degree]).append(vertex)
         #if maximal degree vertex for now remember that it's the biggest one
