@@ -101,6 +101,7 @@ def un_del_vert(vertices):
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
             g[adj_vert][1] += 1
+            degree_adj_vert = g[adj_vert][1]
             degree_list[degree_adj_vert].remove(adj_vert)
             degree_list[degree_adj_vert+1].append(adj_vert)
             #if the neighbour has after undeletion a higher degree than max degree we update it
@@ -123,10 +124,11 @@ def get_edge():
     get_edge returns the first edge
     OUTPUT: list of length 2
     """
-    # Iterate through graph:
-    for vertex in g:
-        # If vertex not deleted and has edges, then take first adjacent vertex and return it:
-        if (not g[vertex][0]) and g[vertex][1] > 0:
+    # get one of the highest degree vertices
+    if max_degree != 0:
+        vertex = degree_list[max_degree][0]
+        # If vertex not deleted then take first adjacent vertex and return it:
+        if (not g[vertex][0]):
             for adj_vert in g[vertex][2]:
                 if not g[adj_vert][0]:
                     return [vertex, adj_vert]
