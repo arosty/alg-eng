@@ -1,4 +1,3 @@
-import sys
 
 def add_vertex(g, vertex):
     """
@@ -70,6 +69,7 @@ def del_vert(vertices):
     INPUT: vertices is list : vertices to 'delete'
     del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global max_degree
     for vertex in vertices:
         # 'Delete' vertex:
         g[vertex][0] = True
@@ -77,11 +77,12 @@ def del_vert(vertices):
         degree_list[degree_vertex].remove(vertex)
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
-            degree_adj_vert = g[adj_vert][1]
-            degree_list[degree_adj_vert].remove(adj_vert)
-            degree_list[degree_adj_vert-1].append(adj_vert)
-            g[adj_vert][1] -= 1
-    while max_degree > 0 & degree_list[max_degree] == []:
+            if not g[adj_vert][0]:
+                degree_adj_vert = g[adj_vert][1]
+                degree_list[degree_adj_vert].remove(adj_vert)
+                degree_list[degree_adj_vert-1].append(adj_vert)
+                g[adj_vert][1] -= 1
+    while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
 
 
@@ -91,22 +92,26 @@ def un_del_vert(vertices):
     INPUT: vertices is list : vertices to 'undelete'
     un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global max_degree
     for vertex in vertices:
         # 'Undelete' vertex:
         g[vertex][0] = False
+        degree_vertex = g[vertex][1]
+        degree_list[degree_vertex].append(vertex)
         #If the vertex has a higher degree than max_degree, we update max_degree
         if g[vertex][1] > max_degree:
             max_degree = g[vertex][1]
 
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
-            g[adj_vert][1] += 1
-            degree_adj_vert = g[adj_vert][1]
-            degree_list[degree_adj_vert].remove(adj_vert)
-            degree_list[degree_adj_vert+1].append(adj_vert)
-            #if the neighbour has after undeletion a higher degree than max degree we update it
-            if g[adj_vert][1] > max_degree:
-                max_degree = g[adj_vert][1]
+            if not g[adj_vert][0]:
+                degree_adj_vert = g[adj_vert][1]
+                degree_list[degree_adj_vert].remove(adj_vert)
+                degree_list[degree_adj_vert+1].append(adj_vert)
+                g[adj_vert][1] += 1
+                #if the neighbour has after undeletion a higher degree than max degree we update it
+                if g[adj_vert][1] > max_degree:
+                    max_degree = g[adj_vert][1]
 
 
 def is_edgeless():
