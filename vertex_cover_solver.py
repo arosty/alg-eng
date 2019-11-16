@@ -1,5 +1,4 @@
 import sys
-import numpy as np
 
 def add_vertex(vertex):
     """
@@ -27,8 +26,8 @@ def add_edge(edge):
 def get_data():
     """
     INPUT: None
-    get_data reads standard input and returns the given graph
-    OUTPUT: np.array of shape (nb_edges,2)
+    get_data reads standard input and creates the given graph
+    OUTPUT: None
     """
     # Get standard input:
     input_data = sys.stdin
@@ -43,7 +42,7 @@ def get_data():
 
 def print_result(vertices):
     """
-    INPUT: vertices is np.array of shape (nb_vertices,)
+    INPUT: vertices is list : vertices
     print_result prints every given vertex in a new line
     OUTPUT: None
     """
