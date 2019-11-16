@@ -1,3 +1,4 @@
+
 import sys
 import numpy as np
 
@@ -34,21 +35,22 @@ def get_data():
     """
     # Get standard input:
     input_data = sys.stdin
+    print(input_data)
     g = {}
     max_degree = 0
     for counter, line in enumerate(input_data):
         if counter == 0:
             #get number of vertices in the graph
-            nb_vertices = np.uint32(line.split()[0])
+            nb_vertices = np.uint32(line.split()[0][1])
         if counter > 0:
             # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
-    degree_list = [[]]*nb_vertices
+    degree_list = [[] for i in range(nb_vertices)]
     for vertex in g:
         degree = g[vertex][1]
         #append vertex to the list located at its degree in degree_list
-        degree_list[degree].append(vertex)
+        (degree_list[degree]).append(vertex)
         #if maximal degree vertex for now remember that it's the biggest one
         if degree > max_degree:
             max_degree = degree
@@ -57,6 +59,7 @@ def get_data():
 
 
 g,degree_list,max_degree = get_data()
+print(degree_list)
 
 
 def print_result(vertices):
@@ -75,9 +78,13 @@ def del_vert(vertices):
     del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
     global max_degree
+    global degree_list
     for vertex in vertices:
         # 'Delete' vertex:
+        #print('--------- vertex n: ',vertex)
+        #print(g)
         g[vertex][0] = True
+        #print(g)
         degree_vertex = g[vertex][1]
         degree_list[degree_vertex].remove(vertex)
         # Update number of edges on adjacent vertices:
@@ -87,8 +94,10 @@ def del_vert(vertices):
                 degree_list[degree_adj_vert].remove(adj_vert)
                 degree_list[degree_adj_vert-1].append(adj_vert)
                 g[adj_vert][1] -= 1
+    #print(degree_list[max_degree])
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
+    return
 
 
 
@@ -117,6 +126,7 @@ def un_del_vert(vertices):
                 #if the neighbour has after undeletion a higher degree than max degree we update it
                 if g[adj_vert][1] > max_degree:
                     max_degree = g[adj_vert][1]
+    return
 
 
 def is_edgeless():
@@ -142,6 +152,7 @@ def get_edge():
             for adj_vert in g[vertex][2]:
                 if not g[adj_vert][0]:
                     return [vertex, adj_vert]
+    return('max_degree = %s' % max_degree)
 
 
 def vc_branch(k):
@@ -151,6 +162,7 @@ def vc_branch(k):
     OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
+    #print('!!!!!!!!!!!!!rec call n: ',vc_branch.counter, ' max_degree: ', max_degree)
     if k < 0:
         return None
     # Return empty list if no edges are given:
