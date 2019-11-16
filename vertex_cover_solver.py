@@ -2,6 +2,9 @@
 import sys
 import numpy as np
 
+import sys
+import numpy as np
+
 def add_vertex(g, vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -26,6 +29,9 @@ def add_edge(g, edge):
     g[edge[1]][2].append(edge[0])
     return g
 
+g = {}
+max_degree = 0
+degree_list = []
 
 def get_data():
     """
@@ -33,34 +39,35 @@ def get_data():
     get_data reads standard input and returns the given graph
     OUTPUT: np.array of shape (nb_edges,2)
     """
+    global g
+    global max_degree
     # Get standard input:
     input_data = sys.stdin
-    print(input_data)
-    g = {}
-    max_degree = 0
+    #nb_vertices = 1
     for counter, line in enumerate(input_data):
         if counter == 0:
             #get number of vertices in the graph
-            nb_vertices = np.uint32(line.split()[0][1])
+            nb_vertices = np.uint32(line.split()[0][1:])
         if counter > 0:
             # Get current edge and add it to the graph:
             current_edge = line.split()
             g = add_edge(g, current_edge)
-    degree_list = [[] for i in range(nb_vertices)]
+            
+    for i in range (nb_vertices):
+        degree_list.append([])
+    
     for vertex in g:
         degree = g[vertex][1]
+        print(vertex,'° vertex has degree: ',degree)
         #append vertex to the list located at its degree in degree_list
         (degree_list[degree]).append(vertex)
         #if maximal degree vertex for now remember that it's the biggest one
         if degree > max_degree:
             max_degree = degree
     # Return graph:
-    return g,degree_list,max_degree
+    return 
 
-
-g,degree_list,max_degree = get_data()
-print(degree_list)
-
+get_data()
 
 def print_result(vertices):
     """
