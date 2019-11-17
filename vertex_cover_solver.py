@@ -229,11 +229,10 @@ def inspect_vertex(vertex):
 def bound():
     """
     INPUT: None
-    bound() returns a lower bound using clique cover, starting by highest degree
+    bound() returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
-    for list_degree_i in reversed(degree_list):
-        
+    for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
             print(clique_list)
