@@ -203,7 +203,6 @@ def inspect_vertex(vertex):
     OUTPUT: None
     """
     global clique_list
-    clique_list = []
     nb_cliques = len(clique_list)
     best_clique_index = -1
     best_clique_size = 0
@@ -230,6 +229,8 @@ def bound():
     bound() returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
+    global clique_list
+    clique_list = []
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
