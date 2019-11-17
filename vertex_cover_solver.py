@@ -232,7 +232,6 @@ def vc_branch(k):
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         Sv += neighbors + degree_one_neighbors
-        Sv.append(v)
         return Sv
     return None
 
