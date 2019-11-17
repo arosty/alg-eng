@@ -247,8 +247,7 @@ def vc_branch(k):
     OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
-    #if k is smaller than lower bound, no need to branch
-    if (k < 0) or (k < bound()) :
+    if k < 0:
         return None
     # Return empty list if no edges are given:
     if is_edgeless():
@@ -268,6 +267,9 @@ def vc_branch(k):
         return degree_one_neighbors
     elif k == 0:
         un_del_vert(degree_one_neighbors)
+        return None
+    #if k is smaller than lower bound, no need to branch
+    if (k < 0) or (k < bound()) :
         return None
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
