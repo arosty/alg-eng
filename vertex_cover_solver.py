@@ -1,4 +1,3 @@
-
 import sys
 import numpy as np
 
@@ -145,14 +144,12 @@ def get_edge():
     get_edge returns the first edge
     OUTPUT: list of length 2
     """
-    get_edge.counter += 1
     # Get one of the highest degree vertices:
     vertex = degree_list[max_degree][0]
     # If vertex not deleted then take first adjacent vertex and return it:
     for adj_vert in g[vertex][2]:
         if not g[adj_vert][0]:
             return [vertex, adj_vert]
-get_edge.counter = 0
 
 def vc_branch(k):
     """
