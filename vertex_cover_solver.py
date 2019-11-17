@@ -235,7 +235,6 @@ def bound():
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
-            print(clique_list)
     return(len(g)-len(clique_list))
 
 
