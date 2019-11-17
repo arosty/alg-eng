@@ -26,6 +26,7 @@ def add_edge(edge):
 g = {}
 max_degree = 0
 degree_list = []
+nb_deleted = 0
 
 def get_data():
     """
@@ -74,10 +75,12 @@ def del_vert(vertices):
     """
     global max_degree
     global degree_list
+    global nb_deleted
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
         g[vertex][0] = True
+        nb_deleted += 1
         ###Deleting in degree_list
         degree_vertex = g[vertex][1]
         degree_list[degree_vertex].remove(vertex)
@@ -102,10 +105,12 @@ def un_del_vert(vertices):
     """
     global max_degree
     global degree_list
+    global nb_deleted
     for vertex in vertices:
         # 'Undelete' vertex:
         ###Undeleting in g
         g[vertex][0] = False
+        nb_deleted -= 1
         ###Undeleting in degree_list
         degree_vertex = g[vertex][1]
         degree_list[degree_vertex].append(vertex)
@@ -234,7 +239,7 @@ def bound():
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
-    return(len(g)-len(clique_list))
+    return(len(g)-nb_vertices-len(clique_list))
 
 
 def vc_branch(k):
