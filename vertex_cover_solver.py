@@ -1,8 +1,5 @@
-
 import sys
 import numpy as np
-
-import sys
 
 def add_vertex(vertex):
     """
@@ -51,7 +48,6 @@ def get_data():
     # Initializing degree_list:
     for i in range(nb_vertices):
         degree_list.append([])
-
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
@@ -145,14 +141,40 @@ def get_edge():
     get_edge returns the first edge
     OUTPUT: list of length 2
     """
-    get_edge.counter += 1
     # Get one of the highest degree vertices:
     vertex = degree_list[max_degree][0]
     # If vertex not deleted then take first adjacent vertex and return it:
     for adj_vert in g[vertex][2]:
         if not g[adj_vert][0]:
             return [vertex, adj_vert]
-get_edge.counter = 0
+
+
+def  highest_degree_vertex():
+    """
+    INPUT: None
+    highest_degree_vertex returns the key to the highest degree vertex, and the list of all it's neigbours which aren't deleted
+    OUTPUT: highest degree vertex as index of the dictionary, list of neighbours' key 
+    """
+    best_vertex = None
+    neighbours = []
+    degree_max = -1
+    #For every vertex in the dic, we remember its key and neighbours if it has the best degree yet
+    for k in g:
+        if not g[k][0]:
+            if g[k][1]>degree_max:
+                degree_max = g[k][1]
+                best_vertex = k
+    #We have to get rid of the neighbours who have been deleted
+    neigh_vert = None
+    neighbours = g[best_vertex][2]
+    for i in range (len(neighbours)):
+        #pop the first neigbour vertex in the list
+        neigh_vert = neighbours.pop(0)
+        #if it hasn't been deleted we reinsert it at the end
+        if not g[neigh_vert][0]:
+            neighbours.append(neigh_vert)
+    return best_vertex,neighbours
+
 
 def vc_branch(k):
     """
@@ -167,7 +189,7 @@ def vc_branch(k):
     if is_edgeless():
         return []
     # Get vertices of first edge:
-    [u,v] = get_edge()
+    u,neighbours = highest_degree_vertex()
     # 'Delete' first vertex from graph:
     del_vert([u])
     # Call function recursively:
@@ -179,14 +201,15 @@ def vc_branch(k):
         Su.append(u)
         return Su
     # 'Delete' second vertex from graph:
-    del_vert([v])
+    del_vert(neighbours)
     # Call function recursively:
-    Sv = vc_branch(k-1)
+    Sv = vc_branch(k-len(neighbours))
     # 'Undelete' second vertex from graph:
-    un_del_vert([v])
+    un_del_vert(neighbours)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        Sv.append(v)
+        for v in neighbours:
+            Sv.append(v)
         return Sv
     return None
 
