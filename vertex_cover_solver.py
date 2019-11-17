@@ -184,8 +184,7 @@ def vc_branch(k):
     un_del_vert(neighbours)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        for v in neighbours:
-            Sv.append(v)
+        Sv += neighbours
         return Sv
     return None
 
