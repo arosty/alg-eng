@@ -250,22 +250,21 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless():
         return []
+    ##### Preprocessing with degree one vertices 
     # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
     degree_one_neighbors = get_degree_one_neighbors()
-    # Reduce k according to new vertices:
-    k -= len(degree_one_neighbors)
-    if k < 0:
-        return None
-    # 'Delete' neighbors of degree one vertices:
-    del_vert(degree_one_neighbors)
-    # Return one degree neighbors list if no edges left:
-    if is_edgeless():
+    nb_degree_one_neighbors = len(degree_one_neighbors)
+    if nb_degree_one_neighbors > 0:
+        # 'Delete' neighbors of degree one vertices:
+        del_vert(degree_one_neighbors)
+        # 
+        S1 = vc_branch(k - nb_degree_one_neighbors)
         # 'Undelete' neighbors of degree one vertices:
         un_del_vert(degree_one_neighbors)
-        return degree_one_neighbors
-    elif k == 0:
-        un_del_vert(degree_one_neighbors)
-        return None
+        # If vertex cover found return it plus the deleted vertex:
+        if S1 is not None:
+            S1 += degree_one_neighbors
+            return S1
     #if k is smaller than lower bound, no need to branch
     if (k < 0) or (k < bound()) :
         return None
@@ -279,8 +278,6 @@ def vc_branch(k):
     un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
-        un_del_vert(degree_one_neighbors)
-        Su += degree_one_neighbors
         Su.append(u)
         return Su
     # 'Delete' second vertex from graph:
@@ -288,11 +285,10 @@ def vc_branch(k):
     # Call function recursively:
     Sv = vc_branch(k-len(neighbors))
     # 'Undelete' second vertex from graph:
-    un_del_vert(neighbors + degree_one_neighbors)
+    un_del_vert(neighbors)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-        Sv += neighbors + degree_one_neighbors
-        Sv.append(v)
+        Sv += neighbors
         return Sv
     return None
 
