@@ -267,7 +267,7 @@ def vc_branch(k):
         un_del_vert(degree_one_neighbors)
         return None
     #if k is smaller than lower bound, no need to branch
-    if (k < 0) or (k < bound()) :
+    if k < bound():
         return None
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
