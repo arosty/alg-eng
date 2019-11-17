@@ -90,10 +90,6 @@ def del_vert(vertices):
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
-<<<<<<< HEAD
-=======
-                
->>>>>>> 0506bcaa23fad9e185669ac646c08640861ed507
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -142,7 +138,6 @@ def is_edgeless():
 def get_highest_degree_vertex():
     """
     INPUT: None
-<<<<<<< HEAD
     highest_degree_vertex returns the the highest degree vertex, and the list of all it's neigbors which aren't deleted
     OUTPUT: index of the dictionary : highest degree vertex, list : neighbors of highest degree vertex
     """
@@ -156,17 +151,6 @@ def get_highest_degree_vertex():
             neighbors.append(neighbor)
     return high_deg_vertex, neighbors
 
-=======
-    get_edge returns the first edge
-    OUTPUT: list of length 2
-    """
-    # Get one of the highest degree vertices:
-    vertex = degree_list[max_degree][0]
-    # If vertex not deleted then take first adjacent vertex and return it:
-    for adj_vert in g[vertex][2]:
-        if not g[adj_vert][0]:
-            return [vertex, adj_vert]
->>>>>>> 0506bcaa23fad9e185669ac646c08640861ed507
 
 def vc_branch(k):
     """
