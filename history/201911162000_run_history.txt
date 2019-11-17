@@ -1,0 +1,97 @@
+201911162000_run_history
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+random/000002_000000000002.input	0.12s	0		1	correct
+random/000002_000000000006.input	0.12s	1	5	1	correct
+random/000002_000000000012.input	0.12s	2	13	1	correct
+random/000002_000000000020.input	0.13s	2	13	1	correct
+random/000004_000000000004.input	0.13s	0		1	correct
+random/000004_000000000012.input	0.12s	4	61	1	correct
+random/000004_000000000024.input	0.13s	4	61	1	correct
+random/000004_000000000040.input	0.12s	4	61	1	correct
+random/000006_000000000007.input	0.13s	1	5	1	correct
+random/000006_000000000018.input	0.12s	4	61	1	correct
+random/000006_000000000036.input	0.12s	4	61	1	correct
+random/000006_000000000060.input	0.12s	5	125	1	correct
+random/000008_000000000009.input	0.12s	1	5	1	correct
+random/000008_000000000024.input	0.12s	5	125	1	correct
+random/000008_000000000048.input	0.13s	7	509	1	correct
+random/000008_000000000080.input	0.13s	7	509	1	correct
+random/000010_000000000012.input	0.12s	2	13	1	correct
+random/000010_000000000030.input	0.13s	8	1021	1	correct
+random/000010_000000000060.input	0.15s	10	4093	1	correct
+random/000010_000000000100.input	0.18s	10	4093	1	correct
+random/000012_000000000014.input	0.12s	1	5	1	correct
+random/000012_000000000036.input	0.14s	10	4093	1	correct
+random/000012_000000000072.input	0.19s	11	8189	1	correct
+random/000012_000000000120.input	0.23s	11	8189	1	correct
+random/000014_000000000016.input	0.12s	2	13	1	correct
+random/000014_000000000042.input	0.13s	8	1021	1	correct
+random/000014_000000000084.input	0.40s	13	32765	1	correct
+random/000014_000000000140.input	0.71s	13	32765	1	correct
+random/000016_000000000019.input	0.12s	1	5	1	correct
+random/000016_000000000048.input	0.16s	11	8189	1	correct
+random/000016_000000000096.input	1.13s	15	131069	1	correct
+random/000016_000000000160.input	2.65s	15	131069	1	correct
+random/000018_000000000021.input	0.12s	2	13	1	correct
+random/000018_000000000054.input	0.21s	11	8189	1	correct
+random/000018_000000000108.input	1.42s	15	131069	1	correct
+random/000018_000000000180.input	7.12s	17	524285	1	correct
+random/000020_000000000024.input	0.12s	2	13	1	correct
+random/000020_000000000060.input	0.77s	15	131069	1	correct
+random/000020_000000000120.input	8.72s	18	1048573	1	correct
+random/000020_000000000200.input	25.20s	18	1048573	1	correct
+random/000022_000000000026.input	0.12s	3	29	1	correct
+random/000022_000000000066.input	0.76s	15	131069	1	correct
+random/000022_000000000132.input	19.78s	19	2097149	1	correct
+random/000022_000000000220.input	75.17s	20	4194301	1	correct
+random/000024_000000000028.input	0.12s	4	61	1	correct
+random/000024_000000000072.input	0.23s	12	16381	1	correct
+random/000024_000000000144.input	175.97s	22	16777213	1	correct
+random/000024_000000000240.input	s	0		0	
+random/000026_000000000031.input	0.12s	5	125	1	correct
+random/000026_000000000078.input	21.88s	20	4194301	1	correct
+random/000026_000000000156.input	s	0		0	
+random/000026_000000000260.input	s	0		0	
+random/000028_000000000033.input	0.14s	4	61	1	correct
+random/000028_000000000084.input	24.25s	20	4194301	1	correct
+random/000028_000000000168.input	s	0		0	
+random/000028_000000000280.input	s	0		0	
+random/000030_000000000036.input	0.13s	5	125	1	correct
+random/000030_000000000090.input	45.71s	21	8388605	1	correct
+random/000030_000000000180.input	s	0		0	
+random/000030_000000000300.input	s	0		0	
+random/000035_000000000042.input	0.12s	6	253	1	correct
+random/000035_000000000105.input	s	0		0	
+random/000035_000000000210.input	s	0		0	
+random/000035_000000000350.input	s	0		0	
+random/000040_000000000048.input	0.13s	7	509	1	correct
+random/000040_000000000120.input	s	0		0	
+11 instances not solved. Script aborted.
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+dimacs/karate.graph.dimacs	0.50s	14	65533	1	correct
+dimacs/dolphins.graph.dimacs	s	0		0	
+dimacs/chesapeake.graph.dimacs	104.15s	22	16779129	1	correct
+dimacs/adjnoun.graph.dimacs	s	0		0	
+dimacs/polbooks.graph.dimacs	s	0		0	
+dimacs/football.graph.dimacs	s	0		0	
+dimacs/celegans_metabolic.graph.dimacs	s	0		0	
+dimacs/jazz.graph.dimacs	s	0		0	
+dimacs/netscience.graph.dimacs	s	0		0	
+dimacs/email.graph.dimacs	s	0		0	
+dimacs/add20.graph.dimacs	s	0		0	
+dimacs/power.graph.dimacs	s	0		0	
+dimacs/uk.graph.dimacs	s	0		0	
+11 instances not solved. Script aborted.
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+snap/as20000102.txt.dimacs	s	0		0	
+snap/email-Eu-core.txt.dimacs	s	0		0	
+snap/ca-GrQc.txt.dimacs	s	0		0	
+snap/p2p-Gnutella08.txt.dimacs	s	0		0	
+snap/ca-HepTh.txt.dimacs	s	0		0	
+snap/p2p-Gnutella09.txt.dimacs	s	0		0	
+snap/p2p-Gnutella06.txt.dimacs	s	0		0	
+snap/p2p-Gnutella05.txt.dimacs	s	0		0	
+snap/p2p-Gnutella04.txt.dimacs	s	0		0	
+snap/p2p-Gnutella25.txt.dimacs	s	0		0	
+snap/facebook_combined.txt.dimacs	s	0		0	
+11 instances not solved. Script aborted.
