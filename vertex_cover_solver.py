@@ -135,45 +135,18 @@ def is_edgeless():
     return max_degree == 0
 
 
-def get_edge():
-    """
-    INPUT: None
-    get_edge returns the first edge
-    OUTPUT: list of length 2
-    """
-    # Get one of the highest degree vertices:
-    vertex = degree_list[max_degree][0]
-    # If vertex not deleted then take first adjacent vertex and return it:
-    for adj_vert in g[vertex][2]:
-        if not g[adj_vert][0]:
-            return [vertex, adj_vert]
-
-
-def  highest_degree_vertex():
+def get_highest_degree_vertex():
     """
     INPUT: None
     highest_degree_vertex returns the key to the highest degree vertex, and the list of all it's neigbours which aren't deleted
     OUTPUT: highest degree vertex as index of the dictionary, list of neighbours' key 
     """
-    best_vertex = None
-    neighbours = []
-    degree_max = -1
-    #For every vertex in the dic, we remember its key and neighbours if it has the best degree yet
-    for k in g:
-        if not g[k][0]:
-            if g[k][1]>degree_max:
-                degree_max = g[k][1]
-                best_vertex = k
-    #We have to get rid of the neighbours who have been deleted
-    neigh_vert = None
-    neighbours = g[best_vertex][2]
-    for i in range (len(neighbours)):
-        #pop the first neigbour vertex in the list
-        neigh_vert = neighbours.pop(0)
-        #if it hasn't been deleted we reinsert it at the end
-        if not g[neigh_vert][0]:
-            neighbours.append(neigh_vert)
-    return best_vertex,neighbours
+    high_deg_vertex = degree_list[max_degree][0]
+    neighbors = []
+    for neighbor in g[high_deg_vertex][2]:
+        if not g[neighbor][0]:
+            neighbors.append(neighbor)
+    return high_deg_vertex, neighbors
 
 
 def vc_branch(k):
@@ -189,7 +162,7 @@ def vc_branch(k):
     if is_edgeless():
         return []
     # Get vertices of first edge:
-    u,neighbours = highest_degree_vertex()
+    u,neighbours = get_highest_degree_vertex()
     # 'Delete' first vertex from graph:
     del_vert([u])
     # Call function recursively:
