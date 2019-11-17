@@ -167,7 +167,9 @@ def get_degree_one_neighbors():
     (if two vertices of degree one are adjacent to each other, it choses one of them)
     OUTPUT: list
     """
+    # Initialize list of neighbors of vertices with one degree:
     neighbors = []
+    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
     for vertex in degree_list[1]:
         if vertex not in neighbors:
             neighbor = get_neighbor(vertex)
