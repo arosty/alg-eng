@@ -239,7 +239,7 @@ def bound():
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
-    return(len(g)-nb_vertices-len(clique_list))
+    return(len(g)-nb_deleted-len(clique_list))
 
 
 def vc_branch(k):
