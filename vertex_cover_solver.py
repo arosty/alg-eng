@@ -265,9 +265,13 @@ def vc_branch(k):
         if S1 is not None:
             S1 += degree_one_neighbors
             return S1
+
+    ##### Lower bound test
     #if k is smaller than lower bound, no need to branch
     if (k < 0) or (k < bound()) :
         return None
+
+    ##### Refined search
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
     # 'Delete' first vertex from graph:
