@@ -87,13 +87,14 @@ def del_vert(vertices):
         degree_list[degree_vertex].remove(vertex)
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
+            ###Updating g
+            g[adj_vert][1] -= 1
             if not g[adj_vert][0]:
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert].remove(adj_vert)
-                degree_list[degree_adj_vert-1].append(adj_vert)
-                ###Updating g
-                g[adj_vert][1] -= 1
+                degree_list[degree_adj_vert+1].remove(adj_vert)
+                degree_list[degree_adj_vert].append(adj_vert)
+                
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -118,13 +119,13 @@ def un_del_vert(vertices):
             max_degree = g[vertex][1]
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
+            ###Updating g
+            g[adj_vert][1] += 1
             if not g[adj_vert][0]:
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert].remove(adj_vert)
-                degree_list[degree_adj_vert+1].append(adj_vert)
-                ###Updating g
-                g[adj_vert][1] += 1
+                degree_list[degree_adj_vert-1].remove(adj_vert)
+                degree_list[degree_adj_vert].append(adj_vert)
                 #If the neighbour has after undeletion a higher degree than max degree we update it
                 if g[adj_vert][1] > max_degree:
                     max_degree = g[adj_vert][1]
