@@ -181,6 +181,51 @@ def get_degree_one_neighbors():
     return neighbors
 
 
+clique_list = []
+
+
+def test_clique(vertex,clique):
+    """
+    INPUT: vertex, clique: list[vertices]
+    For a vertex and a clique, returns True if the vertex and the existing clique form a clique
+    OUTPUT, Bool
+    """
+    #for every vertices v in the clique 
+    for v in clique:
+        #if vertex is not a neighbour of v, vertex is not in the vertex cover
+        if vertex not in g[v][2]:
+            return(False)
+    #If vertex is a neighbour of all the vertices in the clique, return True
+    return(True)
+
+
+def inspect_vertex(vertex):
+    """
+    INPUT: vertex to assign to a clique
+    Appends vertex to the best existing clique possible in clique_list
+    OUTPUT: None
+    """
+    global clique_list
+    nb_cliques = len(clique_list)
+    best_clique_index = -1
+    best_clique_size = 0
+    #For every clique already created in clique_list
+    for i in range (nb_cliques):
+        clique_size = len(clique_list[i])
+        #If vertex can be added to this clique and this clique is bigger than the best one we found yet
+        if (test_clique(vertex, clique_list[i])) & (clique_size > best_clique_size):
+            #Remember this clique's index and size
+            best_clique_index = i
+            best_clique_size = clique_size
+    #If we didn't find any clique to add vertex in, we create one containing vertex
+    if best_clique_index == -1:
+        clique_list.append([vertex])
+    #Else we add vertex to the best clique possible
+    else: 
+        clique_list[best_clique_index].append(vertex)
+    return
+
+
 def vc_branch(k):
     """
     INPUT: k is int
