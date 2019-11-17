@@ -226,6 +226,20 @@ def inspect_vertex(vertex):
     return
 
 
+def bound():
+    """
+    INPUT: None
+    bound() returns a lower bound using clique cover, starting by highest degree
+    OUTPUT: int
+    """
+    for list_degree_i in reversed(degree_list):
+        
+        for vertex in list_degree_i:
+            inspect_vertex(vertex)
+            print(clique_list)
+    return(len(g)-len(clique_list))
+
+
 def vc_branch(k):
     """
     INPUT: k is int
@@ -233,7 +247,8 @@ def vc_branch(k):
     OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
-    if k < 0:
+    #if k is smaller than lower bound, no need to branch
+    if (k < 0) or (k < bound()) :
         return None
     # Return empty list if no edges are given:
     if is_edgeless():
