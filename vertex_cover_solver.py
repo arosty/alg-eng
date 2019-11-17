@@ -128,7 +128,7 @@ def un_del_vert(vertices):
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert-1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
-                #If the neighbour has after undeletion a higher degree than max degree we update it
+                #If the neighbor has after undeletion a higher degree than max degree we update it
                 if g[adj_vert][1] > max_degree:
                     max_degree = g[adj_vert][1]
 
@@ -196,11 +196,11 @@ def test_clique(vertex,clique):
     """
     # For every vertex v in the clique:
     for v in clique:
-        # If vertex is not a neighbour of v, vertex is not in the vertex cover:
+        # If vertex is not a neighbor of v, vertex is not in the vertex cover:
         if vertex not in g[v][2]:
-            return(False)
-    # If vertex is a neighbour of all the vertices in the clique, return True:
-    return(True)
+            return False
+    # If vertex is a neighbor of all the vertices in the clique, return True:
+    return True
 
 
 def inspect_vertex(vertex):
@@ -227,7 +227,6 @@ def inspect_vertex(vertex):
     # Else we add vertex to the best clique possible:
     else: 
         clique_list[best_clique_index].append(vertex)
-    return
 
 
 def bound():
@@ -241,7 +240,7 @@ def bound():
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
-    return(nb_vertices-len(clique_list))
+    return nb_vertices - len(clique_list)
 
 
 def vc_branch(k):
