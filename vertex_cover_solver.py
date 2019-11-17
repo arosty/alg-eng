@@ -1,8 +1,6 @@
 import sys
 import numpy as np
 
-import sys
-
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -50,7 +48,6 @@ def get_data():
     # Initializing degree_list:
     for i in range(nb_vertices):
         degree_list.append([])
-
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
@@ -93,7 +90,6 @@ def del_vert(vertices):
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
-                
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -139,18 +135,51 @@ def is_edgeless():
     return max_degree == 0
 
 
-def get_edge():
+def get_highest_degree_vertex():
     """
     INPUT: None
-    get_edge returns the first edge
-    OUTPUT: list of length 2
+    highest_degree_vertex returns the the highest degree vertex, and the list of all it's neigbors which aren't deleted
+    OUTPUT: index of the dictionary : highest degree vertex, list : neighbors of highest degree vertex
     """
-    # Get one of the highest degree vertices:
-    vertex = degree_list[max_degree][0]
-    # If vertex not deleted then take first adjacent vertex and return it:
-    for adj_vert in g[vertex][2]:
-        if not g[adj_vert][0]:
-            return [vertex, adj_vert]
+    # Get highest degree vertex:
+    high_deg_vertex = degree_list[max_degree][0]
+    # Initialize list of its neighbors:
+    neighbors = []
+    # Iterate through potential neighbors and add each on that is not deleted to the neighbor list:
+    for neighbor in g[high_deg_vertex][2]:
+        if not g[neighbor][0]:
+            neighbors.append(neighbor)
+    return high_deg_vertex, neighbors
+
+
+def get_neighbor(vertex):
+    """
+    INPUT: vertex is str
+    get_neighbor returns the first neighbor
+    OUTPUT: str
+    """
+    for neighbor in g[vertex][2]:
+        if not g[neighbor][0]:
+            return neighbor
+
+
+def get_degree_one_neighbors():
+    """
+    INPUT: None
+    get_degree_one_neighbors return the neighbors of all vertices of degree one
+    (if two vertices of degree one are adjacent to each other, it choses one of them)
+    OUTPUT: list
+    """
+    # Initialize list of neighbors of vertices with one degree:
+    neighbors = []
+    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
+    for vertex in degree_list[1]:
+        if vertex not in neighbors:
+            neighbor = get_neighbor(vertex)
+            if neighbor not in neighbors:
+                neighbors.append(neighbor)
+    return neighbors
+
 
 def vc_branch(k):
     """
@@ -164,8 +193,24 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless():
         return []
+    # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+    degree_one_neighbors = get_degree_one_neighbors()
+    # Reduce k according to new vertices:
+    k -= len(degree_one_neighbors)
+    if k < 0:
+        return None
+    # 'Delete' neighbors of degree one vertices:
+    del_vert(degree_one_neighbors)
+    # Return one degree neighbors list if no edges left:
+    if is_edgeless():
+        # 'Undelete' neighbors of degree one vertices:
+        un_del_vert(degree_one_neighbors)
+        return degree_one_neighbors
+    elif k == 0:
+        un_del_vert(degree_one_neighbors)
+        return None
     # Get vertices of first edge:
-    [u,v] = get_edge()
+    u, neighbors = get_highest_degree_vertex()
     # 'Delete' first vertex from graph:
     del_vert([u])
     # Call function recursively:
@@ -174,16 +219,19 @@ def vc_branch(k):
     un_del_vert([u])
     # If vertex cover found return it plus the first vertex:
     if Su is not None:
+        un_del_vert(degree_one_neighbors)
+        Su += degree_one_neighbors
         Su.append(u)
         return Su
     # 'Delete' second vertex from graph:
-    del_vert([v])
+    del_vert(neighbors)
     # Call function recursively:
-    Sv = vc_branch(k-1)
+    Sv = vc_branch(k-len(neighbors))
     # 'Undelete' second vertex from graph:
-    un_del_vert([v])
+    un_del_vert(neighbors + degree_one_neighbors)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
+        Sv += neighbors + degree_one_neighbors
         Sv.append(v)
         return Sv
     return None
@@ -196,8 +244,12 @@ def vc():
     OUTPUT:None, prints directly in the console
     """
     vc_branch.counter = 0
-    # Try the recursive function for every k until it gives a result or k>kmax
-    for k in range(len(g)):
+    # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+    degree_one_neighbors = get_degree_one_neighbors()
+    # Asign kmin to the number of neighbors of vertices with degree one:
+    kmin = len(degree_one_neighbors)
+    # Try the recursive function for every k until it gives a result:
+    for k in range(kmin,len(g)):
         S = vc_branch(k)
         if S is not None:
             print_result(S)
