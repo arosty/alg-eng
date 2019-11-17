@@ -317,8 +317,4 @@ def vc():
 
 
 get_data()
-# vc()
-
-print(g)
-print(max_degree)
-print(degree_list)
+vc()
