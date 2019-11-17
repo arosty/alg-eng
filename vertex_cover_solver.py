@@ -151,8 +151,6 @@ def get_highest_degree_vertex():
             neighbors.append(neighbor)
     return high_deg_vertex, neighbors
 
-<<<<<<< HEAD
-=======
 
 def get_neighbor(vertex):
     """
@@ -182,7 +180,6 @@ def get_degree_one_neighbors():
                 neighbors.append(neighbor)
     return neighbors
 
->>>>>>> 7908cee313385a705b0ce9b7b2b450be80f75733
 
 def vc_branch(k):
     """
@@ -234,12 +231,8 @@ def vc_branch(k):
     un_del_vert(neighbors + degree_one_neighbors)
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
-<<<<<<< HEAD
-        Sv += neighbours
-=======
         Sv += neighbors + degree_one_neighbors
         Sv.append(v)
->>>>>>> 7908cee313385a705b0ce9b7b2b450be80f75733
         return Sv
     return None
 
