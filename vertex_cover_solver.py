@@ -233,12 +233,12 @@ def inspect_vertex(vertex):
 def bound():
     """
     INPUT: None
-    bound() returns a lower bound using clique cover, starting by smallest degree
+    bound() returns a lower bound using clique cover, starting by highest degree
     OUTPUT: int
     """
     global clique_list
     clique_list = []
-    for list_degree_i in degree_list:
+    for list_degree_i in reversed(degree_list):
         for vertex in list_degree_i:
             inspect_vertex(vertex)
     return(nb_vertices-len(clique_list))
