@@ -181,6 +181,11 @@ def get_degree_one_neighbors():
     return neighbors
 
 
+def bound(k):
+    # TODO: REMOVE k IN INPUT AND INSERT FUNCTIONALITY
+    return k
+
+
 def vc_branch(k):
     """
     INPUT: k is int
@@ -208,6 +213,9 @@ def vc_branch(k):
         return degree_one_neighbors
     elif k == 0:
         un_del_vert(degree_one_neighbors)
+        return None
+    # Check if lower bound is bigger than k:
+    if bound(k) > k:   # TODO: Remove input 'k'
         return None
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
