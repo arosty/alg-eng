@@ -1,8 +1,6 @@
 import sys
 import numpy as np
 
-import sys
-
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -170,8 +168,8 @@ def get_degree_one_neighbors():
     OUTPUT: list
     """
     neighbors = []
-    for vertex in g:
-        if (not g[vertex][0]) and g[vertex][1] == 1 and (vertex not in neighbors):
+    for vertex in degree_list[1]:
+        if vertex not in neighbors:
             neighbor = get_neighbor(vertex)
             if neighbor not in neighbors:
                 neighbors.append(neighbor)
