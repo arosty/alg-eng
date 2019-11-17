@@ -311,7 +311,11 @@ def vc():
     # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
     degree_one_neighbors = get_degree_one_neighbors()
     # Asign kmin to the number of neighbors of vertices with degree one:
-    kmin = min(len(degree_one_neighbors), bound())
+    kmin = len(degree_one_neighbors)
+    del_vert(degree_one_neighbors)
+    if not is_edgeless():
+        kmin += bound()
+    un_del_vert(degree_one_neighbors)
     # Try the recursive function for every k until it gives a result:
     for k in range(kmin,len(g)):
         S = vc_branch(k)
