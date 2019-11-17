@@ -138,8 +138,8 @@ def is_edgeless():
 def get_highest_degree_vertex():
     """
     INPUT: None
-    highest_degree_vertex returns the key to the highest degree vertex, and the list of all it's neigbours which aren't deleted
-    OUTPUT: highest degree vertex as index of the dictionary, list of neighbours' key 
+    highest_degree_vertex returns the the highest degree vertex, and the list of all it's neigbors which aren't deleted
+    OUTPUT: index of the dictionary : highest degree vertex, list : neighbors of highest degree vertex
     """
     high_deg_vertex = degree_list[max_degree][0]
     neighbors = []
