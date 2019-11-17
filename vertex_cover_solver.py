@@ -181,9 +181,6 @@ def get_degree_one_neighbors():
     return neighbors
 
 
-clique_list = []
-
-
 def test_clique(vertex,clique):
     """
     INPUT: vertex, clique: list[vertices]
@@ -206,6 +203,7 @@ def inspect_vertex(vertex):
     OUTPUT: None
     """
     global clique_list
+    clique_list = []
     nb_cliques = len(clique_list)
     best_clique_index = -1
     best_clique_size = 0
