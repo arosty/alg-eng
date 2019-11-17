@@ -141,8 +141,11 @@ def get_highest_degree_vertex():
     highest_degree_vertex returns the the highest degree vertex, and the list of all it's neigbors which aren't deleted
     OUTPUT: index of the dictionary : highest degree vertex, list : neighbors of highest degree vertex
     """
+    # Get highest degree vertex:
     high_deg_vertex = degree_list[max_degree][0]
+    # Initialize list of its neighbors:
     neighbors = []
+    # Iterate through potential neighbors and add each on that is not deleted to the neighbor list:
     for neighbor in g[high_deg_vertex][2]:
         if not g[neighbor][0]:
             neighbors.append(neighbor)
