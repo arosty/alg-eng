@@ -1,0 +1,18 @@
+201911181849_run_history
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+random/000026_000000000260.input	0.12s	25	1	1	correct
+random/000070_000000000084.input	0.12s	12	1	1	correct
+random/000085_000000000850.input	0.36s	82	2	1	correct
+random/000100_000000001000.input	0.50s	96	2	1	correct
+random/000300_000000003000.input	7.39s	296	3	1	correct
+random/000400_000000004000.input	20.54s	396	3	1	correct
+random/000500_000000005000.input	47.03s	498	3	1	correct
+random/000800_000000008000.input	s	0		0	
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+dimacs/karate.graph.dimacs	0.12s	14	7	1	correct
+dimacs/dolphins.graph.dimacs	0.15s	34	76	1	correct
+dimacs/adjnoun.graph.dimacs	0.36s	59	240	1	correct
+dimacs/polbooks.graph.dimacs	0.31s	62	188	1	correct
+dimacs/football.graph.dimacs	s	0		0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)
+snap/as20000102.txt.dimacs	s	0		0	
