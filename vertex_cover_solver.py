@@ -187,6 +187,7 @@ def get_degree_one_neighbors():
                 neighbors.append(neighbor)
     return neighbors
 
+FILE = open("check.txt", "a")
 
 def test_clique(vertex,clique):
     """
@@ -194,6 +195,7 @@ def test_clique(vertex,clique):
     For a vertex and a clique, returns True if the vertex and the existing clique form a clique
     OUTPUT, Bool
     """
+    test_clique.counter += 1
     # For every vertex v in the clique:
     for v in clique:
         # If vertex is not a neighbor of v, vertex is not in the vertex cover:
@@ -209,6 +211,7 @@ def inspect_vertex(vertex):
     Appends vertex to the best existing clique possible in clique_list
     OUTPUT: None
     """
+    inspect_vertex.counter += 1
     global clique_list
     nb_cliques = len(clique_list)
     best_clique_index = -1
@@ -237,9 +240,12 @@ def bound():
     """
     global clique_list
     clique_list = []
+    inspect_vertex.counter = 0
+    test_clique.counter = 0
     for list_degree_i in degree_list:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
+    FILE.write(str(inspect_vertex.counter) + ',' + str(test_clique.counter) + '\n')
     return nb_vertices - len(clique_list)
 
 
@@ -328,3 +334,4 @@ def vc():
 
 get_data()
 vc()
+FILE.close()
