@@ -26,6 +26,7 @@ def add_edge(edge):
 g = {}
 max_degree = 0
 degree_list = []
+nb_vertices = 0
 
 def get_data():
     """
@@ -35,6 +36,7 @@ def get_data():
     """
     global max_degree
     global degree_list
+    global nb_vertices
     # Get standard input:
     input_data = sys.stdin
     for counter, line in enumerate(input_data):
@@ -55,6 +57,7 @@ def get_data():
         # If maximal degree vertex for now remember that it's the biggest one:
         if degree > max_degree:
             max_degree = degree
+    nb_vertices = len(g)
 
 
 def print_result(vertices):
@@ -74,10 +77,12 @@ def del_vert(vertices):
     """
     global max_degree
     global degree_list
+    global nb_vertices
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
         g[vertex][0] = True
+        nb_vertices -= 1
         ###Deleting in degree_list
         degree_vertex = g[vertex][1]
         degree_list[degree_vertex].remove(vertex)
@@ -102,10 +107,12 @@ def un_del_vert(vertices):
     """
     global max_degree
     global degree_list
+    global nb_vertices
     for vertex in vertices:
         # 'Undelete' vertex:
         ###Undeleting in g
         g[vertex][0] = False
+        nb_vertices += 1
         ###Undeleting in degree_list
         degree_vertex = g[vertex][1]
         degree_list[degree_vertex].append(vertex)
@@ -121,7 +128,7 @@ def un_del_vert(vertices):
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert-1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
-                #If the neighbour has after undeletion a higher degree than max degree we update it
+                #If the neighbor has after undeletion a higher degree than max degree we update it
                 if g[adj_vert][1] > max_degree:
                     max_degree = g[adj_vert][1]
 
@@ -181,6 +188,61 @@ def get_degree_one_neighbors():
     return neighbors
 
 
+def test_clique(vertex,clique):
+    """
+    INPUT: vertex, clique: list[vertices]
+    For a vertex and a clique, returns True if the vertex and the existing clique form a clique
+    OUTPUT, Bool
+    """
+    # For every vertex v in the clique:
+    for v in clique:
+        # If vertex is not a neighbor of v, vertex is not in the vertex cover:
+        if vertex not in g[v][2]:
+            return False
+    # If vertex is a neighbor of all the vertices in the clique, return True:
+    return True
+
+
+def inspect_vertex(vertex):
+    """
+    INPUT: vertex to assign to a clique
+    Appends vertex to the best existing clique possible in clique_list
+    OUTPUT: None
+    """
+    global clique_list
+    nb_cliques = len(clique_list)
+    best_clique_index = -1
+    best_clique_size = 0
+    # For every clique already created in clique_list:
+    for i in range (nb_cliques):
+        clique_size = len(clique_list[i])
+        # If vertex can be added to this clique and this clique is bigger than the best one we found yet:
+        if (test_clique(vertex, clique_list[i])) & (clique_size > best_clique_size):
+            # Remember this clique's index and size:
+            best_clique_index = i
+            best_clique_size = clique_size
+    # If we didn't find any clique to add vertex in, we create one containing vertex:
+    if best_clique_index == -1:
+        clique_list.append([vertex])
+    # Else we add vertex to the best clique possible:
+    else: 
+        clique_list[best_clique_index].append(vertex)
+
+
+def bound():
+    """
+    INPUT: None
+    bound() returns a lower bound using clique cover, starting by smallest degree
+    OUTPUT: int
+    """
+    global clique_list
+    clique_list = []
+    for list_degree_i in degree_list:
+        for vertex in list_degree_i:
+            inspect_vertex(vertex)
+    return nb_vertices - len(clique_list)
+
+
 def vc_branch(k):
     """
     INPUT: k is int
@@ -209,6 +271,10 @@ def vc_branch(k):
     elif k == 0:
         un_del_vert(degree_one_neighbors)
         return None
+    #if k is smaller than lower bound, no need to branch
+    if k < bound():
+        un_del_vert(degree_one_neighbors)
+        return None
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
     # 'Delete' first vertex from graph:
@@ -232,7 +298,6 @@ def vc_branch(k):
     # If vertex cover found return it plus the second vertex:
     if Sv is not None:
         Sv += neighbors + degree_one_neighbors
-        Sv.append(v)
         return Sv
     return None
 
@@ -248,6 +313,10 @@ def vc():
     degree_one_neighbors = get_degree_one_neighbors()
     # Asign kmin to the number of neighbors of vertices with degree one:
     kmin = len(degree_one_neighbors)
+    del_vert(degree_one_neighbors)
+    if not is_edgeless():
+        kmin += bound()
+    un_del_vert(degree_one_neighbors)
     # Try the recursive function for every k until it gives a result:
     for k in range(kmin,len(g)):
         S = vc_branch(k)
