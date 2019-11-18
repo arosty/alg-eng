@@ -1,3 +1,6 @@
+import sys
+import numpy as np
+
 def get_data():
     # Get standard input:
     input_data = sys.stdin
