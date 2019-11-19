@@ -195,9 +195,9 @@ def test_clique(vertex,clique):
     For a vertex and a clique, returns True if the vertex and the existing clique form a clique
     OUTPUT, Bool
     """
-    test_clique.counter += 1
     # For every vertex v in the clique:
     for v in clique:
+        test_clique.counter += 1
         # If vertex is not a neighbor of v, vertex is not in the vertex cover:
         if vertex not in g[v][2]:
             return False
