@@ -101,7 +101,7 @@ run_ce_solver()
 
 PROGRAMM_NAME="python3 vertex_cover_solver.py"  	# insert your program here
 LOG=log.txt									# specify the name of the log file
-maxSec=43200									# overall allowed time for the whole script
+maxSec=7200									# overall allowed time for the whole script
 maxSecPerInstance=300							# allowed time (in seconds) for one instance
 maxNotSolved=10								# no of instances the program is allowed to fail to solve. If reached, then the script is aborted
 
