@@ -188,6 +188,7 @@ def get_degree_one_neighbors():
     return neighbors
 
 FILE = open("check.txt", "a")
+FILE.write(str(9999999999) + ',' + str(9999999999) + '\n')
 
 def test_clique(vertex,clique):
     """
