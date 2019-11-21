@@ -1,5 +1,10 @@
 import sys
 
+g = {}
+max_degree = 0
+degree_list = []
+nb_vertices = 0
+
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -26,10 +31,6 @@ def add_edge(edge):
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
 
-g = {}
-max_degree = 0
-degree_list = []
-nb_vertices = 0
 
 def get_data():
     """
