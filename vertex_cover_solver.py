@@ -210,12 +210,11 @@ def inspect_vertex(vertex):
     OUTPUT: None
     """
     global clique_list
-    nb_cliques = len(clique_list)
     # For every clique already created in clique_list:
     for clique in clique_list:
         # If vertex can be added to this clique append it and return:
         if test_clique(vertex, clique):
-            clique.append([vertex])
+            clique.append(vertex)
             return None
     # If we didn't find any clique to add vertex in, we create one containing vertex:
     clique_list.append([vertex])
@@ -314,6 +313,7 @@ def vc():
         S = vc_branch(k)
         if S is not None:
             print_result(S)
+            print("#solution size:   %s" % len(S))
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
