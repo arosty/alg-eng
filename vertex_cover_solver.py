@@ -156,7 +156,7 @@ def get_highest_degree_vertex():
     for neighbor in g[high_deg_vertex][2]:
         if not g[neighbor][0]:
             neighbors.append(neighbor)
-    return high_deg_vertex, neighbors
+    return [high_deg_vertex], neighbors
 
 
 def get_neighbor(vertex):
@@ -271,35 +271,25 @@ def vc_branch(k):
     elif k == 0:
         un_del_vert(degree_one_neighbors)
         return None
-    #if k is smaller than lower bound, no need to branch
+    # If k is smaller than lower bound, no need to branch
     if k < bound():
         un_del_vert(degree_one_neighbors)
         return None
     # Get vertices of first edge:
     u, neighbors = get_highest_degree_vertex()
-    # 'Delete' first vertex from graph:
-    del_vert([u])
-    # Call function recursively:
-    Su = vc_branch(k-1)
-    # 'Undelete' first vertex from graph:
-    un_del_vert([u])
-    # If vertex cover found return it plus the first vertex:
-    if Su is not None:
-        un_del_vert(degree_one_neighbors)
-        Su += degree_one_neighbors
-        Su.append(u)
-        return Su
-    # 'Delete' second vertex from graph:
-    del_vert(neighbors)
-    # Call function recursively:
-    Sv = vc_branch(k-len(neighbors))
-    # 'Undelete' second vertex from graph:
-    un_del_vert(neighbors + degree_one_neighbors)
-    # If vertex cover found return it plus the second vertex:
-    if Sv is not None:
-        Sv += neighbors + degree_one_neighbors
-        return Sv
-    return None
+    for vertices in u, neighbors:
+        # 'Delete' first vertex from graph:    
+        del_vert(vertices)
+        # Call function recursively:
+        S = vc_branch(k - len(vertices))
+        # 'Undelete' first vertex from graph:
+        un_del_vert(vertices)
+        # If vertex cover found return it plus the first vertex:
+        if S is not None:
+            S += vertices + degree_one_neighbors
+            break
+    un_del_vert(degree_one_neighbors)
+    return S
 
 
 def vc():
@@ -311,19 +301,18 @@ def vc():
     vc_branch.counter = 0
     # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
     degree_one_neighbors = get_degree_one_neighbors()
-    # Asign kmin to the number of neighbors of vertices with degree one:
-    kmin = len(degree_one_neighbors)
+    # 'Delete' the neighbors from the graph:
     del_vert(degree_one_neighbors)
     if not is_edgeless():
-        kmin += bound()
-    un_del_vert(degree_one_neighbors)
-    # Try the recursive function for every k until it gives a result:
-    for k in range(kmin,len(g)):
-        S = vc_branch(k)
-        if S is not None:
-            print_result(S)
-            print("#recursive steps: %s" % vc_branch.counter)
-            return None
+        kmin = bound()
+        for k in range(kmin,len(g)):
+            S = vc_branch(k)
+            if S is not None:
+                S += degree_one_neighbors
+                break
+    print_result(S)
+    print("#recursive steps: %s" % vc_branch.counter)
+    return None
 
 
 get_data()
