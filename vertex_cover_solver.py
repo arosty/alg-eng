@@ -300,6 +300,8 @@ def vc():
             if S is not None:
                 S += degree_one_neighbors
                 break
+    else:
+        S = degree_one_neighbors
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
     return None
