@@ -293,15 +293,15 @@ def vc():
     degree_one_neighbors = get_degree_one_neighbors()
     # 'Delete' the neighbors from the graph:
     del_vert(degree_one_neighbors)
-    if not is_edgeless():
+    if is_edgeless():
+        S = degree_one_neighbors
+    else:
         kmin = bound()
         for k in range(kmin,len(g)):
             S = vc_branch(k)
             if S is not None:
                 S += degree_one_neighbors
                 break
-    else:
-        S = degree_one_neighbors
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
     return None
