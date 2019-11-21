@@ -210,14 +210,23 @@ def inspect_vertex(vertex):
     OUTPUT: None
     """
     global clique_list
+    nb_cliques = len(clique_list)
+    best_clique_index = -1
+    best_clique_size = 0
     # For every clique already created in clique_list:
-    for clique in clique_list:
-        # If vertex can be added to this clique append it and return:
-        if test_clique(vertex, clique):
-            clique.append(vertex)
-            return None
+    for i in range (nb_cliques):
+        clique_size = len(clique_list[i])
+        # If vertex can be added to this clique and this clique is bigger than the best one we found yet:
+        if (test_clique(vertex, clique_list[i])) & (clique_size > best_clique_size):
+            # Remember this clique's index and size:
+            best_clique_index = i
+            best_clique_size = clique_size
     # If we didn't find any clique to add vertex in, we create one containing vertex:
-    clique_list.append([vertex])
+    if best_clique_index == -1:
+        clique_list.append([vertex])
+    # Else we add vertex to the best clique possible:
+    else: 
+        clique_list[best_clique_index].append(vertex)
 
 
 def bound():
@@ -313,7 +322,6 @@ def vc():
         S = vc_branch(k)
         if S is not None:
             print_result(S)
-            print("#solution size:   %s" % len(S))
             print("#recursive steps: %s" % vc_branch.counter)
             return None
 
