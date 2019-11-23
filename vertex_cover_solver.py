@@ -1,5 +1,9 @@
 import sys
-import numpy as np
+
+g = {}
+max_degree = 0
+degree_list = []
+nb_vertices = 0
 
 def add_vertex(vertex):
     """
@@ -16,17 +20,17 @@ def add_edge(edge):
     add_vertex adds a new edge to the graph and returns this graph
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
+    global max_degree
     for vertex in edge:
         if not vertex in g.keys():
             add_vertex(vertex)
         g[vertex][1] += 1
+        # If current degree is greater than maximum degree, update:
+        if g[vertex][1] > max_degree:
+            max_degree += 1
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
 
-g = {}
-max_degree = 0
-degree_list = []
-nb_vertices = 0
 
 def get_data():
     """
@@ -34,29 +38,21 @@ def get_data():
     get_data reads standard input and creates the given graph
     OUTPUT: None
     """
-    global max_degree
     global degree_list
     global nb_vertices
     # Get standard input:
     input_data = sys.stdin
-    for counter, line in enumerate(input_data):
-        if counter == 0:
-            # Get number of vertices in the graph:
-            nb_vertices = np.uint32(line.split()[0][1:])
-        if counter > 0:
+    for line in input_data:
+        if not line[0] == '#':
             # Get current edge and add it to the graph:
             current_edge = line.split()
             add_edge(current_edge)
     # Initializing degree_list:
-    for i in range(nb_vertices):
-        degree_list.append([])
+    degree_list = [[] for i in range(max_degree + 1)]
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
-        (degree_list[degree]).append(vertex)
-        # If maximal degree vertex for now remember that it's the biggest one:
-        if degree > max_degree:
-            max_degree = degree
+        degree_list[degree].append(vertex)
     nb_vertices = len(g)
 
 
