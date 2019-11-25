@@ -249,7 +249,7 @@ def bound():
 
 
 def degree_zero_rule(k):
-    if degree_list[0] != [] and 0 == 1:
+    if 0 == 1 and degree_list[0] != []:
         undelete = degree_list[0]
         del_vert(undelete)
         k -= len(undelete)
@@ -260,7 +260,7 @@ def degree_zero_rule(k):
 
 def high_degree_rule(k):
     S_kern = []
-    while k >= 0 and max_degree > k and 0 == 1:
+    while 0 == 1 and k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert(high_degree_vertex)
         S_kern.append(high_degree_rule)
@@ -270,7 +270,7 @@ def high_degree_rule(k):
 
 
 def reduction_rule(k):
-    if nb_vertices > k**2 + k or nb_edges > k**2: return -1
+    if 0 == 1 and (nb_vertices > k**2 + k or nb_edges > k**2): return -1
     return k
 
 
