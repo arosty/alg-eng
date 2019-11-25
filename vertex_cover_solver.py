@@ -4,6 +4,7 @@ g = {}
 max_degree = 0
 degree_list = []
 nb_vertices = 0
+nb_edges = 0
 
 def add_vertex(vertex):
     """
@@ -21,6 +22,10 @@ def add_edge(edge):
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
     global max_degree
+    global nb_edges
+    #Increment edge counter
+    nb_edges += 1
+    #add edge in dictionary
     for vertex in edge:
         if not vertex in g.keys():
             add_vertex(vertex)
@@ -74,13 +79,15 @@ def del_vert(vertices):
     global max_degree
     global degree_list
     global nb_vertices
+    global nb_edges
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
         g[vertex][0] = True
         nb_vertices -= 1
-        ###Deleting in degree_list
+        ###Deleting in degree_list and updating nb_edges
         degree_vertex = g[vertex][1]
+        nb_edges -= degree_vertex
         degree_list[degree_vertex].remove(vertex)
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
@@ -104,13 +111,15 @@ def un_del_vert(vertices):
     global max_degree
     global degree_list
     global nb_vertices
+    global nb_edges
     for vertex in vertices:
         # 'Undelete' vertex:
         ###Undeleting in g
         g[vertex][0] = False
         nb_vertices += 1
-        ###Undeleting in degree_list
+        ###Undeleting in degree_list and updating nb_edges
         degree_vertex = g[vertex][1]
+        nb_edges += degree_vertex
         degree_list[degree_vertex].append(vertex)
         # If the vertex has a higher degree than max_degree, we update max_degree
         if g[vertex][1] > max_degree:
