@@ -270,13 +270,16 @@ def high_degree_rule(k):
 
 
 def reduction_rule(k):
-    
+    if nb_vertices > k**2 + k or nb_edges > k**2: return -1
+    return k
 
 
 def kernalization(k):
     undelete, k = degree_zero_rule(k)
     S_kern, undelete_new, k = high_degree_rule(k)
     undelete += undelete_new
+    k = reduction_rule(k)
+    if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
          # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
