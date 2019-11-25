@@ -238,6 +238,7 @@ def bound():
             inspect_vertex(vertex)
     return nb_vertices - len(clique_list)
 
+
 def kernalization(k):
     S_kern = []
     undelete = []
