@@ -270,16 +270,19 @@ def high_degree_rule(k):
 
 
 def reduction_rule(k):
-    if (nb_vertices > k**2 + k or nb_edges > k**2): return -1 # 0 == 1 and 
-    return k
+    if (nb_vertices > k**2 + k or nb_edges > k**2): return True # 0 == 1 and 
+    return False
+
+
+def starter_reduction_rule():
+    return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 1)
 
 
 def kernalization(k):
     undelete, k = degree_zero_rule(k)
     S_kern, undelete_new, k = high_degree_rule(k)
     undelete += undelete_new
-    k = reduction_rule(k)
-    if k < 0: return S_kern, undelete, k
+    if k < 0 or reduction_rule(k): return S_kern, undelete, k
     if degree_list[1] != []:
          # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
@@ -339,7 +342,7 @@ def vc():
         S_kern, _, _ = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
         else:
-            kmin = bound()
+            kmin = bound() # max(starter_reduction_rule(), bound())
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
