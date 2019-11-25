@@ -295,13 +295,13 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S, _, _ = kernalization(len(g) - 1)
+        S_kern, _, _ = kernalization(len(g) - 1)
         if not is_edgeless():
             kmin = bound()
             for k in range(kmin, len(g)):
-                S_new = vc_branch(k)
-                if S_new is not None:
-                    S += S_new
+                S = vc_branch(k)
+                if S is not None:
+                    S += S_kern
                     break
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
