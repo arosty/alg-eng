@@ -248,9 +248,35 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
-def kernalization(k):
+def degree_zero_rule(k):
+    if degree_list[0] != [] and 0 == 1:
+        undelete = degree_list[0]
+        del_vert(undelete)
+        k -= len(undelete)
+    else:
+        undelete = []
+    return undelete, k
+
+
+def high_degree_rule(k):
     S_kern = []
-    undelete = []
+    while k >= 0 and max_degree > k and 0 == 1:
+        high_degree_vertex = degree_list[max_degree][0]
+        del_vert(high_degree_vertex)
+        S_kern.append(high_degree_rule)
+        k -= 1
+    undelete = S_kern
+    return S_kern, undelete, k
+
+
+def reduction_rule(k):
+    
+
+
+def kernalization(k):
+    undelete, k = degree_zero_rule(k)
+    S_kern, undelete_new, k = high_degree_rule(k)
+    undelete += undelete_new
     if degree_list[1] != []:
          # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
