@@ -242,7 +242,7 @@ def bound():
 def kernalization(k):
     S_kern = []
     undelete = []
-    if max_degree >= 1:
+    if degree_list[1] != []:
          # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
         # Reduce k according to new vertices:
