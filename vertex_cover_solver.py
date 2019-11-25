@@ -253,8 +253,7 @@ def degree_zero_rule(k):
         undelete = degree_list[0]
         del_vert(undelete)
         k -= len(undelete)
-    else:
-        undelete = []
+    else: undelete = []
     return undelete, k
 
 
@@ -282,9 +281,9 @@ def kernalization(k):
     undelete, k = degree_zero_rule(k)
     S_kern, undelete_new, k = high_degree_rule(k)
     undelete += undelete_new
-    if k < 0 or reduction_rule(k): return S_kern, undelete, k
+    if k < 0 or reduction_rule(k): return S_kern, undelete, -1
     if degree_list[1] != []:
-         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+        # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
@@ -307,7 +306,9 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless(): return []
     S_kern, undelete, k = kernalization(k)
-    if k < 0: return None
+    if k < 0:
+        un_del_vert(undelete)
+        return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
