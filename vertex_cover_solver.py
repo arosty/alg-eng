@@ -248,6 +248,22 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
+def kernalization(k):
+    S_kern = []
+    undelete = []
+    if degree_list[1] != []:
+         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+        degree_one_neighbors = get_degree_one_neighbors()
+        # Reduce k according to new vertices:
+        k -= len(degree_one_neighbors)
+        if k < 0: return S_kern, undelete, k
+        S_kern += degree_one_neighbors
+        # 'Delete' neighbors of degree one vertices:
+        del_vert(degree_one_neighbors)
+        undelete.extend(degree_one_neighbors)
+    return S_kern, undelete, k
+
+
 def vc_branch(k):
     """
     INPUT: k is int
@@ -258,15 +274,10 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
-    degree_one_neighbors = get_degree_one_neighbors()
-    # Reduce k according to new vertices:
-    k -= len(degree_one_neighbors)
+    S_kern, undelete, k = kernalization(k)
     if k < 0: return None
-    # 'Delete' neighbors of degree one vertices:
-    del_vert(degree_one_neighbors)
     # Return one degree neighbors list if no edges left:
-    if is_edgeless(): S = degree_one_neighbors
+    if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
     elif k == 0 or k < bound(): S = None
     else:
@@ -281,9 +292,9 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + degree_one_neighbors
+                S += vertices + S_kern
                 break
-    un_del_vert(degree_one_neighbors)
+    un_del_vert(undelete)
     return S
 
 
@@ -294,22 +305,19 @@ def vc():
     OUTPUT:None, prints directly in the console
     """
     vc_branch.counter = 0
-    # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
-    degree_one_neighbors = get_degree_one_neighbors()
-    # 'Delete' the neighbors from the graph:
-    del_vert(degree_one_neighbors)
-    if is_edgeless():
-        S = degree_one_neighbors
+    if is_edgeless(): S = []
     else:
-        kmin = bound()
-        for k in range(kmin,len(g)):
-            S = vc_branch(k)
-            if S is not None:
-                S += degree_one_neighbors
-                break
+        S_kern, _, _ = kernalization(len(g) - 1)
+        if is_edgeless(): S = S_kern
+        else:
+            kmin = bound()
+            for k in range(kmin, len(g)):
+                S = vc_branch(k)
+                if S is not None:
+                    S += S_kern
+                    break
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
-    return None
 
 
 get_data()
