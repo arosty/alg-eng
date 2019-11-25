@@ -250,6 +250,7 @@ def kernalization(k):
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
+    return S_kern, undelete, k
 
 
 def vc_branch(k):
