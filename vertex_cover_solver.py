@@ -297,7 +297,8 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernalization(len(g) - 1)
-        if not is_edgeless():
+        if is_edgeless(): S = S_kern
+        else:
             kmin = bound()
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
