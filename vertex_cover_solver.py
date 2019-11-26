@@ -352,11 +352,11 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernalization(len(g) - 1)
-        # S_kern, kmin = preprocessing()
+        # S_kern, _, _ = kernalization(len(g) - 1)
+        S_kern, kmin = preprocessing()
         if is_edgeless(): S = S_kern
         else:
-            kmin = bound() # max(kmin, bound())
+            kmin = max(kmin, bound()) # bound()
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
