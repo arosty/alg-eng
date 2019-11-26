@@ -356,7 +356,12 @@ def vc():
         S_kern, _, k = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
         else:
+            print(k)
+            print(starter_reduction_rule())
+            print(bound())
+            print('---')
             kmin = max(k, starter_reduction_rule(), bound()) # bound()
+            # print(kmin)
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
