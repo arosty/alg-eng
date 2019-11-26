@@ -335,11 +335,12 @@ def vc_branch(k):
 
 def preprocessing():
     S_kern, _, k = kernalization(nb_vertices - 1)
-    kmin = starter_reduction_rule()
-    while kmin < k:
-        k = kmin
-        S_kern_new, _, kmin = kernalization(k)
-        S_kern += S_kern_new
+    kmin = max(k, starter_reduction_rule())
+    # while kmin < k:
+    #     k = kmin
+    #     S_kern_new, _, kmin = kernalization(k)
+    #     # Hier kommt k = -1
+    #     S_kern += S_kern_new
     return S_kern, kmin
 
 
@@ -352,19 +353,25 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        # S_kern, _, _ = kernalization(len(g) - 1)
-        S_kern, kmin = preprocessing()
+        S_kern, _, k = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
         else:
-            kmin = max(kmin, bound()) # bound()
+            kmin = max(k, starter_reduction_rule(), bound()) # bound()
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
                     S += S_kern
                     break
     print_result(S)
+    print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
 
 
 get_data()
 vc()
+
+# print(g)
+# print(max_degree)
+# print(degree_list)
+# print(nb_vertices)
+# print(nb_edges)
