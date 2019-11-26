@@ -248,23 +248,22 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
-def degree_zero_rule(k):
+def degree_zero_rule():
     if degree_list[0] != []: # 0 == 1 and 
-        undelete = degree_list[0]
+        undelete = degree_list[0][:]
         del_vert(undelete)
-        k -= len(undelete)
     else: undelete = []
-    return undelete, k
+    return undelete
 
 
 def high_degree_rule(k):
     S_kern = []
     while k >= 0 and max_degree > k: # 0 == 1 and 
         high_degree_vertex = degree_list[max_degree][0]
-        del_vert(high_degree_vertex)
-        S_kern.append(high_degree_rule)
+        del_vert([high_degree_vertex])
+        S_kern.append(high_degree_vertex)
         k -= 1
-    undelete = S_kern
+    undelete = S_kern[:]
     return S_kern, undelete, k
 
 
@@ -278,7 +277,7 @@ def starter_reduction_rule():
 
 
 def kernalization(k):
-    undelete, k = degree_zero_rule(k)
+    undelete = degree_zero_rule()
     S_kern, undelete_new, k = high_degree_rule(k)
     undelete += undelete_new
     if k < 0 or reduction_rule(k): return S_kern, undelete, -1
