@@ -353,14 +353,9 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, k = kernalization(len(g) - 1)
+        S_kern, _, _ = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
-        else:
-            print(k)
-            print(starter_reduction_rule())
-            print(bound())
-            print('---')
-            kmin = max(k, starter_reduction_rule(), bound()) # bound()
+            kmin = max(starter_reduction_rule(), bound()) # bound()
             # print(kmin)
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
