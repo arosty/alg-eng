@@ -248,14 +248,6 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
-def degree_zero_rule():
-    if degree_list[0] != []: # 0 == 1 and 
-        undelete = degree_list[0][:]
-        del_vert(undelete)
-    else: undelete = []
-    return undelete
-
-
 def high_degree_rule(k):
     S_kern = []
     while k >= 0 and max_degree > k: # 0 == 1 and 
@@ -267,9 +259,19 @@ def high_degree_rule(k):
     return S_kern, undelete, k
 
 
+def degree_zero_rule():
+    if degree_list[0] != []: # 0 == 1 and 
+        undelete = degree_list[0][:]
+        del_vert(undelete)
+    else: undelete = []
+    return undelete
+
+
 def reduction_rule(k):
-    if (nb_vertices > k**2 + k or nb_edges > k**2): return True # 0 == 1 and 
-    return False
+    S_kern, undelete, k = high_degree_rule(k)
+    undelete += degree_zero_rule()
+    if nb_vertices > k ** 2 + k or nb_edges > k ** 2: k = -1
+    return S_kern, undelete, k
 
 
 def starter_reduction_rule():
@@ -277,10 +279,8 @@ def starter_reduction_rule():
 
 
 def kernalization(k):
-    undelete = degree_zero_rule()
-    S_kern, undelete_new, k = high_degree_rule(k)
-    undelete += undelete_new
-    if k < 0 or reduction_rule(k): return S_kern, undelete, -1
+    S_kern, undelete, k = reduction_rule(k)
+    if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
@@ -291,6 +291,9 @@ def kernalization(k):
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
+        S_kern_new, undelete_new, k = reduction_rule(k)
+        S_kern += S_kern_new
+        undelete += undelete_new
     return S_kern, undelete, k
 
 
@@ -330,6 +333,16 @@ def vc_branch(k):
     return S
 
 
+def preprocessing():
+    S_kern, _, k = kernalization(nb_vertices - 1)
+    kmin = starter_reduction_rule()
+    while kmin < k:
+        k = kmin
+        S_kern_new, _, kmin = kernalization(k)
+        S_kern += S_kern_new
+    return S_kern, kmin
+
+
 def vc():
     """
     INPUT: None
@@ -340,9 +353,10 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernalization(len(g) - 1)
+        # S_kern, kmin = preprocessing()
         if is_edgeless(): S = S_kern
         else:
-            kmin = bound() # max(starter_reduction_rule(), bound())
+            kmin = bound() # max(kmin, bound())
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
