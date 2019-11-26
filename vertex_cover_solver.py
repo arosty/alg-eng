@@ -355,6 +355,7 @@ def vc():
     else:
         S_kern, _, _ = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
+        else:
             kmin = max(starter_reduction_rule(), bound()) # bound()
             # print(kmin)
             for k in range(kmin, len(g)):
