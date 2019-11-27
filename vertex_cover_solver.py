@@ -321,4 +321,3 @@ def vc():
 
 
 get_data()
-vc()
