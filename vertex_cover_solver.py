@@ -237,7 +237,7 @@ def inspect_vertex(vertex):
 def bound():
     """
     INPUT: None
-    bound() returns a lower bound using clique cover, starting by smallest degree
+    bound returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
     global clique_list
@@ -249,8 +249,13 @@ def bound():
 
 
 def high_degree_rule(k):
+    """
+    INPUT: k
+    high_degree_rule executes the high-degree reduction rule (if a vertex has a higher degree than k, it gets added to the vertex cover)
+    OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    """
     S_kern = []
-    while k >= 0 and max_degree > k: # 0 == 1 and 
+    while k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert([high_degree_vertex])
         S_kern.append(high_degree_vertex)
@@ -260,7 +265,12 @@ def high_degree_rule(k):
 
 
 def degree_zero_rule():
-    if degree_list[0] != []: # 0 == 1 and 
+    """
+    INPUT: None
+    degree_zero_rule deletes all degree zero vertices and returns them
+    OUTPUT: list
+    """
+    if degree_list[0] != []:
         undelete = degree_list[0][:]
         del_vert(undelete)
     else: undelete = []
@@ -268,17 +278,31 @@ def degree_zero_rule():
 
 
 def reduction_rule(k):
+    """
+    INPUT: k
+    reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
+    OUTPUT: OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    """
+    # Execute high-degree reduction rule:
     S_kern, undelete, k = high_degree_rule(k)
+    # Execute degree-zero reduction rule:
     undelete += degree_zero_rule()
+    # Check if k high enough, if not, set k to -1
     if nb_vertices > k ** 2 + k or nb_edges > k ** 2: k = -1
     return S_kern, undelete, k
 
 
 def starter_reduction_rule():
-    return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 1)
+    """
+    INPUT: None
+    starter_reduction_rule gives a lower bound for k according to the reduction rule
+    OUTPUT: int
+    """
+    return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 0.999)
 
 
 def kernalization(k):
+    # Execute reduction rules:
     S_kern, undelete, k = reduction_rule(k)
     if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
@@ -333,17 +357,6 @@ def vc_branch(k):
     return S
 
 
-def preprocessing():
-    S_kern, _, k = kernalization(nb_vertices - 1)
-    kmin = max(k, starter_reduction_rule())
-    # while kmin < k:
-    #     k = kmin
-    #     S_kern_new, _, kmin = kernalization(k)
-    #     # Hier kommt k = -1
-    #     S_kern += S_kern_new
-    return S_kern, kmin
-
-
 def vc():
     """
     INPUT: None
@@ -356,8 +369,7 @@ def vc():
         S_kern, _, _ = kernalization(len(g) - 1)
         if is_edgeless(): S = S_kern
         else:
-            kmin = max(starter_reduction_rule(), bound()) # bound()
-            # print(kmin)
+            kmin = max(starter_reduction_rule(), bound())
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
@@ -370,9 +382,3 @@ def vc():
 
 get_data()
 vc()
-
-# print(g)
-# print(max_degree)
-# print(degree_list)
-# print(nb_vertices)
-# print(nb_edges)
