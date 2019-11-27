@@ -250,7 +250,26 @@ def bound():
 
 def append_to_S(S, vertices):
     for vertex in vertices:
-        if type
+        if type(vertex) is str:
+            S.append(vertex)
+        else:
+            v, u, w = vertex
+            S = del_from_S(S,[v])
+            for x in [u, w]:
+                S = append_to_S(S, [x])
+    return S
+
+
+def del_from_S(S, vertices):
+    for vertex in vertices:
+        if type(vertex) is str:
+            S.remove(vertex)
+        else:
+            v, u, w = vertex
+            S = append_to_S(S, [v])
+            for x in [u, w]:
+                S = del_from_S(S, [x])
+    return S
 
 
 def kernalization(k):
