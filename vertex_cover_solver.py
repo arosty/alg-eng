@@ -284,6 +284,8 @@ def high_degree_rule(k):
         del_vert([high_degree_vertex])
         S_kern = append_to_S(S_kern, [high_degree_vertex])
         k -= 1
+    if S_kern != []:
+        high_degree_rule.counter += 1
     undelete = S_kern[:]
     return S_kern, undelete, k
 
@@ -295,6 +297,7 @@ def degree_zero_rule():
     OUTPUT: list
     """
     if degree_list[0] != []:
+        degree_zero_rule.counter += 1
         undelete = degree_list[0][:]
         del_vert(undelete)
     else: undelete = []
@@ -312,7 +315,9 @@ def extreme_reduction_rule(k):
     # Execute degree-zero reduction rule:
     undelete += degree_zero_rule()
     # Check if k high enough, if not, set k to -1
-    if nb_vertices > k ** 2 + k or nb_edges > k ** 2: k = -1
+    if nb_vertices > k ** 2 + k or nb_edges > k ** 2:
+        extreme_reduction_rule.counter += 1
+        k = -1
     return S_kern, undelete, k
 
 
@@ -388,12 +393,18 @@ def vc():
     OUTPUT:None, prints directly in the console
     """
     vc_branch.counter = 0
+    high_degree_rule.counter = 0
+    degree_zero_rule.counter = 0
+    extreme_reduction_rule.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernalization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            kmin = max(starter_reduction_rule(), bound())
+            x = bound()
+            y = starter_reduction_rule()
+            kmin = max(x, y)
+            first_lower_bound_difference = x - y
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
@@ -402,7 +413,7 @@ def vc():
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
-    print("#test: %s" % 5)
+    print("#first lower bound difference: %s" % first_lower_bound_difference)
 
 
 get_data()
