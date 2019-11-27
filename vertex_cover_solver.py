@@ -277,10 +277,10 @@ def degree_zero_rule():
     return undelete
 
 
-def reduction_rule(k):
+def extreme_reduction_rule(k):
     """
     INPUT: k
-    reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
+    extreme_reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
     OUTPUT: OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
     """
     # Execute high-degree reduction rule:
@@ -303,7 +303,7 @@ def starter_reduction_rule():
 
 def kernalization(k):
     # Execute reduction rules:
-    S_kern, undelete, k = reduction_rule(k)
+    S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
@@ -315,7 +315,7 @@ def kernalization(k):
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
-        S_kern_new, undelete_new, k = reduction_rule(k)
+        S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
     return S_kern, undelete, k
