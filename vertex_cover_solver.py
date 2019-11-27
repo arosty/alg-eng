@@ -237,7 +237,7 @@ def inspect_vertex(vertex):
 def bound():
     """
     INPUT: None
-    bound() returns a lower bound using clique cover, starting by smallest degree
+    bound returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
     global clique_list
@@ -248,19 +248,100 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
-def kernalization(k):
+def append_to_S(S, vertices):
+    for vertex in vertices:
+        if type(vertex) is str:
+            S.append(vertex)
+        else:
+            v, u, w = vertex
+            S = del_from_S(S,[v])
+            for x in [u, w]:
+                S = append_to_S(S, [x])
+    return S
+
+
+def del_from_S(S, vertices):
+    for vertex in vertices:
+        if type(vertex) is str:
+            S.remove(vertex)
+        else:
+            v, u, w = vertex
+            S = append_to_S(S, [v])
+            for x in [u, w]:
+                S = del_from_S(S, [x])
+    return S
+
+
+def high_degree_rule(k):
+    """
+    INPUT: k
+    high_degree_rule executes the high-degree reduction rule (if a vertex has a higher degree than k, it gets added to the vertex cover)
+    OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    """
     S_kern = []
-    undelete = []
+    while k >= 0 and max_degree > k:
+        high_degree_vertex = degree_list[max_degree][0]
+        del_vert([high_degree_vertex])
+        S_kern = append_to_S(S_kern, [high_degree_vertex])
+        k -= 1
+    undelete = S_kern[:]
+    return S_kern, undelete, k
+
+
+def degree_zero_rule():
+    """
+    INPUT: None
+    degree_zero_rule deletes all degree zero vertices and returns them
+    OUTPUT: list
+    """
+    if degree_list[0] != []:
+        undelete = degree_list[0][:]
+        del_vert(undelete)
+    else: undelete = []
+    return undelete
+
+
+def extreme_reduction_rule(k):
+    """
+    INPUT: k
+    extreme_reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
+    OUTPUT: OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    """
+    # Execute high-degree reduction rule:
+    S_kern, undelete, k = high_degree_rule(k)
+    # Execute degree-zero reduction rule:
+    undelete += degree_zero_rule()
+    # Check if k high enough, if not, set k to -1
+    if nb_vertices > k ** 2 + k or nb_edges > k ** 2: k = -1
+    return S_kern, undelete, k
+
+
+def starter_reduction_rule():
+    """
+    INPUT: None
+    starter_reduction_rule gives a lower bound for k according to the reduction rule
+    OUTPUT: int
+    """
+    return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 0.999)
+
+
+def kernalization(k):
+    # Execute reduction rules:
+    S_kern, undelete, k = extreme_reduction_rule(k)
+    if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
-         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
+        # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
+        S_kern = append_to_S(S_kern, degree_one_neighbors)
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
+        S_kern_new, undelete_new, k = extreme_reduction_rule(k)
+        S_kern += S_kern_new
+        undelete += undelete_new
     return S_kern, undelete, k
 
 
@@ -275,7 +356,9 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless(): return []
     S_kern, undelete, k = kernalization(k)
-    if k < 0: return None
+    if k < 0:
+        un_del_vert(undelete)
+        return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
@@ -292,7 +375,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = append_to_S(S, vertices + S_kern)
                 break
     un_del_vert(undelete)
     return S
@@ -307,16 +390,17 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernalization(len(g) - 1)
+        S_kern, _, _ = kernalization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            kmin = bound()
-            for k in range(kmin, len(g)):
+            kmin = max(starter_reduction_rule(), bound())
+            for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
-                    S += S_kern
+                    S = append_to_S(S, S_kern)
                     break
     print_result(S)
+    print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
     print("#test: %s" % 5)
 
