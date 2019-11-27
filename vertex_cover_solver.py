@@ -414,6 +414,9 @@ def vc():
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
     print("#first lower bound difference: %s" % first_lower_bound_difference)
+    print("#high degree rules: %s" % high_degree_rule.counter)
+    print("#degree zero rules: %s" % degree_zero_rule.counter)
+    print("#extreme reduction rules: %s" % extreme_reduction_rule.counter)
 
 
 get_data()
