@@ -248,7 +248,6 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
-<<<<<<< HEAD
 def append_to_S(S, vertices):
     for vertex in vertices:
         if type(vertex) is str:
