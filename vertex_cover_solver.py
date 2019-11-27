@@ -248,6 +248,11 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
+def append_to_S(S, vertices):
+    for vertex in vertices:
+        if type
+
+
 def kernalization(k):
     S_kern = []
     undelete = []
