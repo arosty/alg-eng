@@ -283,7 +283,7 @@ def high_degree_rule(k):
     while k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert([high_degree_vertex])
-        S_kern.append(high_degree_vertex)
+        S_kern = append_to_S(S_kern, [high_degree_vertex])
         k -= 1
     undelete = S_kern[:]
     return S_kern, undelete, k
