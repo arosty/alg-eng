@@ -318,6 +318,7 @@ def vc():
                     break
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
+    print("#test: %s" % 5)
 
 
 get_data()
