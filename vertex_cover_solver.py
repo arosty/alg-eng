@@ -366,11 +366,11 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernalization(len(g) - 1)
+        S_kern, _, _ = kernalization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             kmin = max(starter_reduction_rule(), bound())
-            for k in range(kmin, len(g)):
+            for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
                     S += S_kern
