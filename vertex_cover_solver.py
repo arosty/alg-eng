@@ -248,6 +248,30 @@ def bound():
     return nb_vertices - len(clique_list)
 
 
+def append_to_S(S, vertices):
+    for vertex in vertices:
+        if type(vertex) is str:
+            S.append(vertex)
+        else:
+            v, u, w = vertex
+            S = del_from_S(S,[v])
+            for x in [u, w]:
+                S = append_to_S(S, [x])
+    return S
+
+
+def del_from_S(S, vertices):
+    for vertex in vertices:
+        if type(vertex) is str:
+            S.remove(vertex)
+        else:
+            v, u, w = vertex
+            S = append_to_S(S, [v])
+            for x in [u, w]:
+                S = del_from_S(S, [x])
+    return S
+
+
 def high_degree_rule(k):
     """
     INPUT: k
@@ -258,7 +282,7 @@ def high_degree_rule(k):
     while k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert([high_degree_vertex])
-        S_kern.append(high_degree_vertex)
+        S_kern = append_to_S(S_kern, [high_degree_vertex])
         k -= 1
     undelete = S_kern[:]
     return S_kern, undelete, k
@@ -311,7 +335,7 @@ def kernalization(k):
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
+        S_kern = append_to_S(S_kern, degree_one_neighbors)
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
@@ -351,7 +375,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = append_to_S(S, vertices + S_kern)
                 break
     un_del_vert(undelete)
     return S
@@ -373,7 +397,7 @@ def vc():
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
-                    S += S_kern
+                    S = append_to_S(S, S_kern)
                     break
     print_result(S)
     print("#solution size: %s" % len(S))
