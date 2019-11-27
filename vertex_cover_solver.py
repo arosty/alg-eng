@@ -393,6 +393,7 @@ def vc():
     OUTPUT:None, prints directly in the console
     """
     vc_branch.counter = 0
+    first_lower_bound_difference = 0
     high_degree_rule.counter = 0
     degree_zero_rule.counter = 0
     extreme_reduction_rule.counter = 0
