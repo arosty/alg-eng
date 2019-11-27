@@ -281,7 +281,7 @@ def kernalization(k):
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
+        S_kern = append_to_S(S_kern, degree_one_neighbors)
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
@@ -316,7 +316,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = append_to_S(S, vertices + S_kern)
                 break
     un_del_vert(undelete)
     return S
@@ -338,7 +338,7 @@ def vc():
             for k in range(kmin, len(g)):
                 S = vc_branch(k)
                 if S is not None:
-                    S += S_kern
+                    S = append_to_S(S, S_kern)
                     break
     print_result(S)
     print("#recursive steps: %s" % vc_branch.counter)
