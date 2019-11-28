@@ -175,23 +175,6 @@ def get_neighbor(vertex):
             return neighbor
 
 
-def get_degree_one_neighbors():
-    """
-    INPUT: None
-    get_degree_one_neighbors return the neighbors of all vertices of degree one
-    (if two vertices of degree one are adjacent to each other, it choses one of them)
-    OUTPUT: list
-    """
-    # Initialize list of neighbors of vertices with one degree:
-    neighbors = []
-    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
-    for vertex in degree_list[1]:
-        if vertex not in neighbors:
-            neighbor = get_neighbor(vertex)
-            if neighbor not in neighbors:
-                neighbors.append(neighbor)
-    return neighbors
-
 
 def test_clique(vertex,clique):
     """
@@ -330,9 +313,34 @@ def starter_reduction_rule():
     return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 0.999)
 
 
-def kernalization(k):
-    # Execute reduction rules:
-    S_kern, undelete, k = extreme_reduction_rule(k)
+
+def get_degree_one_neighbors():
+    """
+    INPUT: None
+    get_degree_one_neighbors return the neighbors of all vertices of degree one
+    (if two vertices of degree one are adjacent to each other, it choses one of them)
+    OUTPUT: list
+    """
+    # Initialize list of neighbors of vertices with one degree:
+    neighbors = []
+    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
+    for vertex in degree_list[1]:
+        if vertex not in neighbors:
+            neighbor = get_neighbor(vertex)
+            if neighbor not in neighbors:
+                neighbors.append(neighbor)
+    return neighbors
+
+
+
+def degree_one_rule (k):
+    """
+    INPUT: k is int 
+    degree_one_rule deletes all degree one vertices and returns them, deletes all 
+    of their neighbors and return them to add them to S. also returns the depth budget k changed by deletion
+    OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
+    """
+    S_kern, undelete = [],[]
     if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
@@ -347,6 +355,23 @@ def kernalization(k):
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
+    return S_kern, undelete, k
+
+
+
+def kernalization(k):
+    """
+    INPUT: k is int 
+    kernalization applies all the kernelization rules, and returns the depth budget k changed by the kernelization, 
+    the vertices to add to the vertex cover, and all the deleted vertices that have to be undeleted afterwards 
+    OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
+    """
+    # Execute reduction rules:
+    S_kern, undelete, k = extreme_reduction_rule(k)
+    if k < 0: return S_kern, undelete, k
+    S_kern_one, undelete_one, k = degree_one_rule(k)
+    S_kern += S_kern_one
+    undelete += undelete_one
     return S_kern, undelete, k
 
 
