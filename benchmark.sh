@@ -56,7 +56,7 @@ run_ce_solver()
 			fi
 		
 			k=$(grep -ve "^#" prog_out.txt | wc -l)
-			recursiveSteps=$(grep -e "#recursive steps:" prog_out.txt | sed -e 's/.*recursive steps: \([0-9]*\).*/\1/' )
+			recursiveSteps=$(grep -e "#recursive steps:" prog_out.txt | sed -e 's/.*recursive steps: \(-\?[0-9]*\).*/\1/' )
 			firstLowerBoundDifference=$(grep -e "#first lower bound difference:" prog_out.txt | sed -e 's/.*first lower bound difference: \(-?[0-9]*\).*/\1/' )
 			highDegreeRules=$(grep -e "#high degree rules:" prog_out.txt | sed -e 's/.*high degree rules: \([0-9]*\).*/\1/' )
 			degreeZeroRules=$(grep -e "#degree zero rules:" prog_out.txt | sed -e 's/.*degree zero rules: \([0-9]*\).*/\1/' )
