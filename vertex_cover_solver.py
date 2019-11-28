@@ -308,7 +308,6 @@ def starter_reduction_rule():
     return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 0.999)
 
 
-
 def get_degree_one_neighbors():
     """
     INPUT: None
@@ -325,7 +324,6 @@ def get_degree_one_neighbors():
             if neighbor not in neighbors:
                 neighbors.append(neighbor)
     return neighbors
-
 
 
 def degree_one_rule (k):
@@ -352,6 +350,26 @@ def degree_one_rule (k):
         undelete += undelete_new
     return S_kern, undelete, k
 
+
+def domination_rule(k):
+    for degree in range(3, max_degree):
+        for vertex in degree_list[degree]:
+            neighborhood = [vertex]
+            lowest_degree = max_degree + 1
+            for adj_vert in g[vertex][2]:
+                if not g[adj_vert][0]:
+                    neighborhood.append(adj_vert)
+                    if g[adj_vert][1] < lowest_degree:
+                        lowest_degree = g[adj_vert][1]
+                        low_degree_neighbor = adj_vert
+            for adj_vert in g[low_degree_neighbor][2]:
+                if adj_vert != vertex and not g[adj_vert][0] and g[adj_vert][1] >= lowest_degree and all(u in (adj_vert + g[adj_vert][2]) for u in neighborhood):
+                    del_vert([adj_vert])
+                    undelete = [adj_vert]
+                    S_kern = [adj_vert]
+                    k -= 1
+                    return S_kern, undelete, k
+    return [], [], k
 
 
 def kernalization(k):
