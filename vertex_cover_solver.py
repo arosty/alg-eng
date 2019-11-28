@@ -166,15 +166,26 @@ def get_highest_degree_vertex():
 
 def get_neighbor(vertex):
     """
-    INPUT: vertex is str
+    INPUT: vertex
     get_neighbor returns the first neighbor
-    OUTPUT: str
+    OUTPUT: vertex
     """
     for neighbor in g[vertex][2]:
         if not g[neighbor][0]:
             return neighbor
 
 
+def get_all_neighbors(vertex):
+    """
+    INPUT: vertex
+    get_neighbor returns the first neighbor
+    OUTPUT: list of vertices
+    """
+    neighbors = []
+    for neighbor in g[vertex][2]:
+        if not g[neighbor][0]:
+            neighbors.append(neighbor)
+    return(neighbors)
 
 def test_clique(vertex,clique):
     """
@@ -351,6 +362,11 @@ def degree_one_rule (k):
         S_kern += S_kern_new
         undelete += undelete_new
     return S_kern, undelete, k
+
+
+def 
+
+
 
 
 

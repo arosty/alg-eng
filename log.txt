@@ -65530,3 +65530,71 @@ snap_small/as20000102.txt.dimacs
 #solution size: 1052
 #recursive steps: 6
 
+random_small/000002_000000000002.input
+#solution size: 0
+#recursive steps: 0
+
+random_small/000026_000000000260.input
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+#solution size: 25
+#recursive steps: 0
+
+random_small/000070_000000000084.input
+random_small/000002_000000000002.input
+#solution size: 0
+#recursive steps: 0
+
+random_small/000026_000000000260.input
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+#solution size: 25
+#recursive steps: 0
+
+random_small/000070_000000000084.input

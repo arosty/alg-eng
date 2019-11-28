@@ -1,0 +1,14 @@
+1
+82
+83
+84
+75
+32
+38
+47
+81
+56
+73
+70
+#solution size: 12
+#recursive steps: 0
