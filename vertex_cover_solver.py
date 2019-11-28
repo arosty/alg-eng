@@ -430,6 +430,7 @@ def vc():
         if is_edgeless(): S = S_kern
         else:
             x = bound()
+            bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
