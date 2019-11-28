@@ -390,7 +390,9 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound(): S = None
+    elif k == 0 or k < bound():
+        bound.counter += 1
+        S = None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -421,6 +423,7 @@ def vc():
     degree_zero_rule.counter = 0
     extreme_reduction_rule.counter = 0
     degree_one_rule.counter = 0
+    bound.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernalization(nb_vertices - 1)
@@ -443,6 +446,7 @@ def vc():
     print("#degree zero rules: %s" % degree_zero_rule.counter)
     print("#extreme reduction rules: %s" % extreme_reduction_rule.counter)
     print("#degree one rules: %s" % degree_one_rule.counter)
+    print("#lower bounds: %s" % bound.counter)
 
 
 get_data()

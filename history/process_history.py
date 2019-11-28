@@ -24,6 +24,7 @@ def transfer_data(current_history_file):
             'degree_zero_rules',
             'extreme_reduction_rules',
             'degree one rules',
+            'lower_bounds',
             'finished',
             'solution_size_verified'
         ]
