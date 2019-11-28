@@ -175,7 +175,6 @@ def get_neighbor(vertex):
             return neighbor
 
 
-
 def test_clique(vertex,clique):
     """
     INPUT: vertex, clique: list[vertices]
@@ -332,7 +331,6 @@ def get_degree_one_neighbors():
     return neighbors
 
 
-
 def degree_one_rule (k):
     """
     INPUT: k is int 
@@ -343,6 +341,7 @@ def degree_one_rule (k):
     S_kern, undelete = [],[]
     if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
+        degree_one_rule.counter += 1
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
         # Reduce k according to new vertices:
@@ -356,7 +355,6 @@ def degree_one_rule (k):
         S_kern += S_kern_new
         undelete += undelete_new
     return S_kern, undelete, k
-
 
 
 def kernalization(k):
@@ -422,6 +420,7 @@ def vc():
     high_degree_rule.counter = 0
     degree_zero_rule.counter = 0
     extreme_reduction_rule.counter = 0
+    degree_one_rule.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernalization(nb_vertices - 1)
@@ -443,6 +442,7 @@ def vc():
     print("#high degree rules: %s" % high_degree_rule.counter)
     print("#degree zero rules: %s" % degree_zero_rule.counter)
     print("#extreme reduction rules: %s" % extreme_reduction_rule.counter)
+    print("#degree one rules: %s" % degree_one_rule.counter)
 
 
 get_data()
