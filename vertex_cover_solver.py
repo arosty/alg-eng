@@ -368,6 +368,7 @@ def domination_rule(k):
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
                     k -= 1
+                    print('---HERE---')
                     return S_kern, undelete, k
     return [], [], k
 
