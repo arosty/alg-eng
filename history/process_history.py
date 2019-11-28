@@ -19,6 +19,10 @@ def transfer_data(current_history_file):
             'time_in_seconds',
             'solution_size',
             'recursive_steps',
+            'first_lower_bound_difference',
+            'high_degree_rules',
+            'degree_zero_rules',
+            'extreme_reduction_rules',
             'finished',
             'solution_size_verified'
         ]
