@@ -363,7 +363,7 @@ def domination_rule(k):
                         lowest_degree = g[adj_vert][1]
                         low_degree_neighbor = adj_vert
             for adj_vert in g[low_degree_neighbor][2]:
-                if adj_vert != vertex and not g[adj_vert][0] and g[adj_vert][1] >= lowest_degree and all(u in (adj_vert + g[adj_vert][2]) for u in neighborhood):
+                if adj_vert != vertex and not g[adj_vert][0] and g[adj_vert][1] >= lowest_degree and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
