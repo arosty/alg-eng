@@ -383,8 +383,11 @@ def kernalization(k):
     S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, k
     S_kern_one, undelete_one, k = degree_one_rule(k)
-    S_kern += S_kern_one
+    S_kern = append_to_S(S_kern, S_kern_one)
     undelete += undelete_one
+    S_kern_dom, undelete_dom, k = domination_rule(k)
+    S_kern = append_to_S(S_kern, S_kern_dom)
+    undelete += undelete_dom
     return S_kern, undelete, k
 
 
