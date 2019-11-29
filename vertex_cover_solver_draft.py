@@ -81,23 +81,25 @@ def del_vert(vertices):
     global nb_vertices
     global nb_edges
     for vertex in vertices:
-        # 'Delete' vertex:
-        ###Deleting in g
-        g[vertex][0] = True
-        nb_vertices -= 1
-        ###Deleting in degree_list and updating nb_edges
-        degree_vertex = g[vertex][1]
-        nb_edges -= degree_vertex
-        degree_list[degree_vertex].remove(vertex)
-        # Update number of edges on adjacent vertices:
-        for adj_vert in g[vertex][2]:
-            ###Updating g
-            g[adj_vert][1] -= 1
-            if not g[adj_vert][0]:
-                ###Updating degree_list
-                degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert+1].remove(adj_vert)
-                degree_list[degree_adj_vert].append(adj_vert)
+        #if vertex not yet deleted, delete it
+        if not g[vertex][0]:
+            # 'Delete' vertex:
+            ###Deleting in g
+            g[vertex][0] = True
+            nb_vertices -= 1
+            ###Deleting in degree_list and updating nb_edges
+            degree_vertex = g[vertex][1]
+            nb_edges -= degree_vertex
+            degree_list[degree_vertex].remove(vertex)
+            # Update number of edges on adjacent vertices:
+            for adj_vert in g[vertex][2]:
+                ###Updating g
+                g[adj_vert][1] -= 1
+                if not g[adj_vert][0]:
+                    ###Updating degree_list
+                    degree_adj_vert = g[adj_vert][1]
+                    degree_list[degree_adj_vert+1].remove(adj_vert)
+                    degree_list[degree_adj_vert].append(adj_vert)
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -112,30 +114,32 @@ def un_del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
-    for vertex in vertices:
-        # 'Undelete' vertex:
-        ###Undeleting in g
-        g[vertex][0] = False
-        nb_vertices += 1
-        ###Undeleting in degree_list and updating nb_edges
-        degree_vertex = g[vertex][1]
-        nb_edges += degree_vertex
-        degree_list[degree_vertex].append(vertex)
-        # If the vertex has a higher degree than max_degree, we update max_degree
-        if g[vertex][1] > max_degree:
-            max_degree = g[vertex][1]
-        # Update number of edges on adjacent vertices:
-        for adj_vert in g[vertex][2]:
-            ###Updating g
-            g[adj_vert][1] += 1
-            if not g[adj_vert][0]:
-                ###Updating degree_list
-                degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert-1].remove(adj_vert)
-                degree_list[degree_adj_vert].append(adj_vert)
-                #If the neighbor has after undeletion a higher degree than max degree we update it
-                if g[adj_vert][1] > max_degree:
-                    max_degree = g[adj_vert][1]
+    for vertex in reversed(vertices):
+        #vertex deleted, undelete it
+        if g[vertex][0]:
+            # 'Undelete' vertex:
+            ###Undeleting in g
+            g[vertex][0] = False
+            nb_vertices += 1
+            ###Undeleting in degree_list and updating nb_edges
+            degree_vertex = g[vertex][1]
+            nb_edges += degree_vertex
+            degree_list[degree_vertex].append(vertex)
+            # If the vertex has a higher degree than max_degree, we update max_degree
+            if g[vertex][1] > max_degree:
+                max_degree = g[vertex][1]
+            # Update number of edges on adjacent vertices:
+            for adj_vert in g[vertex][2]:
+                ###Updating g
+                g[adj_vert][1] += 1
+                if not g[adj_vert][0]:
+                    ###Updating degree_list
+                    degree_adj_vert = g[adj_vert][1]
+                    degree_list[degree_adj_vert-1].remove(adj_vert)
+                    degree_list[degree_adj_vert].append(adj_vert)
+                    #If the neighbor has after undeletion a higher degree than max degree we update it
+                    if g[adj_vert][1] > max_degree:
+                        max_degree = g[adj_vert][1]
 
 
 def is_edgeless():
@@ -166,15 +170,26 @@ def get_highest_degree_vertex():
 
 def get_neighbor(vertex):
     """
-    INPUT: vertex is str
+    INPUT: vertex
     get_neighbor returns the first neighbor
-    OUTPUT: str
+    OUTPUT: vertex
     """
     for neighbor in g[vertex][2]:
         if not g[neighbor][0]:
             return neighbor
 
 
+def get_all_neighbors(vertex):
+    """
+    INPUT: vertex
+    get_neighbor returns the first neighbor
+    OUTPUT: list of vertices
+    """
+    neighbors = []
+    for neighbor in g[vertex][2]:
+        if not g[neighbor][0]:
+            neighbors.append(neighbor)
+    return(neighbors)
 
 def test_clique(vertex,clique):
     """
@@ -232,21 +247,31 @@ def bound():
 
 
 def append_to_S(S, vertices):
+    # print('#S before append: ', S)
+    # print('# vertices to append: ', vertices)
+    if S == None: return None
     for vertex in vertices:
         if type(vertex) is str:
-            S.append(vertex)
+            if vertex not in S:
+                S.append(vertex)
         else:
             v, u, w = vertex
             S = del_from_S(S,[v])
             for x in [u, w]:
                 S = append_to_S(S, [x])
+    # print('#S after append: ', S)
     return S
 
 
 def del_from_S(S, vertices):
+    # print('#S before del: ', S)
+    # print('# vertices to remove: ', vertices)
     for vertex in vertices:
         if type(vertex) is str:
-            S.remove(vertex)
+            # print('# removed vertex: ', vertex)
+            # print('#S: ', S)
+            if vertex in S: #Maybe better to have a bool parameter that says if it's recursive S or S_kern
+                S.remove(vertex)
         else:
             v, u, w = vertex
             S = append_to_S(S, [v])
@@ -343,7 +368,7 @@ def degree_one_rule (k):
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
+        S_kern = append_to_S(S_kern, degree_one_neighbors)
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
@@ -354,6 +379,102 @@ def degree_one_rule (k):
 
 
 
+def merge_vert (vertex, u, w):
+    """
+    INPUT: vertex of degree 2, and its two neighbors u and w
+    to use only if vertex has degree 2 and there is no edge between u and w
+    merges vertex and its 2 neighbors, but doesn't change k 
+    OUTPUT: the name of the resulting merged_point
+    """
+    global nb_vertices
+    global degree_list
+    merged_point = (vertex, u, w)
+    #add merged vertex and delete vertex and its neighbors
+    del_vert([vertex, u, w])
+    undelete = [vertex, u, w]
+    
+    add_vertex(merged_point)
+    nb_vertices += 1
+    #add edges towards every neighbor only once 
+    for z in [u, w]:
+        for n in g[z][2]:
+            if not g[n][0]:
+                if n not in g[merged_point][2]:
+                    add_edge([merged_point,n])
+                    n_degree = g[n][1]
+                    degree_list[n_degree-1].remove(n)
+                    degree_list[n_degree].append(n)
+    #append the new merged_point in degree_list
+    deg_merged_point = g[merged_point][1]
+    len_degree_list = len(degree_list)
+    # print('# problem point ', merged_point, g[merged_point])
+    # print('# deg_merged_point ',deg_merged_point)
+    # print('# len(degree_list) ', len(degree_list))
+    # print('# deg_merged_point > len(degree_list)', deg_merged_point > len(degree_list))
+    if deg_merged_point + 1 > len_degree_list:
+        for i in range(deg_merged_point + 1 - len_degree_list):
+            degree_list.append([])
+    # print('# len(degree_list) ', len(degree_list))
+    degree_list[deg_merged_point].append(merged_point)
+    return(merged_point, undelete)
+    
+    
+        
+def un_merge_vert (merged_points):
+    """
+    INPUT: list of result vertices of a merge that must be 'v u w'
+    cancels the merge that resulted in the vertices of merged_points, but doesn't change k 
+    OUTPUT: None
+    """        
+    if merged_points != []:
+        print ('#merged_points: ', merged_points, type(merged_points))
+        for merged_point in reversed(merged_points):
+            (vertex, u, w) = merged_point 
+            del_vert([merged_point])
+            un_del_vert([vertex, u, w])
+        
+
+
+def degree_two_rule (k):
+    global max_degree
+    S_kern = []
+    undelete = []
+    unmerge = []
+    if k < 0: return S_kern, undelete, k, unmerge
+    if max_degree < 2:
+        return S_kern, undelete, k, unmerge
+    while degree_list[2] != []:
+        print('#S_kern ', S_kern) 
+        print('#undelete ', undelete) 
+        print('#k ', k)
+        print('#unmerge ', unmerge) 
+        vertex = degree_list[2][0]
+        #u and w are the only 2 undeleted neighbors of vertex 
+        [u, w] = get_all_neighbors(vertex)
+        if w in g[u][2]:
+            #if not k-2<0 we can preprocess
+            if k-2 < 0: return S_kern, undelete, k-2, unmerge
+            del_vert([vertex, u, w])
+            S_kern = append_to_S(S_kern, [u,w])
+            undelete.extend([vertex, u, w])
+            k -= 2
+        else:
+            if k-1 < 0: return S_kern, undelete, k-1, unmerge
+            merged_point, undelete_new = merge_vert(vertex, u, w)
+            S_kern = append_to_S(S_kern, [vertex])
+            undelete += undelete_new
+            unmerge.append(merged_point)
+            k -= 1
+    S_kern_new, undelete_new, k = extreme_reduction_rule(k)
+    S_kern += S_kern_new
+    undelete += undelete_new
+    return S_kern, undelete, k, unmerge
+
+
+
+
+
+
 def kernalization(k):
     """
     INPUT: k is int 
@@ -361,33 +482,44 @@ def kernalization(k):
     the vertices to add to the vertex cover, and all the deleted vertices that have to be undeleted afterwards 
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
-    # Execute reduction rules:
-    S_kern, undelete, k = extreme_reduction_rule(k)
-    if k < 0: return S_kern, undelete, k
-    S_kern_one, undelete_one, k = degree_one_rule(k)
-    S_kern += S_kern_one
-    undelete += undelete_one
-    return S_kern, undelete, k
+    S_kern, undelete, unmerge = [],[],[]
+    # # Execute extreme reduction rules:
+    # S_kern, undelete, k = extreme_reduction_rule(k)
+    # unmerge = []
+    # if k < 0: return S_kern, undelete, k
+    # # Execute degree one rule:
+    # S_kern_one, undelete_one, k = degree_one_rule(k)
+    # S_kern += S_kern_one
+    # undelete += undelete_one
+    # Execute degree two rule:
+    S_kern_two, undelete_two, k, unmerge_two = degree_two_rule(k)
+    S_kern += S_kern_two
+    undelete += undelete_two
+    unmerge = list(set().union(unmerge, unmerge_two))
+    return S_kern, undelete, k, unmerge
 
 
-def vc_branch(k):
+def vc_branch(k, S):
     """
     INPUT: k is int
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: list of length at most k or None
     """
     vc_branch.counter += 1
+    print('#-------------------------------------rec step n°',vc_branch.counter,'-------------------------------------')
     if k < 0: return None
     # Return empty list if no edges are given:
-    if is_edgeless(): return []
-    S_kern, undelete, k = kernalization(k)
+    if is_edgeless(): return S
+    S_kern, undelete, k, unmerge_kern = kernalization(k)
     if k < 0:
+        un_merge_vert(unmerge_kern)
         un_del_vert(undelete)
         return None
+    S = append_to_S(S, S_kern)
     # Return one degree neighbors list if no edges left:
-    if is_edgeless(): S = S_kern
+    if is_edgeless(): return S
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound(): S = None
+    elif k == 0 or k < bound(): return None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -395,16 +527,24 @@ def vc_branch(k):
             # 'Delete' first vertex from graph:    
             del_vert(vertices)
             # Call function recursively:
-            S = vc_branch(k - len(vertices))
+            S = vc_branch(k - len(vertices), S)
             # 'Undelete' first vertex from graph:
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = append_to_S(S, vertices + S_kern)
                 break
+    un_merge_vert(unmerge_kern)
     un_del_vert(undelete)
     return S
 
+def print_all():
+    print('g ', g)
+    print('degree_list ', degree_list)
+    print('max_degree ', max_degree)
+    print('nb_vertices ', nb_vertices)
+    print('nb_edges ', nb_edges, '\n')
+    return
 
 def vc():
     """
@@ -412,18 +552,19 @@ def vc():
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
+    # print_all()
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernalization(nb_vertices - 1)
-        if is_edgeless(): S = S_kern
-        else:
-            kmin = max(starter_reduction_rule(), bound())
-            for k in range(kmin, nb_vertices):
-                S = vc_branch(k)
-                if S is not None:
-                    S += S_kern
-                    break
+        # S_kern, _, _, _ = kernalization(nb_vertices - 1)
+        # if is_edgeless(): S = S_kern
+        # else:
+        kmin = max(starter_reduction_rule(), bound())
+        for k in range(kmin, nb_vertices):
+            S = vc_branch(k,[])
+            # if S is not None:
+            #     S = append_to_S(S, S_kern)
+            #     break
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
