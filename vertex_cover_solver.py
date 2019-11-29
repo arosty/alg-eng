@@ -443,7 +443,7 @@ def vc():
     vc_branch.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernalization(nb_vertices - 1)
+        S_kern, _, _, _ = kernalization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             kmin = max(starter_reduction_rule(), bound())
