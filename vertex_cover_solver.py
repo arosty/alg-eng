@@ -53,12 +53,12 @@ def get_data():
             current_edge = line.split()
             add_edge(current_edge)
     # Initializing degree_list:
-    degree_list = [[] for i in range(max_degree + 1)]
+    nb_vertices = len(g)
+    degree_list = [[] for i in range(nb_vertices)]
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
         degree_list[degree].append(vertex)
-    nb_vertices = len(g)
 
 
 def print_result(vertices):
