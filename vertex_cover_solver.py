@@ -350,7 +350,6 @@ def merge_vert(vertex, u, w):
     merged_point = (vertex, u, w)
     #add merged vertex and delete vertex and its neighbors
     del_vert([vertex, u, w])
-    undelete = [vertex, u, w]
     add_vertex(merged_point)
     nb_vertices += 1
     #add edges towards every neighbor only once 
@@ -362,23 +361,22 @@ def merge_vert(vertex, u, w):
                 degree_list[n_degree-1].remove(n)
                 degree_list[n_degree].append(n)
     degree_list[g[merged_point][1]].append(merged_point)
-    return merged_point, undelete
+    return merged_point
 
 
-def un_merge_vert (merged_points):
+def un_merge_vert(merged_points):
     """
     INPUT: list of result vertices of a merge that must be 'v u w'
     cancels the merge that resulted in the vertices of merged_points, but doesn't change k 
     OUTPUT: None
     """        
     for merged_point in reversed(merged_points):
-        # print(merged_point)
         (vertex, u, w) = merged_point 
         del_vert([merged_point])
         un_del_vert([vertex, u, w])
 
 
-def degree_one_rule (k):
+def degree_one_rule(k):
     """
     INPUT: k is int 
     degree_one_rule deletes all degree one vertices and returns them, deletes all 
