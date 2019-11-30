@@ -54,7 +54,7 @@ def get_data():
             add_edge(current_edge)
     nb_vertices = len(g)
     # Initializing degree_list:
-    degree_list = [[] for i in range(nb_vertices - 1)]
+    degree_list = [[] for i in range(nb_vertices)]
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
@@ -372,6 +372,7 @@ def un_merge_vert (merged_points):
     OUTPUT: None
     """        
     for merged_point in reversed(merged_points):
+        # print(merged_point)
         (vertex, u, w) = merged_point 
         del_vert([merged_point])
         un_del_vert([vertex, u, w])
@@ -493,7 +494,6 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _, _ = kernalization(nb_vertices - 1)
-        # is edgeless!!??
         if is_edgeless(): S = S_kern
         else:
             kmin = max(starter_reduction_rule(), bound())
