@@ -54,7 +54,7 @@ def get_data():
             add_edge(current_edge)
     nb_vertices = len(g)
     # Initializing degree_list:
-    degree_list = [[]] * nb_vertices
+    degree_list = [[] for i in range(nb_vertices - 1)]
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
@@ -265,7 +265,7 @@ def high_degree_rule(k):
     while k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert([high_degree_vertex])
-        S_kern = append_to_S(S_kern, [high_degree_vertex])
+        S_kern.append(high_degree_vertex)
         k -= 1
     undelete = S_kern[:]
     return S_kern, undelete, k
@@ -493,6 +493,7 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _, _ = kernalization(nb_vertices - 1)
+        # is edgeless!!??
         if is_edgeless(): S = S_kern
         else:
             kmin = max(starter_reduction_rule(), bound())
