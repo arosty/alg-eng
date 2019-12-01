@@ -81,9 +81,6 @@ def del_vert(vertices):
     global nb_vertices
     global nb_edges
     del_vert.counter += 1
-    # print(del_vert.counter)
-    # if del_vert.counter == 37:
-    #     print(degree_list)
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
@@ -442,10 +439,10 @@ def kernalization(k):
     """
     # Execute reduction rules:
     S_kern, undelete, k = extreme_reduction_rule(k)
-    if k < 0: return S_kern, undelete, k
-    # S_kern_one, undelete_one, k = degree_one_rule(k)
-    # S_kern += S_kern_one
-    # undelete += undelete_one
+    if k < 0: return S_kern, undelete, [], k
+    S_kern_one, undelete_one, k = degree_one_rule(k)
+    S_kern += S_kern_one
+    undelete += undelete_one
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
