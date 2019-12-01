@@ -1,4 +1,6 @@
 import sys
+import cProfile
+import re
 
 g = {}
 max_degree = 0
@@ -571,4 +573,4 @@ def vc():
 
 
 get_data()
-vc()
+cProfile.run('vc()')
