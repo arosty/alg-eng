@@ -422,6 +422,7 @@ def degree_two_rule(k):
     S_kern, undelete, unmerge = [], [], []
     if max_degree < 2: return S_kern, undelete, unmerge, k
     while degree_list[2] != []:
+        degree_two_rule.counter += 1
         vertex = degree_list[2][0]
         [u, w] = get_all_neighbors(vertex)
         if w in g[u][2]:
@@ -455,6 +456,7 @@ def domination_rule(k):
                         low_degree_neighbor = adj_vert
             for adj_vert in g[low_degree_neighbor][2] + [low_degree_neighbor]:
                 if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
+                    domination_rule.counter += 1
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
@@ -538,6 +540,8 @@ def vc():
     degree_zero_rule.counter = 0
     extreme_reduction_rule.counter = 0
     degree_one_rule.counter = 0
+    degree_two_rule.counter = 0
+    domination_rule.counter = 0
     bound.counter = 0
     if is_edgeless(): S = []
     else:
@@ -562,6 +566,8 @@ def vc():
     print("#degree zero rules: %s" % degree_zero_rule.counter)
     print("#extreme reduction rules: %s" % extreme_reduction_rule.counter)
     print("#degree one rules: %s" % degree_one_rule.counter)
+    print("#degree two rules: %s" % degree_two_rule.counter)
+    print("#domination rules: %s" % domination_rule.counter)
     print("#lower bounds: %s" % bound.counter)
 
 
