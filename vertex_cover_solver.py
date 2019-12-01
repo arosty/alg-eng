@@ -450,6 +450,7 @@ def degree_two_rule(k):
 
 
 def domination_rule(k):
+    print(max_degree)
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
             neighborhood = [vertex]
@@ -465,6 +466,7 @@ def domination_rule(k):
                     domination_rule.counter += 1
                     print('#DOMINATION rule')
                     print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter) + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges))
+                    print(max_degree)
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
