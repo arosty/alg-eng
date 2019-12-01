@@ -377,7 +377,7 @@ def merge_vert(vertex, u, w):
     return merged_point
 
 
-def un_merge_vert(merged_points, undelete):
+def un_merge_vert(merged_points):
     """
     INPUT: list of result vertices of a merge that must be 'v u w'
     cancels the merge that resulted in the vertices of merged_points, but doesn't change k 
@@ -494,7 +494,7 @@ def vc_branch(k):
     S_kern, undelete, unmerge, k = kernalization(k)
     if k < 0:
         un_del_vert(undelete)
-        un_merge_vert(unmerge, undelete)
+        un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -515,7 +515,7 @@ def vc_branch(k):
                 S += vertices + S_kern
                 break
     un_del_vert(undelete)
-    un_merge_vert(unmerge, undelete)
+    un_merge_vert(unmerge)
     return S
 
 
