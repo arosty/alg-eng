@@ -443,9 +443,9 @@ def kernalization(k):
     # Execute reduction rules:
     S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, k
-    S_kern_one, undelete_one, k = degree_one_rule(k)
-    S_kern += S_kern_one
-    undelete += undelete_one
+    # S_kern_one, undelete_one, k = degree_one_rule(k)
+    # S_kern += S_kern_one
+    # undelete += undelete_one
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
