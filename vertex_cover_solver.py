@@ -478,7 +478,7 @@ def kernalization(k, branching_step):
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
-    if branching_step % 2 == 1:
+    if (branching_step % 2) == 1:
         S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
