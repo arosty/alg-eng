@@ -226,10 +226,15 @@ def bound():
     """
     global clique_list
     clique_list = []
-    for list_degree_i in degree_list:
+    for list_degree_i in degree_list[:max(max_degree, 25)]:
         for vertex in list_degree_i:
             inspect_vertex(vertex)
-    return nb_vertices - len(clique_list)
+    k = 0
+    if max_degree > 25:
+        for list_degree_i in degree_list[25:]:
+            for vertex in list_degree_i:
+                k += 1
+    return nb_vertices - len(clique_list) - k
 
 
 def append_to_S(S, vertices):
@@ -487,10 +492,9 @@ def kernalization(k):
     undelete += undelete_two
     # else:
         # unmerge = []
-    if max_degree >= 4:
-        S_kern_dom, undelete_dom, k = domination_rule(k)
-        S_kern += S_kern_dom
-        undelete += undelete_dom
+    S_kern_dom, undelete_dom, k = domination_rule(k)
+    S_kern += S_kern_dom
+    undelete += undelete_dom
     return S_kern, undelete, unmerge, k
     # return S_kern, undelete, [], k
 
