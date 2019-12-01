@@ -405,7 +405,7 @@ def degree_one_rule(k):
     S_kern, undelete = [],[]
     if degree_list[1] != []:
         print('#degree ONE rule')
-        print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges)))
+        print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter) + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges))
         degree_one_rule.counter += 1
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
@@ -427,7 +427,7 @@ def degree_two_rule(k):
     if max_degree < 2: return S_kern, undelete, unmerge, k
     while degree_list[2] != []:
         print('#degree TWO rule')
-        print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges)))
+        print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter) + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges))
         degree_two_rule.counter += 1
         vertex = degree_list[2][0]
         [u, w] = get_all_neighbors(vertex)
@@ -464,7 +464,7 @@ def domination_rule(k):
                 if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
                     domination_rule.counter += 1
                     print('#DOMINATION rule')
-                    print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges)))
+                    print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter) + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges))
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
