@@ -510,7 +510,6 @@ def vc():
             kmin = max(starter_reduction_rule(), bound())
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
-                print(S)
                 if S is not None:
                     S += S_kern
                     break
