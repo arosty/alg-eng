@@ -200,22 +200,13 @@ def inspect_vertex(vertex):
     """
     global clique_list
     nb_cliques = len(clique_list)
-    best_clique_index = -1
-    best_clique_size = 0
     # For every clique already created in clique_list:
-    for i in range (nb_cliques):
-        clique_size = len(clique_list[i])
-        # If vertex can be added to this clique and this clique is bigger than the best one we found yet:
-        if (test_clique(vertex, clique_list[i])) & (clique_size > best_clique_size):
-            # Remember this clique's index and size:
-            best_clique_index = i
-            best_clique_size = clique_size
+    for i in range(nb_cliques):
+        if test_clique(vertex, clique_list[i]):
+            clique_list[i].append(vertex)
+            return
     # If we didn't find any clique to add vertex in, we create one containing vertex:
-    if best_clique_index == -1:
-        clique_list.append([vertex])
-    # Else we add vertex to the best clique possible:
-    else: 
-        clique_list[best_clique_index].append(vertex)
+    clique_list.append([vertex])
 
 
 def bound():
