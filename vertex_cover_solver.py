@@ -80,6 +80,10 @@ def del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
+    del_vert.counter += 1
+    # print(del_vert.counter)
+    # if del_vert.counter == 37:
+    #     print(degree_list)
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
@@ -101,7 +105,7 @@ def del_vert(vertices):
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
-
+del_vert.counter = 0
 
 def un_del_vert(vertices):
     """
@@ -348,8 +352,11 @@ def merge_vert(vertex, u, w):
     global nb_vertices
     global degree_list
     merged_point = (vertex, u, w)
-    #add merged vertex and delete vertex and its neighbors
     del_vert([vertex, u, w])
+    if merged_point in g:
+        un_del_vert([merged_point])
+        return merged_point
+    #add merged vertex and delete vertex and its neighbors
     add_vertex(merged_point)
     nb_vertices += 1
     #add edges towards every neighbor only once 
@@ -364,14 +371,14 @@ def merge_vert(vertex, u, w):
     return merged_point
 
 
-def un_merge_vert(merged_points):
+def un_merge_vert(merged_points, undelete):
     """
     INPUT: list of result vertices of a merge that must be 'v u w'
     cancels the merge that resulted in the vertices of merged_points, but doesn't change k 
     OUTPUT: None
     """        
     for merged_point in reversed(merged_points):
-        (vertex, u, w) = merged_point 
+        (vertex, u, w) = merged_point
         del_vert([merged_point])
         un_del_vert([vertex, u, w])
 
@@ -401,6 +408,7 @@ def degree_one_rule(k):
 
 
 def degree_two_rule(k):
+    degree_two_rule.counter += 1
     S_kern, undelete, unmerge = [], [], []
     if max_degree < 2: return S_kern, undelete, unmerge, k
     while degree_list[2] != []:
@@ -422,7 +430,7 @@ def degree_two_rule(k):
     S_kern += S_kern_new
     undelete += undelete_new
     return S_kern, undelete, unmerge, k
-
+degree_two_rule.counter = 0
 
 
 def kernalization(k):
@@ -456,8 +464,8 @@ def vc_branch(k):
     if is_edgeless(): return []
     S_kern, undelete, unmerge, k = kernalization(k)
     if k < 0:
-        un_merge_vert(unmerge)
         un_del_vert(undelete)
+        un_merge_vert(unmerge, undelete)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -477,8 +485,8 @@ def vc_branch(k):
             if S is not None:
                 S += vertices + S_kern
                 break
-    un_merge_vert(unmerge)
     un_del_vert(undelete)
+    un_merge_vert(unmerge, undelete)
     return S
 
 
