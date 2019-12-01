@@ -487,7 +487,7 @@ def kernalization(k):
     undelete += undelete_two
     # else:
         # unmerge = []
-    if max_degree >= 4
+    if max_degree >= 4:
         S_kern_dom, undelete_dom, k = domination_rule(k)
         S_kern += S_kern_dom
         undelete += undelete_dom
