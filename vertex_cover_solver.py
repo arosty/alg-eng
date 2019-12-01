@@ -465,7 +465,7 @@ def domination_rule(k):
     return [], [], k
 
 
-def kernalization(k):
+def kernalization(k, branching_step):
     """
     INPUT: k is int 
     kernalization applies all the kernelization rules, and returns the depth budget k changed by the kernelization, 
@@ -497,7 +497,7 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    S_kern, undelete, unmerge, k = kernalization(k)
+    S_kern, undelete, unmerge, k = kernalization(k, vc_branch.counter)
     if k < 0:
         un_del_vert(undelete)
         un_merge_vert(unmerge)
@@ -544,7 +544,7 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _, _ = kernalization(nb_vertices - 1)
+        S_kern, _, _, _ = kernalization(nb_vertices - 1, vc_branch.counter)
         if is_edgeless(): S = S_kern
         else:
             x = bound()
