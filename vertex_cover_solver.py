@@ -265,7 +265,7 @@ def high_degree_rule(k):
     while k >= 0 and max_degree > k:
         high_degree_vertex = degree_list[max_degree][0]
         del_vert([high_degree_vertex])
-        S_kern = append_to_S(S_kern, [high_degree_vertex])
+        S_kern.append(high_degree_vertex)
         k -= 1
     undelete = S_kern[:]
     return S_kern, undelete, k
@@ -341,7 +341,7 @@ def degree_one_rule (k):
         # Reduce k according to new vertices:
         k -= len(degree_one_neighbors)
         if k < 0: return S_kern, undelete, k
-        S_kern = append_to_S(S_kern, degree_one_neighbors)
+        S_kern += degree_one_neighbors
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete.extend(degree_one_neighbors)
@@ -362,15 +362,8 @@ def domination_rule(k):
                     if g[adj_vert][1] < lowest_degree:
                         lowest_degree = g[adj_vert][1]
                         low_degree_neighbor = adj_vert
-            # for neighbor in neighborhood[1:]:
-            #     if all(u in ([neighbor] + g[neighbor][2]) for u in neighborhood):
-            #         del_vert([neighbor])
-            #         undelete = [neighbor]
-            #         S_kern = [neighbor]
-            #         k -= 1
-            #         return S_kern, undelete, k
-            for adj_vert in g[low_degree_neighbor][2]:
-                if adj_vert != vertex and adj_vert in neighborhood and g[adj_vert][1] >= lowest_degree and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
+            for adj_vert in g[low_degree_neighbor][2] + [low_degree_neighbor]:
+                if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
@@ -390,10 +383,10 @@ def kernalization(k):
     S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, k
     S_kern_one, undelete_one, k = degree_one_rule(k)
-    S_kern = append_to_S(S_kern, S_kern_one)
+    S_kern += S_kern_one
     undelete += undelete_one
     S_kern_dom, undelete_dom, k = domination_rule(k)
-    S_kern = append_to_S(S_kern, S_kern_dom)
+    S_kern += S_kern_dom
     undelete += undelete_dom
     return S_kern, undelete, k
 
@@ -428,7 +421,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S = append_to_S(S, vertices + S_kern)
+                S += S_kern
                 break
     un_del_vert(undelete)
     return S
@@ -450,7 +443,7 @@ def vc():
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
-                    S = append_to_S(S, S_kern)
+                    S += S_kern
                     break
     print_result(S)
     print("#solution size: %s" % len(S))
