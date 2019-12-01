@@ -479,10 +479,10 @@ def kernalization(k, branching_step):
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
-    if (branching_step % 10) == 0:
-        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-        S_kern += S_kern_two
-        undelete += undelete_two
+    # if (branching_step % 10) == 0:
+    #     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+    #     S_kern += S_kern_two
+    #     undelete += undelete_two
     # S_kern_dom, undelete_dom, k = domination_rule(k)
     # S_kern += S_kern_dom
     # undelete += undelete_dom
