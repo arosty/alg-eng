@@ -52,7 +52,6 @@ def get_data():
             # Get current edge and add it to the graph:
             current_edge = line.split()
             add_edge(current_edge)
-    nb_vertices = len(g)
     # Initializing degree_list:
     nb_vertices = len(g)
     degree_list = [[] for i in range(nb_vertices)]
@@ -81,7 +80,6 @@ def del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
-    del_vert.counter += 1
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
@@ -103,7 +101,7 @@ def del_vert(vertices):
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
-del_vert.counter = 0
+
 
 def un_del_vert(vertices):
     """
@@ -175,6 +173,7 @@ def get_neighbor(vertex):
     for neighbor in g[vertex][2]:
         if not g[neighbor][0]:
             return neighbor
+
 
 
 def test_clique(vertex,clique):
@@ -268,8 +267,6 @@ def high_degree_rule(k):
         del_vert([high_degree_vertex])
         S_kern.append(high_degree_vertex)
         k -= 1
-    if S_kern != []:
-        high_degree_rule.counter += 1
     undelete = S_kern[:]
     return S_kern, undelete, k
 
@@ -281,7 +278,6 @@ def degree_zero_rule():
     OUTPUT: list
     """
     if degree_list[0] != []:
-        degree_zero_rule.counter += 1
         undelete = degree_list[0][:]
         del_vert(undelete)
     else: undelete = []
@@ -299,9 +295,7 @@ def extreme_reduction_rule(k):
     # Execute degree-zero reduction rule:
     undelete += degree_zero_rule()
     # Check if k high enough, if not, set k to -1
-    if nb_vertices > k ** 2 + k or nb_edges > k ** 2:
-        extreme_reduction_rule.counter += 1
-        k = -1
+    if nb_vertices > k ** 2 + k or nb_edges > k ** 2: k = -1
     return S_kern, undelete, k
 
 
@@ -312,18 +306,6 @@ def starter_reduction_rule():
     OUTPUT: int
     """
     return int(.5 * max(-1 + (1 + 4 * nb_vertices) ** .5, 2 * nb_edges ** .5) + 0.999)
-
-
-def get_all_neighbors(vertex):
-    """
-    INPUT: vertex
-    get_neighbor returns the first neighbor
-    OUTPUT: list of vertices
-    """
-    neighbors = []
-    for neighbor in g[vertex][2]:
-        if not g[neighbor][0]: neighbors.append(neighbor)
-    return neighbors
 
 
 def get_degree_one_neighbors():
@@ -344,56 +326,7 @@ def get_degree_one_neighbors():
     return neighbors
 
 
-def merge_vert(vertex, u, w):
-    """
-    INPUT: vertex of degree 2, and its two neighbors u and w
-    to use only if vertex has degree 2 and there is no edge between u and w
-    merges vertex and its 2 neighbors, but doesn't change k 
-    OUTPUT: the name of the resulting merged_point
-    """
-    global nb_vertices
-    global degree_list
-    global max_degree
-    merged_point = (vertex, u, w)
-    del_vert([vertex, u, w])
-    if merged_point in g:
-        un_del_vert([merged_point])
-        return merged_point
-    #add merged vertex and delete vertex and its neighbors
-    add_vertex(merged_point)
-    nb_vertices += 1
-    #add edges towards every neighbor only once 
-    remember = max_degree
-    for z in [u, w]:
-        for n in g[z][2]:
-            if n not in g[merged_point][2]:
-                if not g[n][0]:
-                    add_edge([merged_point, n])
-                    n_degree = g[n][1]
-                    degree_list[n_degree-1].remove(n)
-                    degree_list[n_degree].append(n)
-                else:
-                    #add edge in dictionary
-                    g[merged_point][2].append(n)
-                    g[n][2].append(merged_point)
-                    g[n][1] += 1
-    degree_list[g[merged_point][1]].append(merged_point)
-    return merged_point
-
-
-def un_merge_vert(merged_points):
-    """
-    INPUT: list of result vertices of a merge that must be 'v u w'
-    cancels the merge that resulted in the vertices of merged_points, but doesn't change k 
-    OUTPUT: None
-    """        
-    for merged_point in reversed(merged_points):
-        (vertex, u, w) = merged_point
-        del_vert([merged_point])
-        un_del_vert([vertex, u, w])
-
-
-def degree_one_rule(k):
+def degree_one_rule (k):
     """
     INPUT: k is int 
     degree_one_rule deletes all degree one vertices and returns them, deletes all 
@@ -401,8 +334,8 @@ def degree_one_rule(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     S_kern, undelete = [],[]
+    if k < 0: return S_kern, undelete, k
     if degree_list[1] != []:
-        degree_one_rule.counter += 1
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
         # Reduce k according to new vertices:
@@ -411,36 +344,11 @@ def degree_one_rule(k):
         S_kern += degree_one_neighbors
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
-        undelete += degree_one_neighbors
+        undelete.extend(degree_one_neighbors)
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
     return S_kern, undelete, k
-
-
-def degree_two_rule(k):
-    S_kern, undelete, unmerge = [], [], []
-    if max_degree < 2: return S_kern, undelete, unmerge, k
-    while degree_list[2] != []:
-        degree_two_rule.counter += 1
-        vertex = degree_list[2][0]
-        [u, w] = get_all_neighbors(vertex)
-        if w in g[u][2]:
-            if k - 2 < 0: return S_kern, undelete, unmerge, k - 2
-            del_vert([vertex, u, w])
-            undelete += [vertex, u, w]
-            S_kern += [u, w]
-            k -= 2
-        else:
-            if k - 1 < 0: return S_kern, undelete, unmerge, k - 1
-            merged_point = merge_vert(vertex, u, w)
-            S_kern.append(vertex)
-            unmerge.append(merged_point)
-            k -= 1
-    S_kern_new, undelete_new, k = extreme_reduction_rule(k)
-    S_kern += S_kern_new
-    undelete += undelete_new
-    return S_kern, undelete, unmerge, k
 
 
 def domination_rule(k):
@@ -456,7 +364,6 @@ def domination_rule(k):
                         low_degree_neighbor = adj_vert
             for adj_vert in g[low_degree_neighbor][2] + [low_degree_neighbor]:
                 if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
-                    domination_rule.counter += 1
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
@@ -474,17 +381,14 @@ def kernalization(k):
     """
     # Execute reduction rules:
     S_kern, undelete, k = extreme_reduction_rule(k)
-    if k < 0: return S_kern, undelete, [], k
+    if k < 0: return S_kern, undelete, k
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
-    S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-    S_kern += S_kern_two
-    undelete += undelete_two
     S_kern_dom, undelete_dom, k = domination_rule(k)
     S_kern += S_kern_dom
     undelete += undelete_dom
-    return S_kern, undelete, unmerge, k
+    return S_kern, undelete, k
 
 
 def vc_branch(k):
@@ -497,17 +401,14 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    S_kern, undelete, unmerge, k = kernalization(k)
+    S_kern, undelete, k = kernalization(k)
     if k < 0:
         un_del_vert(undelete)
-        un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound():
-        bound.counter += 1
-        S = None
+    elif k == 0 or k < bound(): S = None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -520,10 +421,9 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S += S_kern
                 break
     un_del_vert(undelete)
-    un_merge_vert(unmerge)
     return S
 
 
@@ -534,24 +434,12 @@ def vc():
     OUTPUT:None, prints directly in the console
     """
     vc_branch.counter = 0
-    first_lower_bound_difference = 0
-    high_degree_rule.counter = 0
-    degree_zero_rule.counter = 0
-    extreme_reduction_rule.counter = 0
-    degree_one_rule.counter = 0
-    degree_two_rule.counter = 0
-    domination_rule.counter = 0
-    bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _, _ = kernalization(nb_vertices - 1)
+        S_kern, _, _ = kernalization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            x = bound()
-            bound.counter += 1
-            y = starter_reduction_rule()
-            kmin = max(x, y)
-            first_lower_bound_difference = x - y
+            kmin = max(starter_reduction_rule(), bound())
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
@@ -560,14 +448,6 @@ def vc():
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
-    print("#first lower bound difference: %s" % first_lower_bound_difference)
-    print("#high degree rules: %s" % high_degree_rule.counter)
-    print("#degree zero rules: %s" % degree_zero_rule.counter)
-    print("#extreme reduction rules: %s" % extreme_reduction_rule.counter)
-    print("#degree one rules: %s" % degree_one_rule.counter)
-    print("#degree two rules: %s" % degree_two_rule.counter)
-    print("#domination rules: %s" % domination_rule.counter)
-    print("#lower bounds: %s" % bound.counter)
 
 
 get_data()
