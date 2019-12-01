@@ -348,6 +348,7 @@ def merge_vert(vertex, u, w):
     """
     global nb_vertices
     global degree_list
+    global max_degree
     merged_point = (vertex, u, w)
     del_vert([vertex, u, w])
     if merged_point in g:
@@ -357,13 +358,20 @@ def merge_vert(vertex, u, w):
     add_vertex(merged_point)
     nb_vertices += 1
     #add edges towards every neighbor only once 
+    remember = max_degree
     for z in [u, w]:
         for n in g[z][2]:
-            if not g[n][0] and n not in g[merged_point][2]:
-                add_edge([merged_point,n])
-                n_degree = g[n][1]
-                degree_list[n_degree-1].remove(n)
-                degree_list[n_degree].append(n)
+            if n not in g[merged_point][2]:
+                if not g[n][0]:
+                    add_edge([merged_point, n])
+                    n_degree = g[n][1]
+                    degree_list[n_degree-1].remove(n)
+                    degree_list[n_degree].append(n)
+                else:
+                    #add edge in dictionary
+                    g[merged_point][2].append(n)
+                    g[n][2].append(merged_point)
+                    g[n][1] += 1
     degree_list[g[merged_point][1]].append(merged_point)
     return merged_point
 
@@ -502,6 +510,7 @@ def vc():
             kmin = max(starter_reduction_rule(), bound())
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
+                print(S)
                 if S is not None:
                     S += S_kern
                     break
