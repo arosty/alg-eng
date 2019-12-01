@@ -54,6 +54,7 @@ def get_data():
             add_edge(current_edge)
     nb_vertices = len(g)
     # Initializing degree_list:
+    nb_vertices = len(g)
     degree_list = [[] for i in range(nb_vertices)]
     for vertex in g:
         degree = g[vertex][1]
@@ -413,7 +414,6 @@ def degree_one_rule(k):
 
 
 def degree_two_rule(k):
-    degree_two_rule.counter += 1
     S_kern, undelete, unmerge = [], [], []
     if max_degree < 2: return S_kern, undelete, unmerge, k
     while degree_list[2] != []:
@@ -435,7 +435,27 @@ def degree_two_rule(k):
     S_kern += S_kern_new
     undelete += undelete_new
     return S_kern, undelete, unmerge, k
-degree_two_rule.counter = 0
+
+
+def domination_rule(k):
+    for degree in range(3, max_degree):
+        for vertex in degree_list[degree]:
+            neighborhood = [vertex]
+            lowest_degree = max_degree + 1
+            for adj_vert in g[vertex][2]:
+                if not g[adj_vert][0]:
+                    neighborhood.append(adj_vert)
+                    if g[adj_vert][1] < lowest_degree:
+                        lowest_degree = g[adj_vert][1]
+                        low_degree_neighbor = adj_vert
+            for adj_vert in g[low_degree_neighbor][2] + [low_degree_neighbor]:
+                if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
+                    del_vert([adj_vert])
+                    undelete = [adj_vert]
+                    S_kern = [adj_vert]
+                    k -= 1
+                    return S_kern, undelete, k
+    return [], [], k
 
 
 def kernalization(k):
@@ -455,6 +475,10 @@ def kernalization(k):
     S_kern += S_kern_two
     undelete += undelete_two
     return S_kern, undelete, unmerge, k
+    S_kern_dom, undelete_dom, k = domination_rule(k)
+    S_kern += S_kern_dom
+    undelete += undelete_dom
+    return S_kern, undelete, k
 
 
 def vc_branch(k):
