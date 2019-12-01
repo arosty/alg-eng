@@ -473,6 +473,7 @@ def kernalization(k, branching_step):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     # Execute reduction rules:
+    unmerge = []
     S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, [], k
     S_kern_one, undelete_one, k = degree_one_rule(k)
