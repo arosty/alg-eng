@@ -520,11 +520,18 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = S_kern + vertices + S
                 break
     un_del_vert(undelete)
     un_merge_vert(unmerge)
     return S
+
+
+def correct_output(S):
+    S_new = []
+    for vertex in S:
+        S_new = append_to_S(S_new, [vertex])
+    return S_new
 
 
 def vc():
@@ -555,8 +562,10 @@ def vc():
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
-                    S += S_kern
+                    S = S_kern + S
                     break
+    print("#convert...")
+    S = correct_output(S)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
