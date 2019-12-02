@@ -511,7 +511,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += vertices + S_kern
+                S = S_kern + vertices + S
                 break
     un_del_vert(undelete)
     un_merge_vert(unmerge)
