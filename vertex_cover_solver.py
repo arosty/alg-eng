@@ -564,6 +564,7 @@ def vc():
                 if S is not None:
                     S = S_kern + S
                     break
+    print("#convert...")
     S = correct_output(S)
     print_result(S)
     print("#solution size: %s" % len(S))
