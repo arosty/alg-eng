@@ -583,4 +583,6 @@ def vc():
 
 
 get_data()
+print(nb_vertices)
+print(nb_edges)
 vc()
