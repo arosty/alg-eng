@@ -23,6 +23,7 @@ def add_edge(edge):
     """
     global max_degree
     global nb_edges
+    if edge[0] in g and edge[1] in g[edge[0]][2]: return
     #Increment edge counter
     nb_edges += 1
     #add edge in dictionary
