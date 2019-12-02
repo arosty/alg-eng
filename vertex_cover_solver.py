@@ -450,7 +450,6 @@ def degree_two_rule(k):
 
 
 def domination_rule(k):
-    print(max_degree)
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
             neighborhood = [vertex]
@@ -466,7 +465,6 @@ def domination_rule(k):
                     domination_rule.counter += 1
                     print('#DOMINATION rule')
                     print('#k = ' + str(k) + ', branch_node = ' + str(vc_branch.counter) + ', nb_vertices = ' + str(nb_vertices) + ', nb_edges = ' + str(nb_edges))
-                    print(max_degree)
                     del_vert([adj_vert])
                     undelete = [adj_vert]
                     S_kern = [adj_vert]
@@ -488,14 +486,17 @@ def kernalization(k):
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
-    # S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-    # S_kern += S_kern_two
-    # undelete += undelete_two
+    if vc_branch.counter % 5 == 0:
+        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+        S_kern += S_kern_two
+        undelete += undelete_two
+    else:
+        unmerge = []
     S_kern_dom, undelete_dom, k = domination_rule(k)
     S_kern += S_kern_dom
     undelete += undelete_dom
-    # return S_kern, undelete, unmerge, k
-    return S_kern, undelete, [], k
+    return S_kern, undelete, unmerge, k
+    # return S_kern, undelete, [], k
 
 
 def vc_branch(k):
