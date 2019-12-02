@@ -518,6 +518,13 @@ def vc_branch(k):
     return S
 
 
+def correct_output(S):
+    S_new = []
+    for vertex in S:
+        S_new = append_to_S(S_new, [vertex])
+    return S_new
+
+
 def vc():
     """
     INPUT: None
@@ -546,8 +553,9 @@ def vc():
             for k in range(kmin, nb_vertices):
                 S = vc_branch(k)
                 if S is not None:
-                    S += S_kern
+                    S = S_kern + S
                     break
+    S = correct_output(S)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
