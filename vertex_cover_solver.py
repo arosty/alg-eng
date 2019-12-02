@@ -517,7 +517,7 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound():
+    elif k == 0 or (vc_branch.counter % 10 == 0 and k < bound()):
         bound.counter += 1
         S = None
     else:
