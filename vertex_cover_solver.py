@@ -483,6 +483,8 @@ def kernalization(k):
         S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
+    else:
+        unmerge = []
     S_kern_dom, undelete_dom, k = domination_rule(k)
     S_kern += S_kern_dom
     undelete += undelete_dom
