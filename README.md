@@ -4,7 +4,17 @@ The project's goal is to solve the VERTEX COVER problem in the best computationa
 
 ## What is new ?
 
-This second version includes the following changes:
+This third version includes the following changes among many small improvements:
+* Reduction Rules:
+    - Implementation of degree zero reduction rule
+    - Updating degree one reduction rule
+    - Implementation of 'extreme reduction rule'
+    - Implementation of degree two reduction rule
+    - Implementation of domination rule
+* Benchmark:
+    - Many new columns about usage of reduction rules and lower bound
+
+The second version included the following changes:
 * Data structure :
     - Changing from local np.array list of edges to global dictionary incidence list 
     - Adding a global list that contains at index i all the vertices of degree i
