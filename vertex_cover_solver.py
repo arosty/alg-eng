@@ -482,10 +482,9 @@ def kernalization(k):
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
-    if vc_branch.counter % 2 == 0:
-        S_kern_dom, undelete_dom, k = domination_rule(k)
-        S_kern += S_kern_dom
-        undelete += undelete_dom
+    S_kern_dom, undelete_dom, k = domination_rule(k)
+    S_kern += S_kern_dom
+    undelete += undelete_dom
     return S_kern, undelete, unmerge, k
 
 
@@ -507,9 +506,11 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound():
-        bound.counter += 1
+    elif k == 0:
         S = None
+    # elif k < bound():
+    #     bound.counter += 1
+    #     S = None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
