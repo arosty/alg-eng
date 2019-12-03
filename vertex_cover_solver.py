@@ -508,9 +508,9 @@ def vc_branch(k):
     # If k is smaller than lower bound, no need to branch:
     elif k == 0:
         S = None
-    # elif k < bound():
-    #     bound.counter += 1
-    #     S = None
+    elif vc_branch.counter % 2 == 0 and k < bound():
+        bound.counter += 1
+        S = None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
