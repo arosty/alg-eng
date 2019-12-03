@@ -413,9 +413,9 @@ def degree_one_rule(k):
         # 'Delete' neighbors of degree one vertices:
         del_vert(degree_one_neighbors)
         undelete += degree_one_neighbors
-        # S_kern_new, undelete_new, k = extreme_reduction_rule(k)
-        # S_kern += S_kern_new
-        # undelete += undelete_new
+        S_kern_new, undelete_new, k = extreme_reduction_rule(k)
+        S_kern += S_kern_new
+        undelete += undelete_new
     return S_kern, undelete, k
 
 
@@ -438,9 +438,9 @@ def degree_two_rule(k):
             S_kern.append(vertex)
             unmerge.append(merged_point)
             k -= 1
-    # S_kern_new, undelete_new, k = extreme_reduction_rule(k)
-    # S_kern += S_kern_new
-    # undelete += undelete_new
+    S_kern_new, undelete_new, k = extreme_reduction_rule(k)
+    S_kern += S_kern_new
+    undelete += undelete_new
     return S_kern, undelete, unmerge, k
 
 
@@ -474,15 +474,15 @@ def kernalization(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     # Execute reduction rules:
-    S_kern, undelete = [], []
-    # S_kern, undelete, k = extreme_reduction_rule(k)
-    # if k < 0: return S_kern, undelete, [], k
-    # S_kern_one, undelete_one, k = degree_one_rule(k)
-    # S_kern += S_kern_one
-    # undelete += undelete_one
-    S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-    S_kern += S_kern_two
-    undelete += undelete_two
+    S_kern, undelete, k = extreme_reduction_rule(k)
+    if k < 0: return S_kern, undelete, [], k
+    S_kern_one, undelete_one, k = degree_one_rule(k)
+    S_kern += S_kern_one
+    undelete += undelete_one
+    # S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+    # S_kern += S_kern_two
+    # undelete += undelete_two
+    unmerge = []
     S_kern_dom, undelete_dom, k = domination_rule(k)
     S_kern += S_kern_dom
     undelete += undelete_dom
@@ -558,8 +558,7 @@ def vc():
         else:
             x = bound()
             bound.counter += 1
-            y = 0
-            # y = starter_reduction_rule()
+            y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
             for k in range(kmin, nb_vertices):
