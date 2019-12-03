@@ -300,9 +300,9 @@ def extreme_reduction_rule(k):
     # Execute degree-zero reduction rule:
     undelete += degree_zero_rule()
     # Check if k high enough, if not, set k to -1
-    if nb_vertices > k ** 2 + k or nb_edges > k ** 2:
-        extreme_reduction_rule.counter += 1
-        k = -1
+    # if nb_vertices > k ** 2 + k or nb_edges > k ** 2:
+    #     extreme_reduction_rule.counter += 1
+    #     k = -1
     return S_kern, undelete, k
 
 
@@ -476,9 +476,9 @@ def kernalization(k):
     # Execute reduction rules:
     S_kern, undelete, k = extreme_reduction_rule(k)
     if k < 0: return S_kern, undelete, [], k
-    # S_kern_one, undelete_one, k = degree_one_rule(k)
-    # S_kern += S_kern_one
-    # undelete += undelete_one
+    S_kern_one, undelete_one, k = degree_one_rule(k)
+    S_kern += S_kern_one
+    undelete += undelete_one
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
