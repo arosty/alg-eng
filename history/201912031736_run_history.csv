@@ -1,1 +1,25 @@
 file,time_in_seconds,solution_size,recursive_steps,first_lower_bound_difference,high_degree_rules,degree_zero_rules,extreme_reduction_rules,degree one rules,degree two rules,domination rules,lower_bounds,finished,solution_size_verified
+random_small/000002_000000000002.input,0.03s,0,0,0,0,0,0,0,0,0,0,1,correct
+random_small/000026_000000000260.input,0.21s,25,17,16,0,0,0,0,9,0,1,1,correct
+random_small/000070_000000000084.input,0.03s,12,7,7,0,0,0,0,6,0,1,1,correct
+random_small/000085_000000000850.input,1.33s,82,5,4,0,0,0,0,78,0,1,1,correct
+random_small/000100_000000001000.input,1.30s,96,2,1,0,0,0,0,95,0,1,1,correct
+random_small/000300_000000003000.input,43.63s,296,2,1,0,0,0,0,295,0,1,1,correct
+random_small/000400_000000004000.input,118.75s,396,2,1,0,0,0,0,395,0,1,1,correct
+random_small/000500_000000005000.input,262.78s,498,2,1,0,0,0,0,497,0,1,1,correct
+random_small/000800_000000008000.input,s,0,0	
+random_small/000900_000000002700.input,291.55s,872,89,775,0,0,0,0,784,0,1,1,correct
+random_small/001000_000000006000.input,s,0,0	
+dimacs_small/karate.graph.dimacs,0.03s,14,3,2,0,0,0,0,7,0,1,1,correct
+dimacs_small/dolphins.graph.dimacs,0.03s,34,6,28,0,0,0,0,17,6,1,1,correct
+dimacs_small/adjnoun.graph.dimacs,0.50s,59,29,38,0,0,0,0,156,19,11,1,correct
+dimacs_small/polbooks.graph.dimacs,0.06s,62,10,58,0,0,0,0,83,10,4,1,correct
+dimacs_small/football.graph.dimacs,40.65s,94,8730,92,0,0,0,0,11101,7316,4253,1,correct
+dimacs_small/email.graph.dimacs,53.74s,594,879,352,0,0,0,0,9601,871,417,1,correct	
+dimacs_small/power.graph.dimacs,146.26s,2203,288,566,0,0,0,0,2340,113,49,1,correct
+dimacs_small/polblogs.graph.dimacs,4.33s,560,59,204,0,0,0,0,1692,50,21,1,correct
+snap_small/as20000102.txt.dimacs,s,0,0	
+snap_small/email-Eu-core.txt.dimacs,81.53s,579,976,467,0,0,0,0,10172,973,452,1,correct
+snap_small/p2p-Gnutella08.txt.dimacs,67.89s,2054,34,111,0,0,0,0,1996,3,2,1,correct
+snap_small/p2p-Gnutella06.txt.dimacs,s,0,0	
+snap_small/p2p-Gnutella04.txt.dimacs,s,0,0	
