@@ -1,0 +1,25 @@
+file,time_in_seconds,solution_size,recursive_steps,first_lower_bound_difference,high_degree_rules,degree_zero_rules,extreme_reduction_rules,degree one rules,degree two rules,domination rules,lower_bounds,finished,solution_size_verified
+random_small/000002_000000000002.input,0.03s,0,0,0,0,0,0,0,0,0,0,1,correct
+random_small/000026_000000000260.input,0.04s,25,0,0,0,1,0,1,0,0,0,1,correct
+random_small/000070_000000000084.input,0.03s,12,0,0,0,1,0,1,0,0,0,1,correct
+random_small/000085_000000000850.input,0.04s,82,1,-2,1,3,0,1,1,0,1,1,correct
+random_small/000100_000000001000.input,0.04s,96,1,1,0,2,0,2,1,0,1,1,correct
+random_small/000300_000000003000.input,1.06s,296,1,-32,1,2,0,1,88,0,1,1,correct
+random_small/000400_000000004000.input,4.93s,396,1,-43,1,2,0,1,128,0,1,1,correct
+random_small/000500_000000005000.input,19.87s,498,1,-53,1,2,0,1,200,0,1,1,correct
+random_small/000800_000000008000.input,178.23s,796,1,-74,1,2,0,1,403,0,1,1,correct
+random_small/000900_000000002700.input,71.68s,872,14,433,4,9,0,6,665,0,1,1,correct
+random_small/001000_000000006000.input,s,0,,0
+dimacs_small/karate.graph.dimacs,0.03s,14,1,0,0,3,0,2,7,0,1,1,correct
+dimacs_small/dolphins.graph.dimacs,0.03s,34,2,7,0,4,0,3,25,1,1,1,correct
+dimacs_small/adjnoun.graph.dimacs,0.04s,59,12,15,2,16,1,11,61,4,3,1,correct
+dimacs_small/polbooks.graph.dimacs,0.04s,62,12,37,3,14,2,6,88,8,1,1,correct
+dimacs_small/football.graph.dimacs,125.99s,94,19774,67,3130,15297,3083,4320,27281,14408,5926,1,correct
+dimacs_small/email.graph.dimacs,0.80s,594,149,214,21,278,24,133,2543,131,45,1,correct
+dimacs_small/power.graph.dimacs,0.28s,2203,6,183,1,13,1,6,958,5,2,1,correct
+dimacs_small/polblogs.graph.dimacs,0.52s,560,14,160,4,30,2,15,980,11,4,1,correct
+snap_small/as20000102.txt.dimacs,0.40s,1052,1,240,0,3,0,2,169,0,1,1,correct
+snap_small/email-Eu-core.txt.dimacs,17.05s,579,922,300,132,1307,114,620,9035,870,314,1,correct
+snap_small/p2p-Gnutella08.txt.dimacs,1.00s,2054,1,45,1,4,0,2,877,0,1,1,correct
+snap_small/p2p-Gnutella06.txt.dimacs,16.93s,3405,21,902,12,53,12,20,9927,1,3,1,correct
+snap_small/p2p-Gnutella04.txt.dimacs,13.10s,4348,17,1025,3,30,7,18,5706,1,4,1,correct
