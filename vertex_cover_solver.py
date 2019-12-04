@@ -479,7 +479,7 @@ def kernalization(k):
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
-    if vc_branch.counter % 3 == 0:
+    if vc_branch.counter % 5 == 0:
         S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
