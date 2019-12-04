@@ -438,9 +438,9 @@ def degree_two_rule(k):
             S_kern.append(vertex)
             unmerge.append(merged_point)
             k -= 1
-    S_kern_new, undelete_new, k = extreme_reduction_rule(k)
-    S_kern += S_kern_new
-    undelete += undelete_new
+    # S_kern_new, undelete_new, k = extreme_reduction_rule(k)
+    # S_kern += S_kern_new
+    # undelete += undelete_new
     return S_kern, undelete, unmerge, k
 
 
@@ -474,11 +474,12 @@ def kernalization(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     # Execute reduction rules:
-    S_kern, undelete, k = extreme_reduction_rule(k)
-    if k < 0: return S_kern, undelete, [], k
-    S_kern_one, undelete_one, k = degree_one_rule(k)
-    S_kern += S_kern_one
-    undelete += undelete_one
+    # S_kern, undelete, k = extreme_reduction_rule(k)
+    # if k < 0: return S_kern, undelete, [], k
+    # S_kern_one, undelete_one, k = degree_one_rule(k)
+    # S_kern += S_kern_one
+    # undelete += undelete_one
+    S_kern, undelete = [], []
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
@@ -506,11 +507,9 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0:
+    elif k == 0 or k < bound():
+        bound.counter += 1
         S = None
-    # elif k < bound():
-    #     bound.counter += 1
-    #     S = None
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
