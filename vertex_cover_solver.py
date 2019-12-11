@@ -82,7 +82,6 @@ def del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
-    del_vert.counter += 1
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
@@ -104,7 +103,6 @@ def del_vert(vertices):
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
-del_vert.counter = 0
 
 def un_del_vert(vertices):
     """
@@ -364,7 +362,6 @@ def merge_vert(vertex, u, w):
     add_vertex(merged_point)
     nb_vertices += 1
     #add edges towards every neighbor only once 
-    remember = max_degree
     for z in [u, w]:
         for n in g[z][2]:
             if n not in g[merged_point][2]:
@@ -402,7 +399,7 @@ def degree_one_rule(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     S_kern, undelete = [],[]
-    if degree_list[1] != []:
+    while degree_list[1] != []:
         degree_one_rule.counter += 1
         # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
         degree_one_neighbors = get_degree_one_neighbors()
@@ -416,6 +413,17 @@ def degree_one_rule(k):
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
+    return S_kern, undelete, k
+
+
+def basic_rules(k):
+    S_kern, undelete = [], []
+    while True:
+        S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
+        S_kern_one, undelete_one, k = degree_one_rule(k)
+        undelete += undelete_ex + undelete_one
+        if S_kern_ex == [] and S_kern_one == []: break
+        S_kern += S_kern_ex + S_kern_one
     return S_kern, undelete, k
 
 
@@ -438,13 +446,14 @@ def degree_two_rule(k):
             S_kern.append(vertex)
             unmerge.append(merged_point)
             k -= 1
-    S_kern_new, undelete_new, k = extreme_reduction_rule(k)
-    S_kern += S_kern_new
-    undelete += undelete_new
+        S_kern_new, undelete_new, k = basic_rules(k)
+        S_kern += S_kern_new
+        undelete += undelete_new
     return S_kern, undelete, unmerge, k
 
 
 def domination_rule(k):
+    S_kern, undelete = [], []
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
             neighborhood = [vertex]
@@ -459,11 +468,14 @@ def domination_rule(k):
                 if adj_vert != vertex and adj_vert in neighborhood and all(u in ([adj_vert] + g[adj_vert][2]) for u in neighborhood):
                     domination_rule.counter += 1
                     del_vert([adj_vert])
-                    undelete = [adj_vert]
-                    S_kern = [adj_vert]
+                    undelete.append(adj_vert)
+                    S_kern.append(adj_vert)
                     k -= 1
-                    return S_kern, undelete, k
-    return [], [], k
+                    S_kern_new, undelete_new, k = basic_rules(k)
+                    S_kern += S_kern_new
+                    undelete += undelete_new
+                    break
+    return S_kern, undelete, k
 
 
 def kernalization(k):
