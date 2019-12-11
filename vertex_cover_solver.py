@@ -420,10 +420,12 @@ def basic_rules(k):
     S_kern, undelete = [], []
     while True:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
+        S_kern += S_kern_ex
+        undelete += undelete_ex
         if k < 0: break
         S_kern_one, undelete_one, k = degree_one_rule(k)
-        S_kern += S_kern_ex + S_kern_one
-        undelete += undelete_ex + undelete_one
+        S_kern += S_kern_one
+        undelete += undelete_one
         if (S_kern_ex == [] and S_kern_one == []) or k < 0: break
     return S_kern, undelete, k
 
