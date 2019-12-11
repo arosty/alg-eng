@@ -420,10 +420,12 @@ def basic_rules(k):
     S_kern, undelete = [], []
     while True:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
+        if k < 0: break
         S_kern_one, undelete_one, k = degree_one_rule(k)
-        undelete += undelete_ex + undelete_one
-        if S_kern_ex == [] and S_kern_one == []: break
+        if k < 0
         S_kern += S_kern_ex + S_kern_one
+        undelete += undelete_ex + undelete_one
+        if (S_kern_ex == [] and S_kern_one == []) or k < 0: break
     return S_kern, undelete, k
 
 
@@ -446,9 +448,11 @@ def degree_two_rule(k):
             S_kern.append(vertex)
             unmerge.append(merged_point)
             k -= 1
+        if k < 0: break
         S_kern_new, undelete_new, k = basic_rules(k)
         S_kern += S_kern_new
         undelete += undelete_new
+        if k < 0: break
     return S_kern, undelete, unmerge, k
 
 
@@ -474,6 +478,7 @@ def domination_rule(k):
                     S_kern_new, undelete_new, k = basic_rules(k)
                     S_kern += S_kern_new
                     undelete += undelete_new
+                    if k < 0: return S_kern, undelete, k
                     break
     return S_kern, undelete, k
 
@@ -491,9 +496,11 @@ def kernalization(k):
     S_kern_one, undelete_one, k = degree_one_rule(k)
     S_kern += S_kern_one
     undelete += undelete_one
+    if k < 0: return S_kern, undelete, [], k
     S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
     S_kern += S_kern_two
     undelete += undelete_two
+    if k < 0: return S_kern, undelete, unmerge, k
     S_kern_dom, undelete_dom, k = domination_rule(k)
     S_kern += S_kern_dom
     undelete += undelete_dom
