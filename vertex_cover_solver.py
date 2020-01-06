@@ -407,6 +407,7 @@ def degree_one_rule(k):
         neighbor = get_neighbor(vertex)
         k -= 1
         if k < 0: return S_kern, undelete, k
+        S_kern.append(neighbor)
         del_vert([neighbor])
         undelete.append(neighbor)
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
