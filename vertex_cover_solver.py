@@ -399,17 +399,16 @@ def degree_one_rule(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     S_kern, undelete = [],[]
-    while degree_list[1] != []:
+    while degree_list[1] != [] and k >= 0:
         degree_one_rule.counter += 1
-        # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
-        degree_one_neighbors = get_degree_one_neighbors()
-        # Reduce k according to new vertices:
-        k -= len(degree_one_neighbors)
+        # Get vertex with degree one:
+        vertex = degree_list[1][0]
+        # Get its neighbor
+        neighbor = get_neighbor(vertex)
+        k -= 1
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
-        # 'Delete' neighbors of degree one vertices:
-        del_vert(degree_one_neighbors)
-        undelete += degree_one_neighbors
+        del_vert([neighbor])
+        undelete.append(neighbor)
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
