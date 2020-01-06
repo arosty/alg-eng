@@ -325,24 +325,6 @@ def get_all_neighbors(vertex):
     return neighbors
 
 
-def get_degree_one_neighbors():
-    """
-    INPUT: None
-    get_degree_one_neighbors return the neighbors of all vertices of degree one
-    (if two vertices of degree one are adjacent to each other, it choses one of them)
-    OUTPUT: list
-    """
-    # Initialize list of neighbors of vertices with one degree:
-    neighbors = []
-    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
-    for vertex in degree_list[1]:
-        if vertex not in neighbors:
-            neighbor = get_neighbor(vertex)
-            if neighbor not in neighbors:
-                neighbors.append(neighbor)
-    return neighbors
-
-
 def merge_vert(vertex, u, w):
     """
     INPUT: vertex of degree 2, and its two neighbors u and w
