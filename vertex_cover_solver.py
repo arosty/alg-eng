@@ -494,13 +494,17 @@ def kernalization(k):
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     if k < 0: return S_kern, undelete, [], k
-    S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-    S_kern += S_kern_two
-    undelete += undelete_two
-    if k < 0: return S_kern, undelete, unmerge, k
-    S_kern_dom, undelete_dom, k = domination_rule(k)
-    S_kern += S_kern_dom
-    undelete += undelete_dom
+    else: k_old = k
+    while k >= 0:
+        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+        S_kern += S_kern_two
+        undelete += undelete_two
+        if k < 0: return S_kern, undelete, unmerge, k
+        S_kern_dom, undelete_dom, k = domination_rule(k)
+        S_kern += S_kern_dom
+        undelete += undelete_dom
+        if k == k_old: break
+        else: k_old = k
     return S_kern, undelete, unmerge, k
 
 
