@@ -12,7 +12,7 @@ def add_vertex(vertex):
     add_vertex adds a new vertex with default values
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
-    g[vertex] = [False, 0, []]
+    g[vertex] = [False, 0, [], False]
 
 
 def add_edge(edge):
