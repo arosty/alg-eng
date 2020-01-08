@@ -454,8 +454,9 @@ def domination_rule(k):
     S_kern, undelete = [], []
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
-            if dom_opt and not g[vertex][3]: continue
-            else: g[vertex][3] = False
+            if dom_opt:
+                if not g[vertex][3]: continue
+                else: g[vertex][3] = False
             neighborhood = [vertex]
             lowest_degree = max_degree + 1
             for adj_vert in g[vertex][2]:
