@@ -6,6 +6,9 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
+f_deg2 = 1
+f_dom = 1
+
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -466,23 +469,28 @@ def domination_rule(k):
     return S_kern, undelete, k
 
 
-def kernalization(k):
+def kernelization(k):
     """
-    INPUT: k is int 
-    kernalization applies all the kernelization rules, and returns the depth budget k changed by the kernelization, 
+    INPUT: k is int
+    kernelization applies all the kernelization rules, depending on the frequencies for branch counting , and returns the depth budget k changed by the kernelization, 
     the vertices to add to the vertex cover, and all the deleted vertices that have to be undeleted afterwards 
-    OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
+    OUTPUT: S_kern is list of vertices, undelete is list of vertices, k is int
     """
+    global f_deg2
+    global f_dom
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
-    if k < 0: return S_kern, undelete, [], k
-    S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-    S_kern += S_kern_two
-    undelete += undelete_two
+    unmerge = []
     if k < 0: return S_kern, undelete, unmerge, k
-    S_kern_dom, undelete_dom, k = domination_rule(k)
-    S_kern += S_kern_dom
-    undelete += undelete_dom
+    if vc_branch.counter%f_deg2 == 0:
+        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+        S_kern += S_kern_two
+        undelete += undelete_two
+        if k < 0: return S_kern, undelete, unmerge, k
+    if vc_branch.counter%f_dom == 0:
+        S_kern_dom, undelete_dom, k = domination_rule(k)
+        S_kern += S_kern_dom
+        undelete += undelete_dom
     return S_kern, undelete, unmerge, k
 
 
@@ -496,7 +504,7 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    S_kern, undelete, unmerge, k = kernalization(k)
+    S_kern, undelete, unmerge, k = kernelization(k)
     if k < 0:
         un_del_vert(undelete)
         un_merge_vert(unmerge)
@@ -550,7 +558,7 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _, _ = kernalization(nb_vertices - 1)
+        S_kern, _, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             x = bound()
