@@ -418,7 +418,7 @@ def degree_one_rule(k):
 
 def basic_rules(k):
     S_kern, undelete = [], []
-    while True:
+    while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
         S_kern += S_kern_ex
         undelete += undelete_ex
@@ -426,7 +426,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
-        if (S_kern_ex == [] and S_kern_one == []) or k < 0: break
+        if S_kern_ex == [] and S_kern_one == []: break
     return S_kern, undelete, k
 
 
@@ -493,18 +493,17 @@ def kernalization(k):
     """
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
-    if k < 0: return S_kern, undelete, [], k
-    else: k_old = k
+    unmerge = []
     while k >= 0:
-        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+        S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
+        unmerge += unmerge_two
         if k < 0: return S_kern, undelete, unmerge, k
         S_kern_dom, undelete_dom, k = domination_rule(k)
         S_kern += S_kern_dom
         undelete += undelete_dom
-        if k == k_old: break
-        else: k_old = k
+        if S_kern_two == [] and S_kern_dom == []: break
     return S_kern, undelete, unmerge, k
 
 
