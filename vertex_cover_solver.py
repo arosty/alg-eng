@@ -8,6 +8,7 @@ nb_edges = 0
 
 f_deg2 = 1
 f_dom = 1
+dom_opt = True
 
 def add_vertex(vertex):
     """
@@ -15,7 +16,9 @@ def add_vertex(vertex):
     add_vertex adds a new vertex with default values
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
-    g[vertex] = [False, 0, [], True]
+    global dom_opt
+    if dom_opt: g[vertex] = [False, 0, [], True]
+    else: g[vertex] = [False, 0, []]
 
 
 def add_edge(edge):
@@ -81,6 +84,7 @@ def del_vert(vertices):
     INPUT: vertices is list : vertices to 'delete'
     del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global dom_opt
     global max_degree
     global degree_list
     global nb_vertices
@@ -88,7 +92,8 @@ def del_vert(vertices):
     for vertex in vertices:
         # 'Delete' vertex:
         ###Deleting in g
-        g[vertex][0], g[vertex][3] = True, True
+        g[vertex][0] = True
+        if dom_opt: g[vertex][3] = True
         nb_vertices -= 1
         ###Deleting in degree_list and updating nb_edges
         degree_vertex = g[vertex][1]
@@ -99,7 +104,7 @@ def del_vert(vertices):
             ###Updating g
             g[adj_vert][1] -= 1
             if not g[adj_vert][0]:
-                g[adj_vert][3] = True
+                if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
@@ -113,6 +118,7 @@ def un_del_vert(vertices):
     INPUT: vertices is list : vertices to 'undelete'
     un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global dom_opt
     global max_degree
     global degree_list
     global nb_vertices
@@ -134,7 +140,7 @@ def un_del_vert(vertices):
             ###Updating g
             g[adj_vert][1] += 1
             if not g[adj_vert][0]:
-                g[adj_vert][3] = True
+                if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert-1].remove(adj_vert)
@@ -448,7 +454,7 @@ def domination_rule(k):
     S_kern, undelete = [], []
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
-            if not g[vertex][3]: continue
+            if dom_opt and not g[vertex][3]: continue
             else: g[vertex][3] = False
             neighborhood = [vertex]
             lowest_degree = max_degree + 1
