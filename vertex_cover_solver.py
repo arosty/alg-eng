@@ -325,24 +325,6 @@ def get_all_neighbors(vertex):
     return neighbors
 
 
-def get_degree_one_neighbors():
-    """
-    INPUT: None
-    get_degree_one_neighbors return the neighbors of all vertices of degree one
-    (if two vertices of degree one are adjacent to each other, it choses one of them)
-    OUTPUT: list
-    """
-    # Initialize list of neighbors of vertices with one degree:
-    neighbors = []
-    # Iterate through all vertices of degree one and append its neighbor to the list (if not added already):
-    for vertex in degree_list[1]:
-        if vertex not in neighbors:
-            neighbor = get_neighbor(vertex)
-            if neighbor not in neighbors:
-                neighbors.append(neighbor)
-    return neighbors
-
-
 def merge_vert(vertex, u, w):
     """
     INPUT: vertex of degree 2, and its two neighbors u and w
@@ -399,17 +381,17 @@ def degree_one_rule(k):
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
     S_kern, undelete = [],[]
-    while degree_list[1] != []:
+    while degree_list[1] != [] and k >= 0:
         degree_one_rule.counter += 1
-        # Get neighbors of vertices with degree one (if two are adjacent to each other, only one of them):
-        degree_one_neighbors = get_degree_one_neighbors()
-        # Reduce k according to new vertices:
-        k -= len(degree_one_neighbors)
+        # Get vertex with degree one:
+        vertex = degree_list[1][0]
+        # Get its neighbor
+        neighbor = get_neighbor(vertex)
+        k -= 1
         if k < 0: return S_kern, undelete, k
-        S_kern += degree_one_neighbors
-        # 'Delete' neighbors of degree one vertices:
-        del_vert(degree_one_neighbors)
-        undelete += degree_one_neighbors
+        S_kern.append(neighbor)
+        del_vert([neighbor])
+        undelete.append(neighbor)
         S_kern_new, undelete_new, k = extreme_reduction_rule(k)
         S_kern += S_kern_new
         undelete += undelete_new
