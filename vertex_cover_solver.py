@@ -491,7 +491,7 @@ def kernelization(k):
     while k >= 0 and counter < limit:
         counter += 1
         if vc_branch.counter%f_deg2 == 0:
-            S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
+            S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
             undelete += undelete_two
             unmerge += unmerge_two
