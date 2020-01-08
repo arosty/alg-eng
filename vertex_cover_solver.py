@@ -500,12 +500,12 @@ def kernelization(k, count):
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
     if k < 0: return S_kern, undelete, unmerge, k
-    if count%f_deg2 == 0
+    if count%f_deg2 == 0:
         S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
         if k < 0: return S_kern, undelete, unmerge, k
-    if count%f_dom == 0
+    if count%f_dom == 0:
         S_kern_dom, undelete_dom, k = domination_rule(k)
         S_kern += S_kern_dom
         undelete += undelete_dom
