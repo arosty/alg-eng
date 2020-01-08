@@ -6,6 +6,9 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
+limit_kern_start = float('inf')
+limit_kern_branch = float('inf')
+
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -491,10 +494,16 @@ def kernalization(k):
     the vertices to add to the vertex cover, and all the deleted vertices that have to be undeleted afterwards 
     OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
     """
+    global limit_kern_start
+    global limit_kern_branch
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
-    while k >= 0:
+    counter = 0
+    if vc_branch.counter == 0: limit = limit_kern_start
+    else: limit = limit_kern_branch
+    while k >= 0 and counter < limit:
+        counter += 1
         S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
         S_kern += S_kern_two
         undelete += undelete_two
