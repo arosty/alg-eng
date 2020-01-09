@@ -12,7 +12,7 @@ f_deg2 = 1
 f_dom = 1
 f_bound = 1
 
-constrained_branching = True
+constrained_branching = False
 dom_opt = True
 
 def add_vertex(vertex):
@@ -597,7 +597,7 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size > upper: return S, upper
         else: return [], sol_size
-    if sol_size + bound() > upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
     S_kern, undelete, unmerge, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
