@@ -6,6 +6,8 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
+limit_kern_start = float('inf')
+limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 dom_opt = True
@@ -411,7 +413,7 @@ def degree_one_rule(k):
 
 def basic_rules(k):
     S_kern, undelete = [], []
-    while True:
+    while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
         S_kern += S_kern_ex
         undelete += undelete_ex
@@ -419,7 +421,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
-        if (S_kern_ex == [] and S_kern_one == []) or k < 0: break
+        if S_kern_ex == [] and S_kern_one == []: break
     return S_kern, undelete, k
 
 
@@ -489,19 +491,27 @@ def kernelization(k):
     """
     global f_deg2
     global f_dom
+    global limit_kern_start
+    global limit_kern_branch
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
-    if k < 0: return S_kern, undelete, unmerge, k
-    if vc_branch.counter%f_deg2 == 0:
-        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-        S_kern += S_kern_two
-        undelete += undelete_two
-        if k < 0: return S_kern, undelete, unmerge, k
-    if vc_branch.counter%f_dom == 0:
-        S_kern_dom, undelete_dom, k = domination_rule(k)
-        S_kern += S_kern_dom
-        undelete += undelete_dom
+    counter = 0
+    if vc_branch.counter == 0: limit = limit_kern_start
+    else: limit = limit_kern_branch
+    while k >= 0 and counter < limit:
+        counter += 1
+        if vc_branch.counter%f_deg2 == 0:
+            S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
+            S_kern += S_kern_two
+            undelete += undelete_two
+            unmerge += unmerge_two
+            if k < 0: return S_kern, undelete, unmerge, k
+        if vc_branch.counter%f_dom == 0:
+            S_kern_dom, undelete_dom, k = domination_rule(k)
+            S_kern += S_kern_dom
+            undelete += undelete_dom
+        if S_kern_two == [] and S_kern_dom == []: break
     return S_kern, undelete, unmerge, k
 
 
