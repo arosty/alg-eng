@@ -552,7 +552,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += S_kern + vertices
+                S = S_kern + vertices + S
                 break
     un_del_vert(undelete)
     un_merge_vert(unmerge)
@@ -583,7 +583,7 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S += S_kern + vertices
+                S = S_kern + vertices + S
                 upper = sol_size + len(S)
     un_del_vert(undelete)
     un_merge_vert(unmerge)
@@ -593,6 +593,7 @@ def vc_branch_constrained(sol_size, upper):
 def correct_output(S):
     S_new = []
     for vertex in S:
+        print(vertex)
         S_new = append_to_S(S_new, [vertex])
     return S_new
 
@@ -618,7 +619,7 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _, _ = kernelization(nb_vertices - 1)
-        if is_edgeless(): S = []
+        if is_edgeless(): S = S_kern
         else:
             x = bound()
             bound.counter += 1
@@ -626,13 +627,13 @@ def vc():
             kmin = max(x, y)
             first_lower_bound_difference = x - y
             if constrained_branching:
-                upper = nb_vertices
+                upper = nb_vertices - 1
                 S = vc_branch_constrained(0, upper)
             else:
                 for k in range(kmin, nb_vertices):
                     S = vc_branch(k)
                     if S is not None: break
-            S += S_kern
+            S = S_kern + S
     print("#convert...")
     S = correct_output(S)
     print_result(S)
