@@ -593,7 +593,6 @@ def vc_branch_constrained(sol_size, upper):
 def correct_output(S):
     S_new = []
     for vertex in S:
-        print(vertex)
         S_new = append_to_S(S_new, [vertex])
     return S_new
 
