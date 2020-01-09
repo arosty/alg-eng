@@ -6,10 +6,15 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
+#max number of kernelization loops allowed for preproccesing kern
 limit_kern_start = float('inf')
+#max number of kernelization loops allowed while branching
 limit_kern_branch = float('inf')
+#reduction rules' frequencies
 f_deg2 = 1
 f_dom = 1
+f_deg3 = 1
+#if True, domination rule works with flags
 dom_opt = True
 
 def add_vertex(vertex):
