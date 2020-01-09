@@ -593,20 +593,18 @@ def heuristic():
 
 def vc_branch_constrained(sol_size, upper):
     vc_branch_constrained.counter += 1
+    S = None
     if is_edgeless():
-        if sol_size > upper: return None, upper
+        if sol_size > upper: return S, upper
         else: return [], sol_size
-    if sol_size + bound() > upper: return None, upper
+    if sol_size + bound() > upper: return S, upper
     S_kern, undelete, unmerge, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size <= upper:
             S = S_kern
             upper = sol_size
-        else: S = None
-    elif sol_size + bound() > upper:
-        bound.counter += 1
-        S = None
+    elif sol_size + bound() > upper: bound.counter += 1
     else:
         heur_upper = heuristic()
         upper = min(sol_size + heur_upper, upper)
