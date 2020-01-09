@@ -8,6 +8,9 @@ nb_edges = 0
 
 f_deg2 = 1
 f_dom = 1
+f_bound = 1
+
+constrained_branching = False
 
 def add_vertex(vertex):
     """
@@ -500,6 +503,7 @@ def vc_branch(k):
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: list of length at most k or None
     """
+    global f_bound
     vc_branch.counter += 1
     if k < 0: return None
     # Return empty list if no edges are given:
@@ -512,7 +516,7 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound():
+    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()):
         bound.counter += 1
         S = None
     else:
@@ -534,6 +538,37 @@ def vc_branch(k):
     return S
 
 
+def vc_branch_constrained(sol_size, upper):
+    vc_branch_constrained.counter += 1
+    if sol_size + bound() >= upper: return None
+    if is_edgeless(): return []
+    S_kern, undelete, unmerge, _ = kernelization(upper)
+    if is_edgeless():
+        if sol_size + len(S_kern) < upper:
+            S = S_kern
+            upper = sol_size + len(S)
+        else: S = None
+    elif sol_size + len(S_kern) + bound() >= upper:
+        bound.counter += 1
+        S = None
+    else:
+        u, neighbors = get_highest_degree_vertex()
+        for vertices in u, neighbors:
+            # 'Delete' first vertex from graph:    
+            del_vert(vertices)
+            # Call function recursively:
+            S = vc_branch_constrained(sol_size + len(S_kern), upper)
+            # 'Undelete' first vertex from graph:
+            un_del_vert(vertices)
+            # If vertex cover found return it plus the first vertex:
+            if S is not None:
+                S = S_kern + vertices + S
+                upper = min(upper, sol_size + len(S))
+    un_del_vert(undelete)
+    un_merge_vert(unmerge)
+    return S
+
+
 def correct_output(S):
     S_new = []
     for vertex in S:
@@ -547,7 +582,10 @@ def vc():
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
+    global constrained_branching
+    global nb_vertices
     vc_branch.counter = 0
+    vc_branch_constrained.counter = 0
     first_lower_bound_difference = 0
     high_degree_rule.counter = 0
     degree_zero_rule.counter = 0
@@ -559,18 +597,21 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _, _ = kernelization(nb_vertices - 1)
-        if is_edgeless(): S = S_kern
+        if is_edgeless(): S = []
         else:
             x = bound()
             bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
-            for k in range(kmin, nb_vertices):
-                S = vc_branch(k)
-                if S is not None:
-                    S = S_kern + S
-                    break
+            if constrained_branching:
+                upper = nb_vertices
+                S = vc_branch_constrained(0, upper)
+            else:
+                for k in range(kmin, nb_vertices):
+                    S = vc_branch(k)
+                    if S is not None: break
+            S += S_kern
     print("#convert...")
     S = correct_output(S)
     print_result(S)
