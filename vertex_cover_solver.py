@@ -552,7 +552,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S = S_kern + vertices + S
+                S += S_kern + vertices
                 break
     un_del_vert(undelete)
     un_merge_vert(unmerge)
@@ -583,8 +583,8 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S = S_kern + vertices + S
-                upper = min(upper, sol_size + len(S))
+                S += S_kern + vertices
+                upper = sol_size + len(S)
     un_del_vert(undelete)
     un_merge_vert(unmerge)
     return S
