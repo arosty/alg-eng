@@ -6,11 +6,14 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
+limit_kern_start = float('inf')
+limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_bound = 1
 
 constrained_branching = False
+dom_opt = True
 
 def add_vertex(vertex):
     """
@@ -18,7 +21,9 @@ def add_vertex(vertex):
     add_vertex adds a new vertex with default values
     OUTPUT: dict with each value list of 3 (boolean, int, list)
     """
-    g[vertex] = [False, 0, []]
+    global dom_opt
+    if dom_opt: g[vertex] = [False, 0, [], True]
+    else: g[vertex] = [False, 0, []]
 
 
 def add_edge(edge):
@@ -84,6 +89,7 @@ def del_vert(vertices):
     INPUT: vertices is list : vertices to 'delete'
     del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global dom_opt
     global max_degree
     global degree_list
     global nb_vertices
@@ -92,6 +98,7 @@ def del_vert(vertices):
         # 'Delete' vertex:
         ###Deleting in g
         g[vertex][0] = True
+        if dom_opt: g[vertex][3] = True
         nb_vertices -= 1
         ###Deleting in degree_list and updating nb_edges
         degree_vertex = g[vertex][1]
@@ -102,6 +109,7 @@ def del_vert(vertices):
             ###Updating g
             g[adj_vert][1] -= 1
             if not g[adj_vert][0]:
+                if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
@@ -115,6 +123,7 @@ def un_del_vert(vertices):
     INPUT: vertices is list : vertices to 'undelete'
     un_del_vert 'undeletes' the given vertices and updates the number of edges of all adjacent vertices
     """
+    global dom_opt
     global max_degree
     global degree_list
     global nb_vertices
@@ -136,6 +145,7 @@ def un_del_vert(vertices):
             ###Updating g
             g[adj_vert][1] += 1
             if not g[adj_vert][0]:
+                if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert-1].remove(adj_vert)
@@ -406,7 +416,7 @@ def degree_one_rule(k):
 
 def basic_rules(k):
     S_kern, undelete = [], []
-    while True:
+    while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
         S_kern += S_kern_ex
         undelete += undelete_ex
@@ -414,7 +424,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
-        if (S_kern_ex == [] and S_kern_one == []) or k < 0: break
+        if S_kern_ex == [] and S_kern_one == []: break
     return S_kern, undelete, k
 
 
@@ -449,6 +459,9 @@ def domination_rule(k):
     S_kern, undelete = [], []
     for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
+            if dom_opt:
+                if not g[vertex][3]: continue
+                else: g[vertex][3] = False
             neighborhood = [vertex]
             lowest_degree = max_degree + 1
             for adj_vert in g[vertex][2]:
@@ -481,19 +494,27 @@ def kernelization(k):
     """
     global f_deg2
     global f_dom
+    global limit_kern_start
+    global limit_kern_branch
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
-    if k < 0: return S_kern, undelete, unmerge, k
-    if vc_branch.counter%f_deg2 == 0:
-        S_kern_two, undelete_two, unmerge, k = degree_two_rule(k)
-        S_kern += S_kern_two
-        undelete += undelete_two
-        if k < 0: return S_kern, undelete, unmerge, k
-    if vc_branch.counter%f_dom == 0:
-        S_kern_dom, undelete_dom, k = domination_rule(k)
-        S_kern += S_kern_dom
-        undelete += undelete_dom
+    counter = 0
+    if vc_branch.counter == 0: limit = limit_kern_start
+    else: limit = limit_kern_branch
+    while k >= 0 and counter < limit:
+        counter += 1
+        if vc_branch.counter%f_deg2 == 0:
+            S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
+            S_kern += S_kern_two
+            undelete += undelete_two
+            unmerge += unmerge_two
+            if k < 0: return S_kern, undelete, unmerge, k
+        if vc_branch.counter%f_dom == 0:
+            S_kern_dom, undelete_dom, k = domination_rule(k)
+            S_kern += S_kern_dom
+            undelete += undelete_dom
+        if S_kern_two == [] and S_kern_dom == []: break
     return S_kern, undelete, unmerge, k
 
 
@@ -557,7 +578,7 @@ def vc_branch_constrained(sol_size, upper):
             # 'Delete' first vertex from graph:    
             del_vert(vertices)
             # Call function recursively:
-            S = vc_branch_constrained(sol_size + len(S_kern), upper)
+            S = vc_branch_constrained(sol_size + len(S_kern) + len(vertices), upper)
             # 'Undelete' first vertex from graph:
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
