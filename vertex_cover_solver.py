@@ -592,6 +592,7 @@ def heuristic():
 
 
 def vc_branch_constrained(sol_size, upper):
+    print(upper)
     vc_branch_constrained.counter += 1
     S = None
     if is_edgeless():
