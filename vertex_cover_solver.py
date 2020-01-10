@@ -10,6 +10,9 @@ limit_kern_start = float('inf')
 limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
+f_bound = 1
+
+constrained_branching = False
 dom_opt = True
 
 def add_vertex(vertex):
@@ -521,6 +524,7 @@ def vc_branch(k):
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: list of length at most k or None
     """
+    global f_bound
     vc_branch.counter += 1
     if k < 0: return None
     # Return empty list if no edges are given:
@@ -533,7 +537,7 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or k < bound():
+    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()):
         bound.counter += 1
         S = None
     else:
@@ -555,6 +559,70 @@ def vc_branch(k):
     return S
 
 
+def heuristic_processing(vertex, counter, dom_freq):
+    del_vert([vertex])
+    S_one, undelete_one, _ = degree_one_rule(nb_vertices)
+    S_two, undelete_two, unmerge_new, _ = degree_two_rule(nb_vertices)
+    S_new = [vertex] + S_one + S_two
+    undelete_new = [vertex] + undelete_one + undelete_two
+    # if counter % dom_freq == 0:
+    #     S_dom, undelete_dom = domination_rule(False)
+    #     S_new += S_dom
+    #     undelete_new += undelete_dom
+    #     current_dom_freq = max(1, int((nb_edges / 15000) ** 5))
+    #     if S_dom == []: dom_freq = current_dom_freq
+    #     else: dom_freq = max(1, min(dom_freq, current_dom_freq) // (1 + len(S_dom)))
+    return S_new, undelete_new, unmerge_new, dom_freq
+
+
+def heuristic():
+    S_heur, undelete, unmerge = [], [], []
+    dom_freq = 1
+    counter = 0
+    while not is_edgeless() and max_degree > 0:
+        counter += 1
+        vertex = degree_list[max_degree][0]
+        S_new, undelete_new, unmerge_new, dom_freq = heuristic_processing(vertex, counter, dom_freq)
+        S_heur += S_new
+        undelete += undelete_new
+        unmerge += unmerge_new
+    un_del_vert(undelete)
+    un_merge_vert(unmerge)
+    return len(S_heur)
+
+
+def vc_branch_constrained(sol_size, upper):
+    vc_branch_constrained.counter += 1
+    S = None
+    if is_edgeless():
+        if sol_size > upper: return S, upper
+        else: return [], sol_size
+    if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
+    S_kern, undelete, unmerge, _ = kernelization(upper)
+    sol_size += len(S_kern)
+    if is_edgeless():
+        if sol_size <= upper:
+            S = S_kern
+            upper = sol_size
+    elif sol_size + bound() > upper: bound.counter += 1
+    else:
+        heur_upper = heuristic()
+        upper = min(sol_size + heur_upper, upper)
+        u, neighbors = get_highest_degree_vertex()
+        for vertices in u, neighbors:
+            # 'Delete' first vertex from graph:    
+            del_vert(vertices)
+            # Call function recursively:
+            S_new, upper = vc_branch_constrained(sol_size + len(vertices), upper)
+            # 'Undelete' first vertex from graph:
+            un_del_vert(vertices)
+            # If vertex cover found return it plus the first vertex:
+            if S_new is not None: S = S_kern + vertices + S_new
+    un_del_vert(undelete)
+    un_merge_vert(unmerge)
+    return S, upper
+
+
 def correct_output(S):
     S_new = []
     for vertex in S:
@@ -568,7 +636,10 @@ def vc():
     function to call to find and print the vertex cover in a benchmark understandable way
     OUTPUT:None, prints directly in the console
     """
+    global constrained_branching
+    global nb_vertices
     vc_branch.counter = 0
+    vc_branch_constrained.counter = 0
     first_lower_bound_difference = 0
     high_degree_rule.counter = 0
     degree_zero_rule.counter = 0
@@ -587,16 +658,20 @@ def vc():
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
-            for k in range(kmin, nb_vertices):
-                S = vc_branch(k)
-                if S is not None:
-                    S = S_kern + S
-                    break
+            if constrained_branching:
+                upper = nb_vertices - 1
+                S, _ = vc_branch_constrained(0, upper)
+            else:
+                for k in range(kmin, nb_vertices):
+                    S = vc_branch(k)
+                    if S is not None: break
+            S = S_kern + S
     print("#convert...")
     S = correct_output(S)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
+    print("#recursive steps (constrained): %s" % vc_branch_constrained.counter)
     print("#first lower bound difference: %s" % first_lower_bound_difference)
     print("#high degree rules: %s" % high_degree_rule.counter)
     print("#degree zero rules: %s" % degree_zero_rule.counter)
