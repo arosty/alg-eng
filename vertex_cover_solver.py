@@ -554,6 +554,7 @@ def lp_rule(k):
     for j in range(numcols):
         if x[j] in [0,1]:
             vertex = my_colnames[j]
+            print(vertex)
             del_vert([vertex])
             if x[j] == 1:
                 S_lp.append(vertex)
