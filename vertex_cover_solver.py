@@ -1,5 +1,6 @@
-import sys
 from __future__ import print_function
+
+import sys
 import cplex
 from cplex.exceptions import CplexError
 
