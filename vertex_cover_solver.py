@@ -16,7 +16,7 @@ f_dom = 1
 f_deg3 = 1
 f_bound = 1
 #if True, second method of branching is used
-constrained_branching = False
+constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
@@ -597,7 +597,7 @@ def heuristic():
 
 
 def vc_branch_constrained(sol_size, upper):
-    print(upper)
+    print('#' + str(upper))
     vc_branch_constrained.counter += 1
     S = None
     if is_edgeless():
@@ -657,6 +657,8 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, _, _, _ = kernelization(nb_vertices - 1)
+        print('#' + str(len(S_kern)))
+        print('# +++')
         if is_edgeless(): S = S_kern
         else:
             x = bound()
