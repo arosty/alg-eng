@@ -517,7 +517,7 @@ def mipParam():
     my_rownames = []
     #Actual rows are going to be filled during the for loop
     rows = []
-    for degree in range(max_degree)
+    for degree in range(max_degree):
         for vertex in degree_list[degree]:
             my_colnames.append(vertex)
             for neigh in g[vertex][2]:
