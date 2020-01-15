@@ -546,6 +546,12 @@ def lp_rule(k):
     # prob.parameters.mip.tolerances.absmipgap = 1e-15
     #fill the CPLEX problem with all correct parameters
     prob.objective.set_sense(prob.objective.sense.minimize)
+    print(my_colnames)
+    print(my_rownames)
+    print(nb_edges)
+    print(nb_vertices)
+    print(len(my_colnames))
+    print(len(my_rownames))
     prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
     prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
     #Solve the CPLEX problem
@@ -557,7 +563,6 @@ def lp_rule(k):
     for j in range(numcols):
         if x[j] in [0,1]:
             vertex = my_colnames[j]
-            print(vertex)
             del_vert([vertex])
             if x[j] == 1:
                 S_lp.append(vertex)
