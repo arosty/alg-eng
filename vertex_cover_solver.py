@@ -553,8 +553,8 @@ def lp_rule(k):
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
-            del_vert([vertex])
             vertex = my_colnames[j]
+            del_vert([vertex])
             if x[j] == 1:
                 S_lp.append(vertex)
                 k -= 1
