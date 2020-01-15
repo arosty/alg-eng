@@ -1,4 +1,7 @@
 import sys
+from __future__ import print_function
+import cplex
+from cplex.exceptions import CplexError
 
 g = {}
 max_degree = 0
@@ -14,6 +17,7 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
+f_lp = 1
 f_bound = 1
 #if True, second method of branching is used
 constrained_branching = False
@@ -490,6 +494,75 @@ def domination_rule(k):
     return S_kern, undelete, k
 
 
+def mipParam():
+    """
+    INPUT: NONE
+    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
+    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+    """
+    global nb_vertices
+    global nb_edges
+    #Objective function is sum with all factors set to 1
+    my_obj = [1]*nb_vertices
+    #all variables bounded by 0 (default) and 1
+    my_ub = [1]*nb_vertices
+    #All variables are integers
+    my_ctype = 'I'*nb_vertices
+    #each edge is a greater-than 1 constraint 
+    my_rhs = [1]*nb_edges
+    my_sense = 'G'*nb_edges
+    #name of the vertices and of the columns are left to fill
+    my_colnames = []
+    my_rownames = []
+    #Actual rows are going to be filled during the for loop
+    rows = []
+    for vertex in g:
+        my_colnames.append(vertex)
+        for neigh in g[vertex][2]:
+            if neigh > vertex:              ## VERTICES IN G NOT SORTED!?
+                my_rownames.append("e %s %s" % (vertex,neigh))
+                rows.append([[vertex,neigh],[1,1]])
+    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+
+
+def lp_rule(k):
+    """
+    INPUT: None
+    prints the vertex cover corresponding to global g using cplex solver
+    OUTPUT: None
+    """
+    #get parameters of the CPLEX problem
+    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
+    #initialize the CPLEX problem
+    prob = cplex.Cplex()
+    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
+    prob.set_results_stream(None)
+    prob.parameters.workmem = 1536
+    # prob.parameters.mip.tolerances.mipgap = 1e-15
+    # prob.parameters.mip.tolerances.absmipgap = 1e-15
+    #fill the CPLEX problem with all correct parameters
+    prob.objective.set_sense(prob.objective.sense.minimize)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
+    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
+    #Solve the CPLEX problem
+    prob.solve()
+    #print the solution 
+    numcols = prob.variables.get_num()
+    x = prob.solution.get_values()
+    S_lp, undelete = [], []
+    for j in range(numcols):
+        if x[j] in [0,1]:
+            del_vert([vertex])
+            vertex = my_colnames[j]
+            if x[j] == 1:
+                S_lp.append(vertex)
+                k -= 1
+                if k < 0: return S_lp, undelete, k
+            undelete.append(vertex)
+    return S_lp, undelete, k
+
+
+
 def kernelization(k):
     """
     INPUT: k is int
@@ -499,6 +572,7 @@ def kernelization(k):
     """
     global f_deg2
     global f_dom
+    global f_lp
     global limit_kern_start
     global limit_kern_branch
     # Execute reduction rules:
@@ -514,12 +588,17 @@ def kernelization(k):
             S_kern += S_kern_two
             undelete += undelete_two
             unmerge += unmerge_two
-            if k < 0: return S_kern, undelete, unmerge, k
+            if k < 0: break
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
             undelete += undelete_dom
-        if S_kern_two == [] and S_kern_dom == []: break
+            if k < 0: break
+        if vc_branch.counter%f_lp == 0:
+            S_lp, undelete_lp, k = lp_rule(k)
+            S_kern += S_lp
+            undelete += undelete_lp
+        if S_kern_two == [] and S_kern_dom == []: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undelete, unmerge, k
 
 
