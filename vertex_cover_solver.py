@@ -517,11 +517,14 @@ def mipParam():
     my_rownames = []
     #Actual rows are going to be filled during the for loop
     rows = []
-    for vertex in g:
-        my_colnames.append(vertex)
-        for neigh in g[vertex][2]:
-            if neigh > vertex:              ## VERTICES IN G NOT SORTED!?
-                my_rownames.append("e %s %s" % (vertex,neigh))
+    for degree in range(max_degree)
+        for vertex in degree_list[degree]:
+            my_colnames.append(vertex)
+            for neigh in g[vertex][2]:
+                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
+                rowname = "e %s %s" % (vertex,neigh)
+                if g[neigh][1] == g[vertex][1] and rowname in my_rownames: continue
+                my_rownames.append(rowname)
                 rows.append([[vertex,neigh],[1,1]])
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
@@ -562,7 +565,6 @@ def lp_rule(k):
                 if k < 0: return S_lp, undelete, k
             undelete.append(vertex)
     return S_lp, undelete, k
-
 
 
 def kernelization(k):
