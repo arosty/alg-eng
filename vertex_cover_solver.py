@@ -522,9 +522,10 @@ def mipParam():
             my_colnames.append(str(vertex))
             for neigh in g[vertex][2]:
                 if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
-                if g[neigh][1] == g[vertex][1] and [[neigh,vertex],[1,1]] in rows: continue
+                new_row = [[str(neigh),str(vertex)],[1,1]]
+                if g[neigh][1] == g[vertex][1] and new_row in rows: continue
                 my_rownames.append("e %s %s" % (vertex,neigh))
-                rows.append([[vertex,neigh],[1,1]])
+                rows.append(new_row)
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
 
