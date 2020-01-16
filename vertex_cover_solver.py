@@ -746,6 +746,7 @@ def vc():
             bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
+            kmin = 93
             first_lower_bound_difference = x - y
             if constrained_branching:
                 upper = nb_vertices - 1
