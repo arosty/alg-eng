@@ -467,7 +467,7 @@ def degree_two_rule(k):
 
 def domination_rule(k):
     S_kern, undelete = [], []
-    for degree in range(3, max_degree):
+    for degree in range(3, max_degree+1):
         for vertex in degree_list[degree]:
             if dom_opt:
                 if not g[vertex][3]: continue
@@ -517,7 +517,7 @@ def mipParam():
     my_rownames = []
     #Actual rows are going to be filled during the for loop
     rows = []
-    for degree in range(max_degree):
+    for degree in range(max_degree+1):
         for vertex in degree_list[degree]:
             my_colnames.append(vertex)
             for neigh in g[vertex][2]:
@@ -546,12 +546,6 @@ def lp_rule(k):
     # prob.parameters.mip.tolerances.absmipgap = 1e-15
     #fill the CPLEX problem with all correct parameters
     prob.objective.set_sense(prob.objective.sense.minimize)
-    # print(my_colnames)
-    # print(my_rownames)
-    # print(nb_edges)
-    # print(nb_vertices)
-    # print(len(my_colnames))
-    # print(len(my_rownames))
     prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
     prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
     #Solve the CPLEX problem
@@ -584,18 +578,6 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
-    real_nb_vertices1 = 0
-    for degree in range(max_degree):
-        for vertex in degree_list[degree]:
-            real_nb_vertices1 += 1
-    real_nb_vertices2 = 0
-    for vertex in g:
-        if not g[vertex][0]: real_nb_vertices2 +=1
-    print('---')
-    if real_nb_vertices1 != nb_vertices or real_nb_vertices2 != nb_vertices:
-        print(real_nb_vertices1)
-        print(real_nb_vertices2)
-        print(nb_vertices)
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
@@ -615,7 +597,7 @@ def kernelization(k):
             S_kern += S_kern_dom
             undelete += undelete_dom
             if k < 0: break
-        if vc_branch.counter%f_lp == 2:
+        if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
