@@ -602,9 +602,7 @@ def kernelization(k):
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
-            print("# " + str(S_lp))
-        # if is_edgeless() or (S_kern_two == [] and S_kern_dom == []): break     # TODO: Try one last time! if haven't tried one of the above before (counter)
-        if is_edgeless(): break
+        if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undelete, unmerge, k
 
 
