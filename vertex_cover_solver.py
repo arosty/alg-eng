@@ -592,8 +592,10 @@ def kernelization(k):
     for vertex in g:
         if not g[vertex][0]: real_nb_vertices2 +=1
     print('---')
-    print(real_nb_vertices1 == nb_vertices)
-    print(real_nb_vertices2 == nb_vertices)
+    if real_nb_vertices1 != nb_vertices or real_nb_vertices2 != nb_vertices:
+        print(real_nb_vertices1)
+        print(real_nb_vertices2)
+        print(nb_vertices)
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
