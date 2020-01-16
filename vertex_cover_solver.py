@@ -508,7 +508,7 @@ def mipParam():
     #all variables bounded by 0 (default) and 1
     my_ub = [1]*nb_vertices
     #All variables are integers
-    my_ctype = 'I'*nb_vertices
+    my_ctype = 'C'*nb_vertices
     #each edge is a greater-than 1 constraint 
     my_rhs = [1]*nb_edges
     my_sense = 'G'*nb_edges
