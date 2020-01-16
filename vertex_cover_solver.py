@@ -519,7 +519,7 @@ def mipParam():
     rows = []
     for degree in range(max_degree+1):
         for vertex in degree_list[degree]:
-            my_colnames.append(vertex)
+            my_colnames.append(str(vertex))
             for neigh in g[vertex][2]:
                 if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
                 if g[neigh][1] == g[vertex][1] and [[neigh,vertex],[1,1]] in rows: continue
@@ -556,6 +556,8 @@ def lp_rule(k):
     for j in range(numcols):
         if x[j] in [0,1]:
             vertex = my_colnames[j]
+            # If vertex is merged point convert it from string to triple:
+            if vertex[0] == '(': vertex = eval(vertex)
             del_vert([vertex])
             if x[j] == 1:
                 S_lp.append(vertex)
@@ -591,7 +593,7 @@ def kernelization(k):
             undelete += undelete_two
             unmerge += unmerge_two
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_dom == 1:
+        if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
             undelete += undelete_dom
