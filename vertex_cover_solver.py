@@ -1,8 +1,8 @@
-from __future__ import print_function
+# from __future__ import print_function
 
 import sys
-import cplex
-from cplex.exceptions import CplexError
+# import cplex
+# from cplex.exceptions import CplexError
 
 g = {}
 max_degree = 0
@@ -545,7 +545,7 @@ def lp_rule(k):
     # prob.parameters.mip.tolerances.absmipgap = 1e-15
     #fill the CPLEX problem with all correct parameters
     prob.objective.set_sense(prob.objective.sense.minimize)
-    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype)
     prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
     #Solve the CPLEX problem
     prob.solve()
