@@ -426,7 +426,7 @@ def degree_one_rule(k):
 
 def basic_rules(k):
     S_kern, undelete = [], []
-    while k >= 0:
+    'while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
         S_kern += S_kern_ex
         undelete += undelete_ex
@@ -434,7 +434,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
-        if S_kern_ex == [] and S_kern_one == []: break
+        if S_kern_ex == [] and S_ke'rn_one == []: break
     return S_kern, undelete, k
 
 
@@ -545,7 +545,7 @@ def lp_rule(k):
     # prob.parameters.mip.tolerances.absmipgap = 1e-15
     #fill the CPLEX problem with all correct parameters
     prob.objective.set_sense(prob.objective.sense.minimize)
-    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
     prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
     #Solve the CPLEX problem
     prob.solve()
@@ -585,18 +585,18 @@ def kernelization(k):
     else: limit = limit_kern_branch
     while k >= 0 and counter < limit:
         counter += 1
-        if vc_branch.counter%f_deg2 == 0:
+        if vc_branch.counter%f_deg2 == 1:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
             undelete += undelete_two
             unmerge += unmerge_two
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_dom == 0:
+        if vc_branch.counter%f_dom == 1:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
             undelete += undelete_dom
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_lp == 0:
+        if vc_branch.counter%f_lp == 1:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
