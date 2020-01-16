@@ -522,9 +522,8 @@ def mipParam():
             my_colnames.append(vertex)
             for neigh in g[vertex][2]:
                 if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
-                rowname = "e %s %s" % (vertex,neigh)
-                if g[neigh][1] == g[vertex][1] and rowname in my_rownames: continue
-                my_rownames.append(rowname)
+                if g[neigh][1] == g[vertex][1] and [[neigh,vertex],[1,1]] in rows: continue
+                my_rownames.append("e %s %s" % (vertex,neigh))
                 rows.append([[vertex,neigh],[1,1]])
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
@@ -537,10 +536,10 @@ def lp_rule(k):
     """
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
-    # print(nb_edges)
-    # print(nb_vertices)
-    # print(len(my_colnames))
-    # print(len(my_rownames))
+    print(nb_edges)
+    print(nb_vertices)
+    print(len(my_colnames))
+    print(len(my_rownames))
     #initialize the CPLEX problem
     prob = cplex.Cplex()
     #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
