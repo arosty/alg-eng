@@ -584,6 +584,16 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
+    real_nb_vertices1 = 0
+    for degree in range(max_degree):
+        for vertex in degree_list[degree]:
+            real_nb_vertices1 += 1
+    real_nb_vertices2 = 0
+    for vertex in g:
+        if not g[vertex][0]: real_nb_vertices2 +=1
+    print('---')
+    print(real_nb_vertices1 == nb_vertices)
+    print(real_nb_vertices2 == nb_vertices)
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
@@ -603,7 +613,7 @@ def kernelization(k):
             S_kern += S_kern_dom
             undelete += undelete_dom
             if k < 0: break
-        if vc_branch.counter%f_lp == 0:
+        if vc_branch.counter%f_lp == 2:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
