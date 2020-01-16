@@ -1,8 +1,8 @@
-# from __future__ import print_function
+from __future__ import print_function
 
 import sys
-# import cplex
-# from cplex.exceptions import CplexError
+import cplex
+from cplex.exceptions import CplexError
 
 g = {}
 max_degree = 0
