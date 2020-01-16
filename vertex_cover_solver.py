@@ -1,8 +1,8 @@
-from __future__ import print_function
+# from __future__ import print_function
 
 import sys
-import cplex
-from cplex.exceptions import CplexError
+# import cplex
+# from cplex.exceptions import CplexError
 
 g = {}
 max_degree = 0
@@ -522,10 +522,9 @@ def mipParam():
             my_colnames.append(str(vertex))
             for neigh in g[vertex][2]:
                 if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
-                new_row = [[str(neigh),str(vertex)],[1,1]]
-                if g[neigh][1] == g[vertex][1] and new_row in rows: continue
+                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
                 my_rownames.append("e %s %s" % (vertex,neigh))
-                rows.append(new_row)
+                rows.append([[str(vertex),str(neigh)],[1,1]])
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
 
