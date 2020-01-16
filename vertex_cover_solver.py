@@ -596,7 +596,7 @@ def kernelization(k):
             S_kern += S_kern_dom
             undelete += undelete_dom
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_lp == 1:
+        if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
