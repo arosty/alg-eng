@@ -537,6 +537,10 @@ def lp_rule(k):
     """
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
+    # print(nb_edges)
+    # print(nb_vertices)
+    # print(len(my_colnames))
+    # print(len(my_rownames))
     #initialize the CPLEX problem
     prob = cplex.Cplex()
     #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
@@ -546,12 +550,6 @@ def lp_rule(k):
     # prob.parameters.mip.tolerances.absmipgap = 1e-15
     #fill the CPLEX problem with all correct parameters
     prob.objective.set_sense(prob.objective.sense.minimize)
-    # print(my_colnames)
-    # print(my_rownames)
-    print(nb_edges)
-    print(nb_vertices)
-    print(len(my_colnames))
-    print(len(my_rownames))
     prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
     prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
     #Solve the CPLEX problem
@@ -597,17 +595,17 @@ def kernelization(k):
             S_kern += S_kern_two
             undelete += undelete_two
             unmerge += unmerge_two
-            if k < 0: break
+            if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
             undelete += undelete_dom
-            if k < 0: break
+            if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             undelete += undelete_lp
-        if S_kern_two == [] and S_kern_dom == []: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
+        if is_edgeless() or (S_kern_two == [] and S_kern_dom == []): break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undelete, unmerge, k
 
 
