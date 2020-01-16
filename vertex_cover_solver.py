@@ -536,10 +536,6 @@ def lp_rule(k):
     """
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
-    print(nb_edges)
-    print(nb_vertices)
-    print(len(my_colnames))
-    print(len(my_rownames))
     #initialize the CPLEX problem
     prob = cplex.Cplex()
     #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
