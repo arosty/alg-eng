@@ -552,6 +552,7 @@ def lp_rule(k):
     #print the solution 
     numcols = prob.variables.get_num()
     x = prob.solution.get_values()
+    print(x)
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
