@@ -601,6 +601,7 @@ def kernelization(k):
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
+            print(S_lp)
             S_kern += S_lp
             undelete += undelete_lp
         if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
