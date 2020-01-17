@@ -14,9 +14,9 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
-f_bound = 10000
+f_bound = 1
 #if True, second method of branching is used
-constrained_branching = False
+constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
@@ -526,8 +526,8 @@ def kernelization(k):
         if vc_branch.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
-            if undelete_two != []: undo_list.append([1, undelete_two])
             if unmerge_two != []: undo_list.append([2, unmerge_two])
+            if undelete_two != []: undo_list.append([1, undelete_two])
             if k < 0: return S_kern, undo_list, k
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
@@ -618,8 +618,8 @@ def heuristic():
         vertex = degree_list[max_degree][0]
         S_new, undelete_new, unmerge_new, dom_freq = heuristic_processing(vertex, counter, dom_freq)
         S_heur += S_new
-        if undelete_new != []: undo_list.append([1, undelete_new])
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
+        if undelete_new != []: undo_list.append([1, undelete_new])
     undo(undo_list)
     return len(S_heur)
 
@@ -691,7 +691,6 @@ def vc():
         S_kern, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            print("# nb_edges: ", nb_edges)
             x = bound()
             bound.counter += 1
             y = starter_reduction_rule()
@@ -703,7 +702,7 @@ def vc():
             else:
                 upper_bound = nb_vertices -1
                 for k in range(kmin, nb_vertices):
-                    print("#", k)
+                    print("# k = ", k)
                     S = vc_branch(k)
                     if S is not None: break
             try:
