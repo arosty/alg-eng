@@ -16,7 +16,7 @@ f_dom = 1
 f_deg3 = 1
 f_bound = 1
 #if True, second method of branching is used
-constrained_branching = True
+constrained_branching = False
 #if True, domination rule works with flags
 dom_opt = True
 
@@ -108,11 +108,7 @@ def del_vert(vertices):
         ###Deleting in degree_list and updating nb_edges
         degree_vertex = g[vertex][1]
         nb_edges -= degree_vertex
-        try:
-            degree_list[degree_vertex].remove(vertex)
-        except:
-            print("# vertex ", vertex, " is not in degree_list at degree ", degree_vertex, " \n#degree_list: \n#", degree_list)
-            raise
+        degree_list[degree_vertex].remove(vertex)
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
             ###Updating g
@@ -445,14 +441,7 @@ def degree_two_rule(k):
     while degree_list[2] != []:
         degree_two_rule.counter += 1
         vertex = degree_list[2][0]
-        try:
-            [u, w] = get_all_neighbors(vertex)
-        except:
-            print("#error: ", sys.exc_info()[0])
-            print("#vertex: ", vertex)
-            print("#g[vertex]", g[vertex])
-            print("#get_all_neighbors(vertex) : ", get_all_neighbors(vertex))
-            raise
+        [u, w] = get_all_neighbors(vertex)
         if w in g[u][2]:
             if k - 2 < 0: return S_kern, undelete, unmerge, k - 2
             del_vert([vertex, u, w])
@@ -658,13 +647,7 @@ def vc_branch_constrained(sol_size, upper):
 def correct_output(S):
     S_new = []
     for vertex in S:
-        try:
-            S_new = append_to_S(S_new, [vertex])
-        except:
-            print("#problem correcting output at vertex: ", vertex)
-            print("#     for a S_new = ", S_new)
-            print("#     and a S = ", S)
-            raise
+        S_new = append_to_S(S_new, [vertex])
     return S_new
 
 
@@ -700,18 +683,10 @@ def vc():
                 upper = nb_vertices - 1
                 S, _ = vc_branch_constrained(0, upper)
             else:
-                upper_bound = nb_vertices -1
                 for k in range(kmin, nb_vertices):
-                    print("# k = ", k)
                     S = vc_branch(k)
                     if S is not None: break
-            try:
-                S = S_kern + S
-            except:
-                print ("# bounds : ", kmin, upper_bound)
-                print("# S_kern: ", len(S_kern), S_kern)
-                print("# S: ", S)
-                raise
+            S = S_kern + S
     print("#convert...")
     S = correct_output(S)
     print_result(S)
