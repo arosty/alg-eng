@@ -112,6 +112,7 @@ def del_vert(vertices):
             degree_list[degree_vertex].remove(vertex)
         except:
             print("# vertex ", vertex, " is not in degree_list at degree ", degree_vertex, " \n#degree_list: \n#", degree_list)
+            raise
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
             ###Updating g
