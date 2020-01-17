@@ -504,13 +504,13 @@ def lpParam():
     global nb_vertices
     global nb_edges
     #Objective function is sum with all factors set to 1
-    my_obj = [1 for i in range(nb_vertices)]
+    my_obj = [1]*nb_vertices
     #all variables bounded by 0 (default) and 1
-    my_ub = [1 for i in range(nb_vertices)]
+    my_ub = [1]*nb_vertices
     #All variables are integers
     my_ctype = 'C'*nb_vertices
     #each edge is a greater-than 1 constraint 
-    my_rhs = [1 for i  in range(nb_edges)]
+    my_rhs = [1]*nb_edges
     my_sense = 'G'*nb_edges
     #name of the vertices and of the columns are left to fill
     my_colnames = []
@@ -534,9 +534,9 @@ def lp_rule(k):
     prints the vertex cover corresponding to global g using cplex solver
     OUTPUT: None
     """
-    print("....." + str(nb_vertices))
-    print("......" + str(nb_edges))
-    print(k)
+    # print("....." + str(nb_vertices))
+    # print("......" + str(nb_edges))
+    # print(k)
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
     #initialize the CPLEX problem
@@ -555,7 +555,7 @@ def lp_rule(k):
     #print the solution 
     numcols = prob.variables.get_num()
     x = prob.solution.get_values()
-    print(x)
+    # print(x)
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
@@ -583,8 +583,8 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
-    print("..." + str(nb_vertices))
-    print("...." + str(nb_edges))
+    # print("..." + str(nb_vertices))
+    # print("...." + str(nb_edges))
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
@@ -606,7 +606,11 @@ def kernelization(k):
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
-            print(S_lp)
+            if S_lp != []:
+                print('!!!')
+                print(vc_branch.counter)
+                print(S_lp)
+                print(k)
             S_kern += S_lp
             undelete += undelete_lp
         if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
@@ -621,9 +625,9 @@ def vc_branch(k):
     """
     global f_bound
     vc_branch.counter += 1
-    print('-----------')
-    print(vc_branch.counter)
-    print(k)
+    # print('-----------')
+    # print(vc_branch.counter)
+    # print(k)
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
