@@ -1,12 +1,13 @@
 # Set False if cplex not installed on current machine:
 use_cplex = True
 
-import sys
 # Import cplex only if set to True:
 if use_cplex:
     from __future__ import print_function
     import cplex
     from cplex.exceptions import CplexError
+
+import sys
 
 g = {}
 max_degree = 0
