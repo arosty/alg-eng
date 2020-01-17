@@ -29,6 +29,8 @@ constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
+if constrained_branching: S_upper, upper = [], 0
+
 def add_vertex(vertex):
     """
     INPUT: g is dict with each value list of length 3 (boolean, int, list), vertex is str
@@ -542,12 +544,7 @@ def lpParam():
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
 
-def lp_rule(k):
-    """
-    INPUT: None
-    prints the vertex cover corresponding to global g using cplex solver
-    OUTPUT: None
-    """
+def lp():
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
     #initialize the CPLEX problem
@@ -564,6 +561,17 @@ def lp_rule(k):
     #print the solution 
     numcols = prob.variables.get_num()
     x = prob.solution.get_values()
+    return x, numcols, my_colnames
+
+
+def lp_rule(k):
+    """
+    INPUT: None
+    prints the vertex cover corresponding to global g using cplex solver
+    OUTPUT: None
+    """
+    x, numcols, my_colnames = lp()
+    if sum(x) > k: return [], [], -1
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
@@ -577,6 +585,11 @@ def lp_rule(k):
                 k -= 1
                 if k < 0: return S_lp, undelete, k
     return S_lp, undelete, k
+
+
+def lp_bound():
+    x, _, _ = lp()
+    return sum(x)
 
 
 def kernelization(k):
@@ -702,38 +715,52 @@ def heuristic():
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
     undo(undo_list)
-    return len(S_heur)
+    return S_heur
 
 
-def vc_branch_constrained(sol_size, upper):
+def update_lower(sol_size, lower):
+    lower = max(lower, sol_size + clique_bound())
+    if use_cplex: lower = max(lower, sol_size + lp_bound())
+    return lower
+
+
+## TODO: Before: update S (with merged point) while undo!! (S as input and output as well)
+
+def vc_branch_constrained(sol_size, S, lower):
+    global S_upper
+    global upper
     vc_branch_constrained.counter += 1
     S = None
     if is_edgeless():
-        if sol_size > upper: return S, upper
-        else: return [], sol_size
-    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() > upper: return S, upper
+        if sol_size < upper:
+            upper = sol_size
+            S_upper = S
+        return
+    lower = update_lower(sol_size, lower)
+    if lower >= upper: return
     S_kern, undo_list, _ = kernelization(upper)
+    S = S_kern + S
     sol_size += len(S_kern)
     if is_edgeless():
-        if sol_size <= upper:
-            S = S_kern
+        if sol_size < upper:
             upper = sol_size
-    elif sol_size + clique_bound() > upper: clique_bound.counter += 1
+            S_upper = S
     else:
-        heur_upper = heuristic()
-        upper = min(sol_size + heur_upper, upper)
-        u, neighbors = get_highest_degree_vertex()
-        for vertices in u, neighbors:
-            # 'Delete' first vertex from graph:    
-            del_vert(vertices)
-            # Call function recursively:
-            S_new, upper = vc_branch_constrained(sol_size + len(vertices), upper)
-            # 'Undelete' first vertex from graph:
-            un_del_vert(vertices)
-            # If vertex cover found return it plus the first vertex:
-            if S_new is not None: S = S_kern + vertices + S_new
+        if S_kern != []: lower = update_lower(sol_size, lower)
+        if lower < upper:
+            S_heur = heuristic()
+            if sol_size + len(S_heur) < upper:
+                upper = len(S_heur)
+                S_upper = S_heur + S
+            u, neighbors = get_highest_degree_vertex()
+            for vertices in u, neighbors:
+                # 'Delete' first vertex from graph:    
+                del_vert(vertices)
+                # Call function recursively:
+                vc_branch_constrained(sol_size + len(vertices), vertices + S, lower)
+                # 'Undelete' first vertex from graph:
+                un_del_vert(vertices)
     undo(undo_list)
-    return S, upper
 
 
 def correct_output(S):
@@ -751,6 +778,7 @@ def vc():
     """
     global constrained_branching
     global nb_vertices
+    if constrained_branching: global upper
     vc_branch.counter = 0
     vc_branch_constrained.counter = 0
     first_lower_bound_difference = 0
@@ -766,16 +794,18 @@ def vc():
         S_kern, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            x = clique_bound()
+            lb_clique = clique_bound()
             clique_bound.counter += 1
-            y = starter_reduction_rule()
-            kmin = max(x, y)
-            first_lower_bound_difference = x - y
+            if use_cplex: lb_lp = lp_bound()
+            else: lb_lp = 0
+            lp_easy = starter_reduction_rule()
+            lower = max(lb_clique, lb_lp, lp_easy)
+            first_lower_bound_difference = lb_clique - lb_lp
             if constrained_branching:
-                upper = nb_vertices - 1
-                S, _ = vc_branch_constrained(0, upper)
+                upper = nb_vertices
+                S = vc_branch_constrained(0, lower)
             else:
-                for k in range(kmin, nb_vertices):
+                for k in range(lower, nb_vertices):
                     S = vc_branch(k)
                     if S is not None: break
             S = S_kern + S
