@@ -725,6 +725,7 @@ def update_lower(sol_size, lower):
 
 
 ## TODO: Before: update S (with merged point) while undo!! (S as input and output as well)
+## TODO: If S_heur new S_upper: restructure (merged points!)
 
 def vc_branch_constrained(sol_size, S, lower):
     global S_upper
