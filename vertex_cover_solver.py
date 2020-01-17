@@ -3,7 +3,7 @@ use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
-    from __future__ import print_function
+    # from __future__ import print_function
     import cplex
     from cplex.exceptions import CplexError
 
