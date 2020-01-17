@@ -1,8 +1,12 @@
-from __future__ import print_function
+# Set False if cplex not installed on current machine:
+use_cplex = True
 
 import sys
-import cplex
-from cplex.exceptions import CplexError
+# Import cplex only if set to True:
+if use_cplex:
+    from __future__ import print_function
+    import cplex
+    from cplex.exceptions import CplexError
 
 g = {}
 max_degree = 0
@@ -18,7 +22,8 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
-f_lp = 1
+if use_cplex: f_lp = 1
+else: f_lp = float('inf')
 f_bound = 1
 #if True, second method of branching is used
 constrained_branching = False
@@ -198,6 +203,7 @@ def get_neighbor(vertex):
     OUTPUT: str
     """
     for neighbor in g[vertex][2]:
+        # Return neighbor if not deleted:
         if not g[neighbor][0]:
             return neighbor
 
@@ -249,6 +255,7 @@ def bound():
     bound returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
+    # Declare clique list:
     global clique_list
     clique_list = []
     for list_degree_i in degree_list:
@@ -317,7 +324,7 @@ def extreme_reduction_rule(k):
     """
     INPUT: k
     extreme_reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
-    OUTPUT: OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
     """
     # Execute high-degree reduction rule:
     S_kern, undelete, k = high_degree_rule(k)
@@ -425,6 +432,13 @@ def degree_one_rule(k):
 
 
 def basic_rules(k):
+    """
+    INPUT: k is int
+    basic_rules calls the extreme reduction rule (degree zero and high degree) and the degree one rule until
+    none of them can be applied anymore and returns the so gotten vertices for S, the ones to undelete again
+    and the depth budget k changed by deletion
+    OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
+    """
     S_kern, undelete = [], []
     while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
@@ -434,6 +448,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
+        # Finish if no rule could be applied:
         if S_kern_ex == [] and S_kern_one == []: break
     return S_kern, undelete, k
 
