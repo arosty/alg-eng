@@ -534,9 +534,6 @@ def lp_rule(k):
     prints the vertex cover corresponding to global g using cplex solver
     OUTPUT: None
     """
-    # print("....." + str(nb_vertices))
-    # print("......" + str(nb_edges))
-    # print(k)
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
     #initialize the CPLEX problem
@@ -555,11 +552,9 @@ def lp_rule(k):
     #print the solution 
     numcols = prob.variables.get_num()
     x = prob.solution.get_values()
-    # print(x)
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
-            # print(x[j])
             vertex = my_colnames[j]
             # If vertex is merged point convert it from string to triple:
             if vertex[0] == '(': vertex = eval(vertex)
@@ -584,8 +579,6 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
-    # print("..." + str(nb_vertices))
-    # print("...." + str(nb_edges))
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
@@ -607,11 +600,6 @@ def kernelization(k):
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
-            # if S_lp != []:
-            #     print('!!!')
-            #     print(vc_branch.counter)
-            #     print(S_lp)
-            #     print(k)
             S_kern += S_lp
             undelete += undelete_lp
         if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
@@ -626,9 +614,6 @@ def vc_branch(k):
     """
     global f_bound
     vc_branch.counter += 1
-    # print('-----------')
-    # print(vc_branch.counter)
-    # print(k)
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
@@ -760,7 +745,6 @@ def vc():
             bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
-            kmin = 93           ## DELETE!!!!!!!!!!!!!!!!! only for football
             first_lower_bound_difference = x - y
             if constrained_branching:
                 upper = nb_vertices - 1
