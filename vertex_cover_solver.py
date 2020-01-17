@@ -14,7 +14,7 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
-f_bound = 1
+f_bound = 10000
 #if True, second method of branching is used
 constrained_branching = False
 #if True, domination rule works with flags
@@ -100,25 +100,30 @@ def del_vert(vertices):
     global nb_vertices
     global nb_edges
     for vertex in vertices:
-        # 'Delete' vertex:
-        ###Deleting in g
-        g[vertex][0] = True
-        if dom_opt: g[vertex][3] = True
-        nb_vertices -= 1
-        ###Deleting in degree_list and updating nb_edges
-        degree_vertex = g[vertex][1]
-        nb_edges -= degree_vertex
-        degree_list[degree_vertex].remove(vertex)
-        # Update number of edges on adjacent vertices:
-        for adj_vert in g[vertex][2]:
-            ###Updating g
-            g[adj_vert][1] -= 1
-            if not g[adj_vert][0]:
-                if dom_opt: g[adj_vert][3] = True
-                ###Updating degree_list
-                degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert+1].remove(adj_vert)
-                degree_list[degree_adj_vert].append(adj_vert)
+        if not g[vertex][0]:
+            # 'Delete' vertex:
+            ###Deleting in g
+            g[vertex][0] = True
+            if dom_opt: g[vertex][3] = True
+            nb_vertices -= 1
+            ###Deleting in degree_list and updating nb_edges
+            degree_vertex = g[vertex][1]
+            nb_edges -= degree_vertex
+            try:
+                degree_list[degree_vertex].remove(vertex)
+            except:
+                print("# vertex ", vertex, " is not in degree_list at degree ", degree_vertex, " \n#degree_list: \n#", degree_list)
+            # Update number of edges on adjacent vertices:
+            for adj_vert in g[vertex][2]:
+                ###Updating g
+                g[adj_vert][1] -= 1
+                if not g[adj_vert][0]:
+                    if dom_opt: g[adj_vert][3] = True
+                    ###Updating degree_list
+                    # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is deleted. g[97] :", g[adj_vert])
+                    degree_adj_vert = g[adj_vert][1]
+                    degree_list[degree_adj_vert+1].remove(adj_vert)
+                    degree_list[degree_adj_vert].append(adj_vert)
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -134,30 +139,32 @@ def un_del_vert(vertices):
     global nb_vertices
     global nb_edges
     for vertex in vertices:
-        # 'Undelete' vertex:
-        ###Undeleting in g
-        g[vertex][0] = False
-        nb_vertices += 1
-        ###Undeleting in degree_list and updating nb_edges
-        degree_vertex = g[vertex][1]
-        nb_edges += degree_vertex
-        degree_list[degree_vertex].append(vertex)
-        # If the vertex has a higher degree than max_degree, we update max_degree
-        if g[vertex][1] > max_degree:
-            max_degree = g[vertex][1]
-        # Update number of edges on adjacent vertices:
-        for adj_vert in g[vertex][2]:
-            ###Updating g
-            g[adj_vert][1] += 1
-            if not g[adj_vert][0]:
-                if dom_opt: g[adj_vert][3] = True
-                ###Updating degree_list
-                degree_adj_vert = g[adj_vert][1]
-                degree_list[degree_adj_vert-1].remove(adj_vert)
-                degree_list[degree_adj_vert].append(adj_vert)
-                #If the neighbor has after undeletion a higher degree than max degree we update it
-                if g[adj_vert][1] > max_degree:
-                    max_degree = g[adj_vert][1]
+        if g[vertex][0]:
+            # 'Undelete' vertex:
+            ###Undeleting in g
+            g[vertex][0] = False
+            nb_vertices += 1
+            ###Undeleting in degree_list and updating nb_edges
+            degree_vertex = g[vertex][1]
+            nb_edges += degree_vertex
+            degree_list[degree_vertex].append(vertex)
+            # If the vertex has a higher degree than max_degree, we update max_degree
+            if g[vertex][1] > max_degree:
+                max_degree = g[vertex][1]
+            # Update number of edges on adjacent vertices:
+            for adj_vert in g[vertex][2]:
+                ###Updating g
+                g[adj_vert][1] += 1
+                if not g[adj_vert][0]:
+                    if dom_opt: g[adj_vert][3] = True
+                    ###Updating degree_list
+                    # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is undeleted. g[97] :", g[adj_vert])
+                    degree_adj_vert = g[adj_vert][1]
+                    degree_list[degree_adj_vert-1].remove(adj_vert)
+                    degree_list[degree_adj_vert].append(adj_vert)
+                    #If the neighbor has after undeletion a higher degree than max degree we update it
+                    if g[adj_vert][1] > max_degree:
+                        max_degree = g[adj_vert][1]
 
 
 def is_edgeless():
@@ -439,7 +446,14 @@ def degree_two_rule(k):
     while degree_list[2] != []:
         degree_two_rule.counter += 1
         vertex = degree_list[2][0]
-        [u, w] = get_all_neighbors(vertex)
+        try:
+            [u, w] = get_all_neighbors(vertex)
+        except:
+            print("#error: ", sys.exc_info()[0])
+            print("#vertex: ", vertex)
+            print("#g[vertex]", g[vertex])
+            print("#get_all_neighbors(vertex) : ", get_all_neighbors(vertex))
+            raise
         if w in g[u][2]:
             if k - 2 < 0: return S_kern, undelete, unmerge, k - 2
             del_vert([vertex, u, w])
@@ -501,9 +515,10 @@ def kernelization(k):
     global f_dom
     global limit_kern_start
     global limit_kern_branch
+    undo_list = []
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
-    unmerge = []
+    if undelete != []: undo_list.append([1, undelete])
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
     else: limit = limit_kern_branch
@@ -512,15 +527,30 @@ def kernelization(k):
         if vc_branch.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
-            undelete += undelete_two
-            unmerge += unmerge_two
-            if k < 0: return S_kern, undelete, unmerge, k
+            if undelete_two != []: undo_list.append([1, undelete_two])
+            if unmerge_two != []: undo_list.append([2, unmerge_two])
+            if k < 0: return S_kern, undo_list, k
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
-            undelete += undelete_dom
+            if undelete_dom != []: undo_list.append([1, undelete_dom])
         if S_kern_two == [] and S_kern_dom == []: break
-    return S_kern, undelete, unmerge, k
+    return S_kern, undo_list, k
+
+
+def undo(undo_list):
+    """
+    INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
+    calls the right function to undo a change on G, depending on the int before every list of changed items
+    1: undelete, 2: unmerge, 3: undo deg3 changes
+    OUTPUT: None
+    """
+    for [indicator, l] in reversed(undo_list):
+        if indicator == 1:
+            un_del_vert(l)
+        if indicator == 2:
+            un_merge_vert(l)
+    return
 
 
 def vc_branch(k):
@@ -534,10 +564,11 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    S_kern, undelete, unmerge, k = kernelization(k)
+    S_kern, undo_list, k = kernelization(k)
     if k < 0:
-        un_del_vert(undelete)
-        un_merge_vert(unmerge)
+        undo(undo_list)
+        # un_del_vert(undelete)
+        # un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -559,8 +590,7 @@ def vc_branch(k):
             if S is not None:
                 S = S_kern + vertices + S
                 break
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+    undo(undo_list)
     return S
 
 
@@ -581,7 +611,7 @@ def heuristic_processing(vertex, counter, dom_freq):
 
 
 def heuristic():
-    S_heur, undelete, unmerge = [], [], []
+    S_heur, undo_list = [], []
     dom_freq = 1
     counter = 0
     while not is_edgeless() and max_degree > 0:
@@ -589,10 +619,9 @@ def heuristic():
         vertex = degree_list[max_degree][0]
         S_new, undelete_new, unmerge_new, dom_freq = heuristic_processing(vertex, counter, dom_freq)
         S_heur += S_new
-        undelete += undelete_new
-        unmerge += unmerge_new
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+        if undelete_new != []: undo_list.append([1, undelete_new])
+        if unmerge_new != []: undo_list.append([2, unmerge_new]) 
+    undo(undo_list)
     return len(S_heur)
 
 
@@ -603,7 +632,7 @@ def vc_branch_constrained(sol_size, upper):
         if sol_size > upper: return S, upper
         else: return [], sol_size
     if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
-    S_kern, undelete, unmerge, _ = kernelization(upper)
+    S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size <= upper:
@@ -623,15 +652,19 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S_new is not None: S = S_kern + vertices + S_new
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+    undo(undo_list)
     return S, upper
 
 
 def correct_output(S):
     S_new = []
     for vertex in S:
-        S_new = append_to_S(S_new, [vertex])
+        try:
+            S_new = append_to_S(S_new, [vertex])
+        except:
+            print("#problem correcting output at vertex: ", vertex)
+            print("#     for a S_new = ", S_new)
+            print("#     and a S = ", S)
     return S_new
 
 
@@ -655,9 +688,10 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _, _ = kernelization(nb_vertices - 1)
+        S_kern, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
+            print("# nb_edges: ", nb_edges)
             x = bound()
             bound.counter += 1
             y = starter_reduction_rule()
@@ -667,10 +701,18 @@ def vc():
                 upper = nb_vertices - 1
                 S, _ = vc_branch_constrained(0, upper)
             else:
+                upper_bound = nb_vertices -1
                 for k in range(kmin, nb_vertices):
+                    print("#", k)
                     S = vc_branch(k)
                     if S is not None: break
-            S = S_kern + S
+            try:
+                S = S_kern + S
+            except:
+                print ("# bounds : ", kmin, upper_bound)
+                print("# S_kern: ", len(S_kern), S_kern)
+                print("# S: ", S)
+                raise
     print("#convert...")
     S = correct_output(S)
     print_result(S)
