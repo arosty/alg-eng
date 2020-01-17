@@ -616,6 +616,9 @@ def vc_branch(k):
     """
     global f_bound
     vc_branch.counter += 1
+    print('-----------')
+    print(vc_branch.counter)
+    print(k)
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
@@ -747,7 +750,7 @@ def vc():
             bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
-            kmin = 93
+            kmin = 93           ## DELETE!!!!!!!!!!!!!!!!! only for football
             first_lower_bound_difference = x - y
             if constrained_branching:
                 upper = nb_vertices - 1
