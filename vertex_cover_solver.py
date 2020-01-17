@@ -467,7 +467,7 @@ def degree_two_rule(k):
 
 def domination_rule(k):
     S_kern, undelete = [], []
-    for degree in range(3, max_degree+1):
+    for degree in range(3, max_degree):
         for vertex in degree_list[degree]:
             if dom_opt:
                 if not g[vertex][3]: continue
