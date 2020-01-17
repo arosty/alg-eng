@@ -100,30 +100,29 @@ def del_vert(vertices):
     global nb_vertices
     global nb_edges
     for vertex in vertices:
-        if not g[vertex][0]:
-            # 'Delete' vertex:
-            ###Deleting in g
-            g[vertex][0] = True
-            if dom_opt: g[vertex][3] = True
-            nb_vertices -= 1
-            ###Deleting in degree_list and updating nb_edges
-            degree_vertex = g[vertex][1]
-            nb_edges -= degree_vertex
-            try:
-                degree_list[degree_vertex].remove(vertex)
-            except:
-                print("# vertex ", vertex, " is not in degree_list at degree ", degree_vertex, " \n#degree_list: \n#", degree_list)
-            # Update number of edges on adjacent vertices:
-            for adj_vert in g[vertex][2]:
-                ###Updating g
-                g[adj_vert][1] -= 1
-                if not g[adj_vert][0]:
-                    if dom_opt: g[adj_vert][3] = True
-                    ###Updating degree_list
-                    # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is deleted. g[97] :", g[adj_vert])
-                    degree_adj_vert = g[adj_vert][1]
-                    degree_list[degree_adj_vert+1].remove(adj_vert)
-                    degree_list[degree_adj_vert].append(adj_vert)
+        # 'Delete' vertex:
+        ###Deleting in g
+        g[vertex][0] = True
+        if dom_opt: g[vertex][3] = True
+        nb_vertices -= 1
+        ###Deleting in degree_list and updating nb_edges
+        degree_vertex = g[vertex][1]
+        nb_edges -= degree_vertex
+        try:
+            degree_list[degree_vertex].remove(vertex)
+        except:
+            print("# vertex ", vertex, " is not in degree_list at degree ", degree_vertex, " \n#degree_list: \n#", degree_list)
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            ###Updating g
+            g[adj_vert][1] -= 1
+            if not g[adj_vert][0]:
+                if dom_opt: g[adj_vert][3] = True
+                ###Updating degree_list
+                # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is deleted. g[97] :", g[adj_vert])
+                degree_adj_vert = g[adj_vert][1]
+                degree_list[degree_adj_vert+1].remove(adj_vert)
+                degree_list[degree_adj_vert].append(adj_vert)
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -138,33 +137,32 @@ def un_del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
-    for vertex in vertices:
-        if g[vertex][0]:
-            # 'Undelete' vertex:
-            ###Undeleting in g
-            g[vertex][0] = False
-            nb_vertices += 1
-            ###Undeleting in degree_list and updating nb_edges
-            degree_vertex = g[vertex][1]
-            nb_edges += degree_vertex
-            degree_list[degree_vertex].append(vertex)
-            # If the vertex has a higher degree than max_degree, we update max_degree
-            if g[vertex][1] > max_degree:
-                max_degree = g[vertex][1]
-            # Update number of edges on adjacent vertices:
-            for adj_vert in g[vertex][2]:
-                ###Updating g
-                g[adj_vert][1] += 1
-                if not g[adj_vert][0]:
-                    if dom_opt: g[adj_vert][3] = True
-                    ###Updating degree_list
-                    # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is undeleted. g[97] :", g[adj_vert])
-                    degree_adj_vert = g[adj_vert][1]
-                    degree_list[degree_adj_vert-1].remove(adj_vert)
-                    degree_list[degree_adj_vert].append(adj_vert)
-                    #If the neighbor has after undeletion a higher degree than max degree we update it
-                    if g[adj_vert][1] > max_degree:
-                        max_degree = g[adj_vert][1]
+    for vertex in reversed(vertices):
+        # 'Undelete' vertex:
+        ###Undeleting in g
+        g[vertex][0] = False
+        nb_vertices += 1
+        ###Undeleting in degree_list and updating nb_edges
+        degree_vertex = g[vertex][1]
+        nb_edges += degree_vertex
+        degree_list[degree_vertex].append(vertex)
+        # If the vertex has a higher degree than max_degree, we update max_degree
+        if g[vertex][1] > max_degree:
+            max_degree = g[vertex][1]
+        # Update number of edges on adjacent vertices:
+        for adj_vert in g[vertex][2]:
+            ###Updating g
+            g[adj_vert][1] += 1
+            if not g[adj_vert][0]:
+                if dom_opt: g[adj_vert][3] = True
+                ###Updating degree_list
+                # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is undeleted. g[97] :", g[adj_vert])
+                degree_adj_vert = g[adj_vert][1]
+                degree_list[degree_adj_vert-1].remove(adj_vert)
+                degree_list[degree_adj_vert].append(adj_vert)
+                #If the neighbor has after undeletion a higher degree than max degree we update it
+                if g[adj_vert][1] > max_degree:
+                    max_degree = g[adj_vert][1]
 
 
 def is_edgeless():
@@ -665,6 +663,7 @@ def correct_output(S):
             print("#problem correcting output at vertex: ", vertex)
             print("#     for a S_new = ", S_new)
             print("#     and a S = ", S)
+            raise
     return S_new
 
 
