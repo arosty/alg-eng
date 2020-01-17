@@ -580,8 +580,8 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
-    print("..." + nb_vertices)
-    print("...." + nb_edges)
+    print("..." + str(nb_vertices))
+    print("...." + str(nb_edges))
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
     unmerge = []
