@@ -495,7 +495,7 @@ def domination_rule(k):
     return S_kern, undelete, k
 
 
-def mipParam():
+def lpParam():
     """
     INPUT: NONE
     Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
@@ -504,13 +504,13 @@ def mipParam():
     global nb_vertices
     global nb_edges
     #Objective function is sum with all factors set to 1
-    my_obj = [1]*nb_vertices
+    my_obj = [1 for i in range(nb_vertices)]
     #all variables bounded by 0 (default) and 1
-    my_ub = [1]*nb_vertices
+    my_ub = [1 for i in range(nb_vertices)]
     #All variables are integers
     my_ctype = 'C'*nb_vertices
     #each edge is a greater-than 1 constraint 
-    my_rhs = [1]*nb_edges
+    my_rhs = [1 for i  in range(nb_edges)]
     my_sense = 'G'*nb_edges
     #name of the vertices and of the columns are left to fill
     my_colnames = []
@@ -538,7 +538,7 @@ def lp_rule(k):
     print("......" + str(nb_edges))
     print(k)
     #get parameters of the CPLEX problem
-    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
+    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
     #initialize the CPLEX problem
     prob = cplex.Cplex()
     #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
