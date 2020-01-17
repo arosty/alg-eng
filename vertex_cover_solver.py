@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = True
+use_cplex = False
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -23,8 +23,7 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
-if use_cplex: f_lp = 1
-else: f_lp = float('inf')
+f_lp = 1
 f_bound = 1
 #if True, second method of branching is used
 constrained_branching = False
@@ -604,22 +603,26 @@ def kernelization(k):
     else: limit = limit_kern_branch
     while k >= 0 and not is_edgeless() and counter < limit:
         counter += 1
+        successful = False
         if vc_branch.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
+            if S_kern_two != []: successful = True
             if unmerge_two != []: undo_list.append([2, unmerge_two])
             if undelete_two != []: undo_list.append([1, undelete_two])
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
+            if S_kern_dom != []: successful = True
             if undelete_dom != []: undo_list.append([1, undelete_dom])
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_lp == 0:
+        if use_cplex and vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
+            if S_lp != []: successful = True
             if undelete_lp != []: undo_list.append([1, undelete_lp])
-        if [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
+        if not successful: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undo_list, k
 
 
@@ -631,11 +634,8 @@ def undo(undo_list):
     OUTPUT: None
     """
     for [indicator, vertices] in reversed(undo_list):
-        if indicator == 1:
-            un_del_vert(vertices)
-        if indicator == 2:
-            un_merge_vert(vertices)
-    return
+        if indicator == 1: un_del_vert(vertices)
+        elif indicator == 2: un_merge_vert(vertices)
 
 
 def vc_branch(k):
@@ -652,8 +652,6 @@ def vc_branch(k):
     S_kern, undo_list, k = kernelization(k)
     if k < 0:
         undo(undo_list)
-        # un_del_vert(undelete)
-        # un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
