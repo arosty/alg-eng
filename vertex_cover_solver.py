@@ -559,6 +559,7 @@ def lp_rule(k):
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
+            print(x[j])
             vertex = my_colnames[j]
             # If vertex is merged point convert it from string to triple:
             if vertex[0] == '(': vertex = eval(vertex)
@@ -606,11 +607,11 @@ def kernelization(k):
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
-            if S_lp != []:
-                print('!!!')
-                print(vc_branch.counter)
-                print(S_lp)
-                print(k)
+            # if S_lp != []:
+            #     print('!!!')
+            #     print(vc_branch.counter)
+            #     print(S_lp)
+            #     print(k)
             S_kern += S_lp
             undelete += undelete_lp
         if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
