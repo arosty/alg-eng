@@ -449,7 +449,7 @@ def basic_rules(k):
         S_kern += S_kern_one
         undelete += undelete_one
         # Finish if no rule could be applied:
-        if S_kern_ex == [] and S_kern_one == []: break
+        if [S_kern_ex, S_kern_one] == [[], []]: break
     return S_kern, undelete, k
 
 
@@ -594,31 +594,47 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
+    undo_list = []
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
-    unmerge = []
+    if undelete != []: undo_list.append([1, undelete])
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
     else: limit = limit_kern_branch
-    while k >= 0 and counter < limit:
+    while k >= 0 and not is_edgeless() and counter < limit:
         counter += 1
         if vc_branch.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
-            undelete += undelete_two
-            unmerge += unmerge_two
+            if unmerge_two != []: undo_list.append([2, unmerge_two])
+            if undelete_two != []: undo_list.append([1, undelete_two])
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
-            undelete += undelete_dom
+            if undelete_dom != []: undo_list.append([1, undelete_dom])
             if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
-            undelete += undelete_lp
-        if is_edgeless() or [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
-    return S_kern, undelete, unmerge, k
+            if undelete_lp != []: undo_list.append([1, undelete_lp])
+        if [S_kern_two, S_kern_dom, S_lp] == [[],[],[]]: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
+    return S_kern, undo_list, k
+
+
+def undo(undo_list):
+    """
+    INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
+    calls the right function to undo a change on G, depending on the int before every list of changed items
+    1: undelete, 2: unmerge, 3: undo deg3 changes
+    OUTPUT: None
+    """
+    for [indicator, vertices] in reversed(undo_list):
+        if indicator == 1:
+            un_del_vert(vertices)
+        if indicator == 2:
+            un_merge_vert(vertices)
+    return
 
 
 def vc_branch(k):
@@ -632,10 +648,11 @@ def vc_branch(k):
     if k < 0: return None
     # Return empty list if no edges are given:
     if is_edgeless(): return []
-    S_kern, undelete, unmerge, k = kernelization(k)
+    S_kern, undo_list, k = kernelization(k)
     if k < 0:
-        un_del_vert(undelete)
-        un_merge_vert(unmerge)
+        undo(undo_list)
+        # un_del_vert(undelete)
+        # un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -657,8 +674,7 @@ def vc_branch(k):
             if S is not None:
                 S = S_kern + vertices + S
                 break
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+    undo(undo_list)
     return S
 
 
@@ -679,7 +695,7 @@ def heuristic_processing(vertex, counter, dom_freq):
 
 
 def heuristic():
-    S_heur, undelete, unmerge = [], [], []
+    S_heur, undo_list = [], []
     dom_freq = 1
     counter = 0
     while not is_edgeless() and max_degree > 0:
@@ -687,10 +703,9 @@ def heuristic():
         vertex = degree_list[max_degree][0]
         S_new, undelete_new, unmerge_new, dom_freq = heuristic_processing(vertex, counter, dom_freq)
         S_heur += S_new
-        undelete += undelete_new
-        unmerge += unmerge_new
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+        if unmerge_new != []: undo_list.append([2, unmerge_new]) 
+        if undelete_new != []: undo_list.append([1, undelete_new])
+    undo(undo_list)
     return len(S_heur)
 
 
@@ -701,7 +716,7 @@ def vc_branch_constrained(sol_size, upper):
         if sol_size > upper: return S, upper
         else: return [], sol_size
     if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
-    S_kern, undelete, unmerge, _ = kernelization(upper)
+    S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size <= upper:
@@ -721,8 +736,7 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S_new is not None: S = S_kern + vertices + S_new
-    un_del_vert(undelete)
-    un_merge_vert(unmerge)
+    undo(undo_list)
     return S, upper
 
 
@@ -753,7 +767,7 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _, _ = kernelization(nb_vertices - 1)
+        S_kern, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             x = bound()
