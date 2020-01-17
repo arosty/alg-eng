@@ -534,6 +534,9 @@ def lp_rule(k):
     prints the vertex cover corresponding to global g using cplex solver
     OUTPUT: None
     """
+    print("....." + str(nb_vertices))
+    print("......" + str(nb_edges))
+    print(k)
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = mipParam()
     #initialize the CPLEX problem
