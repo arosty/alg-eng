@@ -557,9 +557,10 @@ def lp_rule(k):
     x = prob.solution.get_values()
     # print(x)
     S_lp, undelete = [], []
+    print(numcols == len(x))
     for j in range(numcols):
         if x[j] in [0,1]:
-            print(x[j])
+            # print(x[j])
             vertex = my_colnames[j]
             # If vertex is merged point convert it from string to triple:
             if vertex[0] == '(': vertex = eval(vertex)
