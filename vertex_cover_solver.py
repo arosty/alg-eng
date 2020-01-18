@@ -542,12 +542,7 @@ def lpParam():
     return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
 
 
-def lp_rule(k):
-    """
-    INPUT: None
-    prints the vertex cover corresponding to global g using cplex solver
-    OUTPUT: None
-    """
+def lp():
     #get parameters of the CPLEX problem
     my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
     #initialize the CPLEX problem
@@ -564,6 +559,17 @@ def lp_rule(k):
     #print the solution 
     numcols = prob.variables.get_num()
     x = prob.solution.get_values()
+    return x, numcols, my_colnames
+
+
+def lp_rule(k):
+    """
+    INPUT: None
+    prints the vertex cover corresponding to global g using cplex solver
+    OUTPUT: None
+    """
+    x, numcols, my_colnames = lp()
+    if sum(x) > k: return [], [], -1
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
