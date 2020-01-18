@@ -1,3 +1,11 @@
+# Set False if cplex not installed on current machine:
+use_cplex = False
+
+# Import cplex only if set to True:
+if use_cplex:
+    import cplex
+    from cplex.exceptions import CplexError
+
 import sys
 
 g = {}
@@ -14,6 +22,7 @@ limit_kern_branch = float('inf')
 f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
+f_lp = 1
 f_bound = 1
 #if True, second method of branching is used
 constrained_branching = False
@@ -116,7 +125,6 @@ def del_vert(vertices):
             if not g[adj_vert][0]:
                 if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
-                # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is deleted. g[97] :", g[adj_vert])
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
@@ -134,7 +142,7 @@ def un_del_vert(vertices):
     global degree_list
     global nb_vertices
     global nb_edges
-    for vertex in reversed(vertices):
+    for vertex in vertices:
         # 'Undelete' vertex:
         ###Undeleting in g
         g[vertex][0] = False
@@ -153,7 +161,6 @@ def un_del_vert(vertices):
             if not g[adj_vert][0]:
                 if dom_opt: g[adj_vert][3] = True
                 ###Updating degree_list
-                # if adj_vert == '97': print("#neighbor ", vertex, " of vertex 97 is undeleted. g[97] :", g[adj_vert])
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert-1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
@@ -195,6 +202,7 @@ def get_neighbor(vertex):
     OUTPUT: str
     """
     for neighbor in g[vertex][2]:
+        # Return neighbor if not deleted:
         if not g[neighbor][0]:
             return neighbor
 
@@ -246,6 +254,7 @@ def bound():
     bound returns a lower bound using clique cover, starting by smallest degree
     OUTPUT: int
     """
+    # Declare clique list:
     global clique_list
     clique_list = []
     for list_degree_i in degree_list:
@@ -314,7 +323,7 @@ def extreme_reduction_rule(k):
     """
     INPUT: k
     extreme_reduction_rule executes the high-degree and zero-degree reduction rules and checks if the k is still high enough (rule)
-    OUTPUT: OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
+    OUTPUT: list : additional vertices for the vertex cover, list : vertices that need to be undeleted later again, int : new k
     """
     # Execute high-degree reduction rule:
     S_kern, undelete, k = high_degree_rule(k)
@@ -422,6 +431,13 @@ def degree_one_rule(k):
 
 
 def basic_rules(k):
+    """
+    INPUT: k is int
+    basic_rules calls the extreme reduction rule (degree zero and high degree) and the degree one rule until
+    none of them can be applied anymore and returns the so gotten vertices for S, the ones to undelete again
+    and the depth budget k changed by deletion
+    OUTPUT: S_kern is list of vertices, undeleteis list of vertices, k is int
+    """
     S_kern, undelete = [], []
     while k >= 0:
         S_kern_ex, undelete_ex, k = extreme_reduction_rule(k)
@@ -431,6 +447,7 @@ def basic_rules(k):
         S_kern_one, undelete_one, k = degree_one_rule(k)
         S_kern += S_kern_one
         undelete += undelete_one
+        # Finish if no rule could be applied:
         if S_kern_ex == [] and S_kern_one == []: break
     return S_kern, undelete, k
 
@@ -492,6 +509,76 @@ def domination_rule(k):
     return S_kern, undelete, k
 
 
+def lpParam():
+    """
+    INPUT: NONE
+    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
+    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+    """
+    global nb_vertices
+    global nb_edges
+    #Objective function is sum with all factors set to 1
+    my_obj = [1]*nb_vertices
+    #all variables bounded by 0 (default) and 1
+    my_ub = [1]*nb_vertices
+    #All variables are integers
+    my_ctype = 'C'*nb_vertices
+    #each edge is a greater-than 1 constraint 
+    my_rhs = [1]*nb_edges
+    my_sense = 'G'*nb_edges
+    #name of the vertices and of the columns are left to fill
+    my_colnames = []
+    my_rownames = []
+    #Actual rows are going to be filled during the for loop
+    rows = []
+    for degree in range(max_degree+1):
+        for vertex in degree_list[degree]:
+            my_colnames.append(str(vertex))
+            for neigh in g[vertex][2]:
+                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
+                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
+                my_rownames.append("e %s %s" % (vertex,neigh))
+                rows.append([[str(vertex),str(neigh)],[1,1]])
+    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+
+
+def lp_rule(k):
+    """
+    INPUT: None
+    prints the vertex cover corresponding to global g using cplex solver
+    OUTPUT: None
+    """
+    #get parameters of the CPLEX problem
+    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
+    #initialize the CPLEX problem
+    prob = cplex.Cplex()
+    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
+    prob.set_results_stream(None)
+    prob.parameters.workmem = 1536
+    #fill the CPLEX problem with all correct parameters
+    prob.objective.set_sense(prob.objective.sense.minimize)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
+    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
+    #Solve the CPLEX problem
+    prob.solve()
+    #print the solution 
+    numcols = prob.variables.get_num()
+    x = prob.solution.get_values()
+    S_lp, undelete = [], []
+    for j in range(numcols):
+        if x[j] in [0,1]:
+            vertex = my_colnames[j]
+            # If vertex is merged point convert it from string to triple:
+            if vertex[0] == '(': vertex = eval(vertex)
+            del_vert([vertex])
+            undelete.append(vertex)
+            if x[j] == 1:
+                S_lp.append(vertex)
+                k -= 1
+                if k < 0: return S_lp, undelete, k
+    return S_lp, undelete, k
+
+
 def kernelization(k):
     """
     INPUT: k is int
@@ -501,6 +588,7 @@ def kernelization(k):
     """
     global f_deg2
     global f_dom
+    global f_lp
     global limit_kern_start
     global limit_kern_branch
     undo_list = []
@@ -510,19 +598,28 @@ def kernelization(k):
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
     else: limit = limit_kern_branch
-    while k >= 0 and counter < limit:
+    while k >= 0 and not is_edgeless() and counter < limit:
         counter += 1
+        successful = False
         if vc_branch.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
+            if S_kern_two != []: successful = True
             if unmerge_two != []: undo_list.append([2, unmerge_two])
             if undelete_two != []: undo_list.append([1, undelete_two])
-            if k < 0: return S_kern, undo_list, k
+            if k < 0 or is_edgeless(): break
         if vc_branch.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
+            if S_kern_dom != []: successful = True
             if undelete_dom != []: undo_list.append([1, undelete_dom])
-        if S_kern_two == [] and S_kern_dom == []: break
+            if k < 0 or is_edgeless(): break
+        if use_cplex and vc_branch.counter%f_lp == 0:
+            S_lp, undelete_lp, k = lp_rule(k)
+            S_kern += S_lp
+            if S_lp != []: successful = True
+            if undelete_lp != []: undo_list.append([1, undelete_lp])
+        if not successful: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undo_list, k
 
 
@@ -533,12 +630,9 @@ def undo(undo_list):
     1: undelete, 2: unmerge, 3: undo deg3 changes
     OUTPUT: None
     """
-    for [indicator, l] in reversed(undo_list):
-        if indicator == 1:
-            un_del_vert(l)
-        if indicator == 2:
-            un_merge_vert(l)
-    return
+    for [indicator, vertices] in reversed(undo_list):
+        if indicator == 1: un_del_vert(vertices)
+        elif indicator == 2: un_merge_vert(vertices)
 
 
 def vc_branch(k):
@@ -555,8 +649,6 @@ def vc_branch(k):
     S_kern, undo_list, k = kernelization(k)
     if k < 0:
         undo(undo_list)
-        # un_del_vert(undelete)
-        # un_merge_vert(unmerge)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
