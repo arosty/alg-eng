@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -248,7 +248,7 @@ def inspect_vertex(vertex):
         clique_list[best_clique_index].append(vertex)
 
 
-def bound():
+def clique_bound():
     """
     INPUT: None
     bound returns a lower bound using clique cover, starting by smallest degree
@@ -653,8 +653,8 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()):
-        bound.counter += 1
+    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < clique_bound()):
+        clique_bound.counter += 1
         S = None
     else:
         # Get vertices of first edge:
@@ -711,14 +711,14 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size > upper: return S, upper
         else: return [], sol_size
-    if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() > upper: return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size <= upper:
             S = S_kern
             upper = sol_size
-    elif sol_size + bound() > upper: bound.counter += 1
+    elif sol_size + clique_bound() > upper: clique_bound.counter += 1
     else:
         heur_upper = heuristic()
         upper = min(sol_size + heur_upper, upper)
@@ -760,14 +760,14 @@ def vc():
     degree_one_rule.counter = 0
     degree_two_rule.counter = 0
     domination_rule.counter = 0
-    bound.counter = 0
+    clique_bound.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            x = bound()
-            bound.counter += 1
+            x = clique_bound()
+            clique_bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
@@ -792,7 +792,7 @@ def vc():
     print("#degree one rules: %s" % degree_one_rule.counter)
     print("#degree two rules: %s" % degree_two_rule.counter)
     print("#domination rules: %s" % domination_rule.counter)
-    print("#lower bounds: %s" % bound.counter)
+    print("#lower bounds: %s" % clique_bound.counter)
 
 
 get_data()
