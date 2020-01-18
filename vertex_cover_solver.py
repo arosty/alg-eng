@@ -263,6 +263,64 @@ def clique_bound():
     return nb_vertices - len(clique_list)
 
 
+def lpParam():
+    """
+    INPUT: NONE
+    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
+    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+    """
+    global nb_vertices
+    global nb_edges
+    #Objective function is sum with all factors set to 1
+    my_obj = [1]*nb_vertices
+    #all variables bounded by 0 (default) and 1
+    my_ub = [1]*nb_vertices
+    #All variables are integers
+    my_ctype = 'C'*nb_vertices
+    #each edge is a greater-than 1 constraint 
+    my_rhs = [1]*nb_edges
+    my_sense = 'G'*nb_edges
+    #name of the vertices and of the columns are left to fill
+    my_colnames = []
+    my_rownames = []
+    #Actual rows are going to be filled during the for loop
+    rows = []
+    for degree in range(max_degree+1):
+        for vertex in degree_list[degree]:
+            my_colnames.append(str(vertex))
+            for neigh in g[vertex][2]:
+                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
+                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
+                my_rownames.append("e %s %s" % (vertex,neigh))
+                rows.append([[str(vertex),str(neigh)],[1,1]])
+    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+
+
+def lp():
+    #get parameters of the CPLEX problem
+    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
+    #initialize the CPLEX problem
+    prob = cplex.Cplex()
+    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
+    prob.set_results_stream(None)
+    prob.parameters.workmem = 1536
+    #fill the CPLEX problem with all correct parameters
+    prob.objective.set_sense(prob.objective.sense.minimize)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
+    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
+    #Solve the CPLEX problem
+    prob.solve()
+    #print the solution 
+    numcols = prob.variables.get_num()
+    x = prob.solution.get_values()
+    return x, numcols, my_colnames
+
+
+def lp_bound():
+    x, _, _ = lp()
+    return sum(x)
+
+
 def append_to_S(S, vertices):
     for vertex in vertices:
         if type(vertex) is str:
@@ -507,59 +565,6 @@ def domination_rule(k):
                     if k < 0: return S_kern, undelete, k
                     break
     return S_kern, undelete, k
-
-
-def lpParam():
-    """
-    INPUT: NONE
-    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
-    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
-    """
-    global nb_vertices
-    global nb_edges
-    #Objective function is sum with all factors set to 1
-    my_obj = [1]*nb_vertices
-    #all variables bounded by 0 (default) and 1
-    my_ub = [1]*nb_vertices
-    #All variables are integers
-    my_ctype = 'C'*nb_vertices
-    #each edge is a greater-than 1 constraint 
-    my_rhs = [1]*nb_edges
-    my_sense = 'G'*nb_edges
-    #name of the vertices and of the columns are left to fill
-    my_colnames = []
-    my_rownames = []
-    #Actual rows are going to be filled during the for loop
-    rows = []
-    for degree in range(max_degree+1):
-        for vertex in degree_list[degree]:
-            my_colnames.append(str(vertex))
-            for neigh in g[vertex][2]:
-                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
-                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
-                my_rownames.append("e %s %s" % (vertex,neigh))
-                rows.append([[str(vertex),str(neigh)],[1,1]])
-    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
-
-
-def lp():
-    #get parameters of the CPLEX problem
-    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
-    #initialize the CPLEX problem
-    prob = cplex.Cplex()
-    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
-    prob.set_results_stream(None)
-    prob.parameters.workmem = 1536
-    #fill the CPLEX problem with all correct parameters
-    prob.objective.set_sense(prob.objective.sense.minimize)
-    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
-    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
-    #Solve the CPLEX problem
-    prob.solve()
-    #print the solution 
-    numcols = prob.variables.get_num()
-    x = prob.solution.get_values()
-    return x, numcols, my_colnames
 
 
 def lp_rule(k):
