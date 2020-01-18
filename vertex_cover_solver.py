@@ -23,7 +23,8 @@ f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
 f_lp = 1
-f_bound = 1
+f_clique_lb = 1
+f_lp_lb = 1
 #if True, second method of branching is used
 constrained_branching = False
 #if True, domination rule works with flags
@@ -652,7 +653,8 @@ def vc_branch(k):
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: list of length at most k or None
     """
-    global f_bound
+    global f_clique_lb
+    global f_lp_lb
     vc_branch.counter += 1
     if k < 0: return None
     # Return empty list if no edges are given:
@@ -664,7 +666,11 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < clique_bound()):
+    elif k == 0: S = None
+    elif use_cplex and vc_branch.counter % f_lp_lb == 0 and k < lp_bound():
+        lp_bound.counter += 1
+        S = None
+    elif vc_branch.counter % f_clique_lb == 0 and k < clique_bound():
         clique_bound.counter += 1
         S = None
     else:
@@ -722,6 +728,7 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size > upper: return S, upper
         else: return [], sol_size
+    if vc_branch_constrained.counter > 1 and sol_size + lp_bound() > upper: return S, upper
     if vc_branch_constrained.counter > 1 and sol_size + clique_bound() > upper: return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
@@ -729,6 +736,7 @@ def vc_branch_constrained(sol_size, upper):
         if sol_size <= upper:
             S = S_kern
             upper = sol_size
+    elif sol_size + lp_bound > upper: lp_bound.counter += 1
     elif sol_size + clique_bound() > upper: clique_bound.counter += 1
     else:
         heur_upper = heuristic()
@@ -772,6 +780,7 @@ def vc():
     degree_two_rule.counter = 0
     domination_rule.counter = 0
     clique_bound.counter = 0
+    lp_bound.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, _, _ = kernelization(nb_vertices - 1)
