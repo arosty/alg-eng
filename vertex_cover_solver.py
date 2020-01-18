@@ -579,6 +579,68 @@ def lp_rule(k):
     return S_lp, undelete, k
 
 
+def add_neighborhood(vertex, neighborhood):
+    """
+    INPUT: vertex is int, neighborhood is list of int
+    try to add all vertices from neighborhood as neighbors of vertex. Those who aren't already are returned in new_neigh
+    OUTPUT: new_neigh is list of int
+    """
+    global max_degree
+    global nb_edges
+    new_neigh = []
+    for neigh in neighborhood:
+        # if neigh is not already a neighbor and is not the vertex itself, it can be added as neighbor
+        if (neigh not in g[vertex][2]) and (neigh != vertex):
+            new_neigh.append(neigh)
+            #Increment edge counter
+            nb_edges += 1
+            #add edge for neigh
+            g[neigh][1] += 1
+            g[neigh][2].append(vertex)
+            n_degree = g[neigh][1]
+            degree_list[n_degree-1].remove(neigh)
+            degree_list[n_degree].append(neigh)
+            # If new degree of neigh is greater than maximum degree, update:
+            if n_degree > max_degree:
+                max_degree = n_degree
+    #add edges for vertex
+    old_degree = g[vertex][1]
+    g[vertex][1] += len(new_neigh)
+    g[vertex][2].extend(new_neigh)
+    new_degree = g[vertex][1]
+    degree_list[old_degree].remove(vertex)
+    degree_list[new_degree].append(vertex)
+    # If new degree of vertex is greater than maximum degree, update:
+    if new_degree > max_degree:
+        max_degree = new_degree
+    return new_neigh
+
+
+
+def degree_three_rule():
+    """
+    INPUT: vertex is int
+    applies degree 3 independent set rule and returns the undo_list
+    OUTPUT: undo_list 
+    """
+    undo_list = []
+    for vertex in degree_list[3]:
+        [a,b,c] = get_all_neighbors(vertex)
+        independent_test = (b not in g[a][2]) & (c not in g[a][2]) & (c not in g[b][2])
+        if independent_test:
+            # Delete vertex:
+            del_vert([vertex])
+            # adding edges to a, b and c:
+            add_edge([a,b])
+            add_edge([b,c])
+            new_neigh_a = add_neighborhood(a, g[b][2])
+            new_neigh_b = add_neighborhood(b, g[c][2])
+            new_neigh_c = add_neighborhood(c, g[a][2])
+            undo_list.append( [3, [ (vertex,a,b,c), new_neigh_a, new_neigh_b, new_neigh_c ] ] )
+    return undo_list
+
+
+
 def kernelization(k):
     """
     INPUT: k is int
@@ -623,7 +685,61 @@ def kernelization(k):
     return S_kern, undo_list, k
 
 
-def undo(undo_list):
+
+def cancel_neighborhood(vertex, new_neigh_v):
+    global max_degree
+    global nb_edges
+    #Decrement edge counter
+    nb_edges -= len(new_neigh_v)
+    for neigh in new_neigh_v:
+            #remove edge for neigh
+            g[neigh][1] -= 1
+            g[neigh][2].remove(vertex)
+            n_degree = g[neigh][1]
+            degree_list[n_degree+1].remove(neigh)
+            degree_list[n_degree].append(neigh)
+    #remove edges for vertex
+    g[vertex][2] = [i for i in g[vertex][2] if i not in new_neigh_v]
+    old_degree = g[vertex][1]
+    g[vertex][1] -= len(new_neigh_v)
+    new_degree = g[vertex][1]
+    degree_list[old_degree].remove(vertex)
+    degree_list[new_degree].append(vertex)
+    #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
+    while (max_degree > 0) & (degree_list[max_degree] == []):
+        max_degree -= 1
+    return 
+
+
+
+def correct_deg3 (S, v,a,b,c):
+    in_S_list = []
+    for n in [a,b,c]:
+        if n in S: in_S_list.append(n)
+    if in_S_list == [b]:
+        S.remove(b)
+        S.append(v)
+        return S
+    elif len(in_S_list) == 2:
+        if in_S_list == [a,b]:
+            S.remove(a)
+            S.append(v)
+            return S
+        elif in_S_list == [b,c]:
+            S.remove(b)
+            S.append(v)
+            return S
+        elif in_S_list == [a,c]:
+            S.remove(c)
+            S.append(v)
+            return S
+    elif len(in_S_list) == 3:
+        return S
+    else:
+        raise ValueError("degree 3 rule undoing error: unexpected case when rebuilding actual vertex cover")
+
+
+def undo(undo_list,S):
     """
     INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
     calls the right function to undo a change on G, depending on the int before every list of changed items
@@ -633,6 +749,18 @@ def undo(undo_list):
     for [indicator, vertices] in reversed(undo_list):
         if indicator == 1: un_del_vert(vertices)
         elif indicator == 2: un_merge_vert(vertices)
+        elif indicator == 3:
+            [(v,a,b,c), new_neigh_a, new_neigh_b, new_neigh_c] = vertices
+            # Change g back to how it was
+            cancel_neighborhood(a, new_neigh_a)
+            cancel_neighborhood(b, new_neigh_b + [a,c])
+            cancel_neighborhood(c, new_neigh_c)
+            un_del_vert([v])
+            # Correct S according to deg3 rule
+            S = correct_deg3(S,v,a,b,c)
+        else:
+            raise ValueError("Unexpected Indicator in undo_list")
+    return S
 
 
 def vc_branch(k):
@@ -648,7 +776,7 @@ def vc_branch(k):
     if is_edgeless(): return []
     S_kern, undo_list, k = kernelization(k)
     if k < 0:
-        undo(undo_list)
+        S_kern = undo(undo_list, S_kern)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -670,7 +798,7 @@ def vc_branch(k):
             if S is not None:
                 S = S_kern + vertices + S
                 break
-    undo(undo_list)
+    S = undo(undo_list,S)
     return S
 
 
@@ -701,7 +829,7 @@ def heuristic():
         S_heur += S_new
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
-    undo(undo_list)
+    S_heur = undo(undo_list,S_heur)
     return len(S_heur)
 
 
@@ -732,7 +860,7 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S_new is not None: S = S_kern + vertices + S_new
-    undo(undo_list)
+    S = undo(undo_list,S)
     return S, upper
 
 
@@ -763,7 +891,7 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernelization(nb_vertices - 1)
+        S_kern, undo_list, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             x = bound()
@@ -779,6 +907,7 @@ def vc():
                     S = vc_branch(k)
                     if S is not None: break
             S = S_kern + S
+        S = undo(undo_list, S)
     print("#convert...")
     S = correct_output(S)
     print_result(S)
