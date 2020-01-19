@@ -622,8 +622,31 @@ def kernelization(k):
         if not successful: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undo_list, k
 
+# def append_to_S(S, vertices):
+#     for vertex in vertices:
+#         if type(vertex) is str:
+#             S.append(vertex)
+#         else:
+#             v, u, w = vertex
+#             S = del_from_S(S,[v])
+#             for x in [u, w]:
+#                 S = append_to_S(S, [x])
+#     return S
 
-def undo(undo_list):
+
+# def del_from_S(S, vertices):
+#     for vertex in vertices:
+#         if type(vertex) is str:
+#             S.remove(vertex)
+#         else:
+#             v, u, w = vertex
+#             S = append_to_S(S, [v])
+#             for x in [u, w]:
+#                 S = del_from_S(S, [x])
+#     return S
+
+
+def undo(S, undo_list):
     """
     INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
     calls the right function to undo a change on G, depending on the int before every list of changed items
@@ -632,7 +655,14 @@ def undo(undo_list):
     """
     for [indicator, vertices] in reversed(undo_list):
         if indicator == 1: un_del_vert(vertices)
-        elif indicator == 2: un_merge_vert(vertices)
+        elif indicator == 2:
+            for vertex in reversed(vertices):
+                if vertex in S:
+                    v, u, w = vertex
+                    for vert in [vertex, v]: S.remove(vert)
+                    S += [u, w]
+            un_merge_vert(vertices)
+    return S
 
 
 def vc_branch(k):
@@ -648,7 +678,7 @@ def vc_branch(k):
     if is_edgeless(): return []
     S_kern, undo_list, k = kernelization(k)
     if k < 0:
-        undo(undo_list)
+        S = undo(S, undo_list)
         return None
     # Return one degree neighbors list if no edges left:
     if is_edgeless(): S = S_kern
@@ -670,7 +700,7 @@ def vc_branch(k):
             if S is not None:
                 S = S_kern + vertices + S
                 break
-    undo(undo_list)
+    S = undo(S, undo_list)
     return S
 
 
@@ -701,7 +731,7 @@ def heuristic():
         S_heur += S_new
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
-    undo(undo_list)
+    S = undo(S, undo_list)
     return len(S_heur)
 
 
@@ -732,7 +762,7 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S_new is not None: S = S_kern + vertices + S_new
-    undo(undo_list)
+    S = undo(S, undo_list)
     return S, upper
 
 
