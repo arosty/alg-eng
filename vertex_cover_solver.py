@@ -628,6 +628,7 @@ def degree_three_rule():
         [a,b,c] = get_all_neighbors(vertex)
         independent_test = (b not in g[a][2]) & (c not in g[a][2]) & (c not in g[b][2])
         if independent_test:
+            degree_three_rule.counter += 1
             # Delete vertex:
             del_vert([vertex])
             # adding edges to a, b and c:
@@ -888,6 +889,7 @@ def vc():
     degree_one_rule.counter = 0
     degree_two_rule.counter = 0
     domination_rule.counter = 0
+    degree_three_rule.counter = 0
     bound.counter = 0
     if is_edgeless(): S = []
     else:
@@ -921,6 +923,7 @@ def vc():
     print("#degree one rules: %s" % degree_one_rule.counter)
     print("#degree two rules: %s" % degree_two_rule.counter)
     print("#domination rules: %s" % domination_rule.counter)
+    print("#degree three rules: %s" % degree_three_rule.counter)
     print("#lower bounds: %s" % bound.counter)
 
 
