@@ -622,29 +622,6 @@ def kernelization(k):
         if not successful: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undo_list, k
 
-# def append_to_S(S, vertices):
-#     for vertex in vertices:
-#         if type(vertex) is str:
-#             S.append(vertex)
-#         else:
-#             v, u, w = vertex
-#             S = del_from_S(S,[v])
-#             for x in [u, w]:
-#                 S = append_to_S(S, [x])
-#     return S
-
-
-# def del_from_S(S, vertices):
-#     for vertex in vertices:
-#         if type(vertex) is str:
-#             S.remove(vertex)
-#         else:
-#             v, u, w = vertex
-#             S = append_to_S(S, [v])
-#             for x in [u, w]:
-#                 S = del_from_S(S, [x])
-#     return S
-
 
 def undo(S, undo_list):
     """
@@ -657,7 +634,7 @@ def undo(S, undo_list):
         if indicator == 1: un_del_vert(vertices)
         elif indicator == 2:
             for vertex in reversed(vertices):
-                if vertex in S:
+                if S is not None and vertex in S:
                     v, u, w = vertex
                     for vert in [vertex, v]: S.remove(vert)
                     S += [u, w]
@@ -673,33 +650,30 @@ def vc_branch(k):
     """
     global f_bound
     vc_branch.counter += 1
-    if k < 0: return None
+    S = None
+    if k < 0: return S
     # Return empty list if no edges are given:
     if is_edgeless(): return []
     S_kern, undo_list, k = kernelization(k)
-    if k < 0:
-        S = undo(S, undo_list)
-        return None
-    # Return one degree neighbors list if no edges left:
-    if is_edgeless(): S = S_kern
-    # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()):
-        bound.counter += 1
-        S = None
-    else:
-        # Get vertices of first edge:
-        u, neighbors = get_highest_degree_vertex()
-        for vertices in u, neighbors:
-            # 'Delete' first vertex from graph:    
-            del_vert(vertices)
-            # Call function recursively:
-            S = vc_branch(k - len(vertices))
-            # 'Undelete' first vertex from graph:
-            un_del_vert(vertices)
-            # If vertex cover found return it plus the first vertex:
-            if S is not None:
-                S = S_kern + vertices + S
-                break
+    if k >= 0:
+        # Return one degree neighbors list if no edges left:
+        if is_edgeless(): S = S_kern
+        # If k is smaller than lower bound, no need to branch:
+        elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()): bound.counter += 1
+        else:
+            # Get vertices of first edge:
+            u, neighbors = get_highest_degree_vertex()
+            for vertices in u, neighbors:
+                # 'Delete' first vertex from graph:    
+                del_vert(vertices)
+                # Call function recursively:
+                S = vc_branch(k - len(vertices))
+                # 'Undelete' first vertex from graph:
+                un_del_vert(vertices)
+                # If vertex cover found return it plus the first vertex:
+                if S is not None:
+                    S = S_kern + vertices + S
+                    break
     S = undo(S, undo_list)
     return S
 
