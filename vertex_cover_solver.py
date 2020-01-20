@@ -704,7 +704,7 @@ def heuristic():
         S_heur += S_new
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
-    S = undo(S, undo_list)
+    S_heur = undo(S_heur, undo_list)
     return len(S_heur)
 
 
