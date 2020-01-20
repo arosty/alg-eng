@@ -25,7 +25,7 @@ f_deg3 = 1
 f_lp = 1
 f_bound = 1
 #if True, second method of branching is used
-constrained_branching = False
+constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
@@ -655,27 +655,26 @@ def vc_branch(k):
     # Return empty list if no edges are given:
     if is_edgeless(): return []
     S_kern, undo_list, k = kernelization(k)
-    if k >= 0:
-        # Return one degree neighbors list if no edges left:
-        if is_edgeless(): S = S_kern
-        # If k is smaller than lower bound, no need to branch:
-        elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()): bound.counter += 1
-        else:
-            # Get vertices of first edge:
-            u, neighbors = get_highest_degree_vertex()
-            for vertices in u, neighbors:
-                # 'Delete' first vertex from graph:    
-                del_vert(vertices)
-                # Call function recursively:
-                S = vc_branch(k - len(vertices))
-                # 'Undelete' first vertex from graph:
-                un_del_vert(vertices)
-                # If vertex cover found return it plus the first vertex:
-                if S is not None:
-                    S = S_kern + vertices + S
-                    break
-    S = undo(S, undo_list)
-    return S
+    if k < 0: return undo(S, undo_list)
+    # Return one degree neighbors list if no edges left:
+    elif is_edgeless(): S = S_kern
+    # If k is smaller than lower bound, no need to branch:
+    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()): bound.counter += 1
+    else:
+        # Get vertices of first edge:
+        u, neighbors = get_highest_degree_vertex()
+        for vertices in u, neighbors:
+            # 'Delete' first vertex from graph:    
+            del_vert(vertices)
+            # Call function recursively:
+            S = vc_branch(k - len(vertices))
+            # 'Undelete' first vertex from graph:
+            un_del_vert(vertices)
+            # If vertex cover found return it plus the first vertex:
+            if S is not None:
+                S = S_kern + vertices + S
+                break
+    return undo(S, undo_list)
 
 
 def heuristic_processing(vertex, counter, dom_freq):
