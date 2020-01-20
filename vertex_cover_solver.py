@@ -25,7 +25,7 @@ f_deg3 = 1
 f_lp = 1
 f_bound = 1
 #if True, second method of branching is used
-constrained_branching = True
+constrained_branching = False
 #if True, domination rule works with flags
 dom_opt = True
 
