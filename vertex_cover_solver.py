@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -766,7 +766,7 @@ def vc():
     bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernelization(nb_vertices - 1)
+        S_kern, undo_list, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             x = bound()
@@ -781,9 +781,7 @@ def vc():
                 for k in range(kmin, nb_vertices):
                     S = vc_branch(k)
                     if S is not None: break
-            S = S_kern + S
-    print("#convert...")
-    S = correct_output(S)
+            S = undo(S_kern + S, undo_list)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
