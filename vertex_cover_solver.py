@@ -635,7 +635,7 @@ def kernelization(k):
     return S_kern, undo_list, k
 
 
-def undo(undo_list):
+def undo(S, undo_list):
     """
     INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
     calls the right function to undo a change on G, depending on the int before every list of changed items
@@ -644,7 +644,14 @@ def undo(undo_list):
     """
     for [indicator, vertices] in reversed(undo_list):
         if indicator == 1: un_del_vert(vertices)
-        elif indicator == 2: un_merge_vert(vertices)
+        elif indicator == 2:
+            for vertex in reversed(vertices):
+                if S is not None and vertex in S:
+                    v, u, w = vertex
+                    for vert in [vertex, v]: S.remove(vert)
+                    S += [u, w]
+            un_merge_vert(vertices)
+    return S
 
 
 def vc_branch(k):
@@ -656,23 +663,17 @@ def vc_branch(k):
     global f_clique_lb
     global f_lp_lb
     vc_branch.counter += 1
-    if k < 0: return None
+    S = None
+    if k < 0: return S
     # Return empty list if no edges are given:
     if is_edgeless(): return []
     S_kern, undo_list, k = kernelization(k)
-    if k < 0:
-        undo(undo_list)
-        return None
+    if k < 0: return undo(S, undo_list)
     # Return one degree neighbors list if no edges left:
-    if is_edgeless(): S = S_kern
+    elif is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0: S = None
-    elif use_cplex and vc_branch.counter % f_lp_lb == 0 and k < lp_bound():
-        lp_bound.counter += 1
-        S = None
-    elif vc_branch.counter % f_clique_lb == 0 and k < clique_bound():
-        clique_bound.counter += 1
-        S = None
+    elif k == 0 or (use_cplex and vc_branch.counter % f_lp_lb == 0 and k < lp_bound()): lp_bound.counter += 1
+    elif vc_branch.counter % f_clique_lb == 0 and k < clique_bound(): clique_bound.counter += 1
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -687,8 +688,7 @@ def vc_branch(k):
             if S is not None:
                 S = S_kern + vertices + S
                 break
-    undo(undo_list)
-    return S
+    return undo(S, undo_list)
 
 
 def heuristic_processing(vertex, counter, dom_freq):
@@ -718,7 +718,7 @@ def heuristic():
         S_heur += S_new
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
-    undo(undo_list)
+    S_heur = undo(S_heur, undo_list)
     return len(S_heur)
 
 
@@ -751,7 +751,7 @@ def vc_branch_constrained(sol_size, upper):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S_new is not None: S = S_kern + vertices + S_new
-    undo(undo_list)
+    S = undo(S, undo_list)
     return S, upper
 
 
@@ -783,7 +783,7 @@ def vc():
     lp_bound.counter = 0
     if is_edgeless(): S = []
     else:
-        S_kern, _, _ = kernelization(nb_vertices - 1)
+        S_kern, undo_list, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
             x = clique_bound()
@@ -798,9 +798,7 @@ def vc():
                 for k in range(kmin, nb_vertices):
                     S = vc_branch(k)
                     if S is not None: break
-            S = S_kern + S
-    print("#convert...")
-    S = correct_output(S)
+            S = undo(S_kern + S, undo_list)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
