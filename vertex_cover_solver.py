@@ -55,12 +55,10 @@ def add_edge(edge):
     nb_edges += 1
     #add edge in dictionary
     for vertex in edge:
-        if not vertex in g.keys():
-            add_vertex(vertex)
+        if not vertex in g.keys(): add_vertex(vertex)
         g[vertex][1] += 1
         # If current degree is greater than maximum degree, update:
-        if g[vertex][1] > max_degree:
-            max_degree += 1
+        if g[vertex][1] > max_degree: max_degree += 1
     g[edge[0]][2].append(edge[1])
     g[edge[1]][2].append(edge[0])
 
@@ -194,8 +192,7 @@ def get_highest_degree_vertex():
     neighbors = []
     # Iterate through potential neighbors and add each on that is not deleted to the neighbor list:
     for neighbor in g[high_deg_vertex][2]:
-        if not g[neighbor][0]:
-            neighbors.append(neighbor)
+        if not g[neighbor][0]: neighbors.append(neighbor)
     return [high_deg_vertex], neighbors
 
 
@@ -207,8 +204,7 @@ def get_neighbor(vertex):
     """
     for neighbor in g[vertex][2]:
         # Return neighbor if not deleted:
-        if not g[neighbor][0]:
-            return neighbor
+        if not g[neighbor][0]: return neighbor
 
 
 def test_clique(vertex,clique):
@@ -220,8 +216,7 @@ def test_clique(vertex,clique):
     # For every vertex v in the clique:
     for v in clique:
         # If vertex is not a neighbor of v, vertex is not in the vertex cover:
-        if vertex not in g[v][2]:
-            return False
+        if vertex not in g[v][2]: return False
     # If vertex is a neighbor of all the vertices in the clique, return True:
     return True
 
@@ -240,13 +235,12 @@ def inspect_vertex(vertex):
     for i in range (nb_cliques):
         clique_size = len(clique_list[i])
         # If vertex can be added to this clique and this clique is bigger than the best one we found yet:
-        if (test_clique(vertex, clique_list[i])) & (clique_size > best_clique_size):
+        if test_clique(vertex, clique_list[i]) and clique_size > best_clique_size:
             # Remember this clique's index and size:
             best_clique_index = i
             best_clique_size = clique_size
     # If we didn't find any clique to add vertex in, we create one containing vertex:
-    if best_clique_index == -1:
-        clique_list.append([vertex])
+    if best_clique_index == -1: clique_list.append([vertex])
     # Else we add vertex to the best clique possible:
     else: 
         clique_list[best_clique_index].append(vertex)
@@ -263,8 +257,7 @@ def clique_bound():
 
     clique_list = []
     for list_degree_i in degree_list:
-        for vertex in list_degree_i:
-            inspect_vertex(vertex)
+        for vertex in list_degree_i:  inspect_vertex(vertex)
     return nb_vertices - len(clique_list)
 
 
@@ -326,34 +319,6 @@ def lp_bound():
     return sum(x)
 
 
-def append_to_S(S, vertices):
-    for vertex in vertices:
-        if type(vertex) is str:
-            S.append(vertex)
-        else:
-            v, u, w = vertex
-            try:
-                S = del_from_S(S,[v])
-            except :
-                print("## error trying to remove ",v, " while trying to append ", vertex, " in S: ", S)
-                raise
-            for x in [u, w]:
-                S = append_to_S(S, [x])
-    return S
-
-
-def del_from_S(S, vertices):
-    for vertex in vertices:
-        if type(vertex) is str:
-            S.remove(vertex)
-        else:
-            v, u, w = vertex
-            S = append_to_S(S, [v])
-            for x in [u, w]:
-                S = del_from_S(S, [x])
-    return S
-
-
 def high_degree_rule(k):
     """
     INPUT: k
@@ -366,8 +331,7 @@ def high_degree_rule(k):
         del_vert([high_degree_vertex])
         S_kern.append(high_degree_vertex)
         k -= 1
-    if S_kern != []:
-        high_degree_rule.counter += 1
+    if S_kern != []: high_degree_rule.counter += 1
     undelete = S_kern[:]
     return S_kern, undelete, k
 
@@ -436,8 +400,7 @@ def merge_vert(vertex, u, w):
     global max_degree
     merged_point = (vertex, u, w)
     del_vert([vertex, u, w])
-    if merged_point in g:
-        raise ValueError("merged point in g")
+    if merged_point in g: raise ValueError("merged point in g")
     #add merged vertex and delete vertex and its neighbors
     add_vertex(merged_point)
     nb_vertices += 1
@@ -609,7 +572,7 @@ def add_neighborhood(vertex, neighborhood):
     new_neigh = []
     for neigh in neighborhood:
         # if neigh is not already a neighbor and is not the vertex itself, it can be added as neighbor
-        if (neigh not in g[vertex][2]) and (vertex not in g[neigh][2]) and (neigh != vertex):
+        if neigh not in g[vertex][2] and vertex not in g[neigh][2] and neigh != vertex:
             new_neigh.append(neigh)
             #Increment edge counter
             nb_edges += 1
@@ -619,8 +582,7 @@ def add_neighborhood(vertex, neighborhood):
             degree_list[ g[neigh][1]-1].remove(neigh)
             degree_list[g[neigh][1]].append(neigh)
             # If new degree of neigh is greater than maximum degree, update:
-            if g[neigh][1] > max_degree:
-                max_degree = g[neigh][1]
+            if g[neigh][1] > max_degree: max_degree = g[neigh][1]
     #add edges for vertex
     old_degree = g[vertex][1]
     g[vertex][1] += len(new_neigh)
@@ -629,8 +591,7 @@ def add_neighborhood(vertex, neighborhood):
     degree_list[old_degree].remove(vertex)
     degree_list[new_degree].append(vertex)
     # If new degree of vertex is greater than maximum degree, update:
-    if new_degree > max_degree:
-        max_degree = new_degree
+    if new_degree > max_degree: max_degree = new_degree
     return new_neigh
 
 
@@ -658,7 +619,6 @@ def degree_three_rule():
             new_neigh_c = add_neighborhood(c, all_neigh_a)
             add_edge([a,b])
             add_edge([b,c])
-
             degree_list[g[a][1]-1].remove(a)
             degree_list[g[a][1]].append(a)
             degree_list[g[b][1]-2].remove(b)
@@ -741,9 +701,7 @@ def cancel_neighborhood(vertex, new_neigh_v):
     degree_list[old_degree].remove(vertex)
     degree_list[new_degree].append(vertex)
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
-    while (max_degree > 0) & (degree_list[max_degree] == []):
-        max_degree -= 1
-    return 
+    while (max_degree > 0) & (degree_list[max_degree] == []): max_degree -= 1
 
 
 
@@ -764,13 +722,8 @@ def correct_deg3 (S, v,a,b,c):
         elif in_S_list == [a,c]:
             S.remove(c)
             S.append(v)
-    elif len(in_S_list) == 3:
-        pass
-    else:
-        print("# v,a,b,c: ", v,a,b,c)
-        print("# in_S_list: ", in_S_list)
-        raise ValueError("degree 3 rule undoing error: unexpected case when rebuilding actual vertex cover")
     return S
+
 
 def undo(S, undo_list, undelete=True):
     """
@@ -798,10 +751,7 @@ def undo(S, undo_list, undelete=True):
                 cancel_neighborhood(c, new_neigh_c)
                 un_del_vert([v])
             # Correct S according to deg3 rule
-            if S is not None:
-                S = correct_deg3(S,v,a,b,c)
-        else:
-            raise ValueError("Unexpected Indicator in undo_list")
+            if S is not None: S = correct_deg3(S,v,a,b,c)
     return S
 
 
