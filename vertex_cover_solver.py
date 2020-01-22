@@ -726,18 +726,18 @@ def vc_branch_constrained(sol_size, upper):
     vc_branch_constrained.counter += 1
     S = None
     if is_edgeless():
-        if sol_size > upper: return S, upper
+        if sol_size >= upper: return S, upper
         else: return [], sol_size
-    if vc_branch_constrained.counter > 1 and sol_size + lp_bound() > upper: return S, upper
-    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() > upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + lp_bound() >= upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() >= upper: return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
-        if sol_size <= upper:
+        if sol_size < upper:
             S = S_kern
             upper = sol_size
-    elif sol_size + lp_bound > upper: lp_bound.counter += 1
-    elif sol_size + clique_bound() > upper: clique_bound.counter += 1
+    elif sol_size + lp_bound >= upper: lp_bound.counter += 1
+    elif sol_size + clique_bound() >= upper: clique_bound.counter += 1
     else:
         S_heur, heur_upper = heuristic()
         if sol_size + heur_upper < upper:
@@ -745,7 +745,7 @@ def vc_branch_constrained(sol_size, upper):
             upper = sol_size + heur_upper
         u, neighbors = get_highest_degree_vertex()
         for vertices in u, neighbors:
-            # 'Delete' first vertex from graph:    
+            # 'Delete' first vertex from graph:
             del_vert(vertices)
             # Call function recursively:
             S_new, upper = vc_branch_constrained(sol_size + len(vertices), upper)
