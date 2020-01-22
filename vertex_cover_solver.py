@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -21,11 +21,11 @@ limit_kern_branch = float('inf')
 #reduction rules' frequencies
 f_deg2 = 1
 f_deg2_heur = 1
-f_dom = float('inf')
+f_dom = 1
 f_deg3 = 1
-f_lp = float('inf')
-f_clique_lb = float('inf')
-f_lp_lb = float('inf')
+f_lp = 1
+f_clique_lb = 1
+f_lp_lb = 1
 #if True, second method of branching is used
 constrained_branching = True
 #if True, domination rule works with flags
@@ -94,8 +94,7 @@ def print_result(vertices):
     print_result prints every given vertex in a new line
     OUTPUT: None
     """
-    for vertex in vertices:
-        print(vertex)
+    for vertex in vertices: print(vertex)
 
         
 def del_vert(vertices, really=False):
@@ -131,8 +130,7 @@ def del_vert(vertices, really=False):
             if really: g[adj_vert][2].remove(vertex)
         if really: del g[vertex]
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
-    while (max_degree > 0) & (degree_list[max_degree] == []):
-        max_degree -= 1
+    while max_degree > 0 and degree_list[max_degree] == []: max_degree -= 1
 
 def un_del_vert(vertices):
     """
@@ -154,8 +152,7 @@ def un_del_vert(vertices):
         nb_edges += degree_vertex
         degree_list[degree_vertex].append(vertex)
         # If the vertex has a higher degree than max_degree, we update max_degree
-        if g[vertex][1] > max_degree:
-            max_degree = g[vertex][1]
+        if g[vertex][1] > max_degree: max_degree = g[vertex][1]
         # Update number of edges on adjacent vertices:
         for adj_vert in g[vertex][2]:
             ###Updating g
@@ -167,8 +164,7 @@ def un_del_vert(vertices):
                 degree_list[degree_adj_vert-1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
                 #If the neighbor has after undeletion a higher degree than max degree we update it
-                if g[adj_vert][1] > max_degree:
-                    max_degree = g[adj_vert][1]
+                if g[adj_vert][1] > max_degree: max_degree = g[adj_vert][1]
 
 
 def is_edgeless():
@@ -242,8 +238,7 @@ def inspect_vertex(vertex):
     # If we didn't find any clique to add vertex in, we create one containing vertex:
     if best_clique_index == -1: clique_list.append([vertex])
     # Else we add vertex to the best clique possible:
-    else: 
-        clique_list[best_clique_index].append(vertex)
+    else: clique_list[best_clique_index].append(vertex)
 
 
 def clique_bound():
@@ -400,7 +395,6 @@ def merge_vert(vertex, u, w):
     global max_degree
     merged_point = (vertex, u, w)
     del_vert([vertex, u, w])
-    if merged_point in g: raise ValueError("merged point in g")
     #add merged vertex and delete vertex and its neighbors
     add_vertex(merged_point)
     nb_vertices += 1
@@ -449,7 +443,7 @@ def degree_one_rule(k):
         # Get its neighbor
         neighbor = get_neighbor(vertex)
         k -= 1
-        if k < 0: return S_kern, undelete, k
+        if k < 0: break
         S_kern.append(neighbor)
         del_vert([neighbor])
         undelete.append(neighbor)
@@ -579,14 +573,14 @@ def add_neighborhood(vertex, neighborhood):
             #add edge for neigh
             g[neigh][1] += 1
             g[neigh][2].append(vertex)
-            degree_list[ g[neigh][1]-1].remove(neigh)
+            degree_list[g[neigh][1]-1].remove(neigh)
             degree_list[g[neigh][1]].append(neigh)
             # If new degree of neigh is greater than maximum degree, update:
             if g[neigh][1] > max_degree: max_degree = g[neigh][1]
     #add edges for vertex
     old_degree = g[vertex][1]
     g[vertex][1] += len(new_neigh)
-    g[vertex][2].extend(new_neigh)
+    g[vertex][2] += new_neigh
     new_degree = g[vertex][1]
     degree_list[old_degree].remove(vertex)
     degree_list[new_degree].append(vertex)
@@ -596,13 +590,13 @@ def add_neighborhood(vertex, neighborhood):
 
 
 
-def degree_three_rule():
+def degree_three_rule(k):
     """
     INPUT: vertex is int
     applies degree 3 independent set rule and returns the undo_list
     OUTPUT: undo_list 
     """
-    undo_list = []
+    S_kern, undo_list = [], []
     for vertex in degree_list[3]:
         [a,b,c] = get_all_neighbors(vertex)
         independent_test = (b not in g[a][2]) & (c not in g[a][2]) & (c not in g[b][2])
@@ -626,7 +620,10 @@ def degree_three_rule():
             degree_list[g[c][1]-1].remove(c)
             degree_list[g[c][1]].append(c)
             undo_list.append( [3, [ (vertex,a,b,c), new_neigh_a, new_neigh_b, new_neigh_c ] ] )
-    return undo_list
+            S_kern_new, undelete, k = basic_rules(k)
+            S_kern += S_kern_new
+            undo_list.append([1, undelete])
+    return S_kern, undo_list, k
 
 
 
@@ -672,10 +669,11 @@ def kernelization(k):
             if S_lp != []: successful = True
             if undelete_lp != []: undo_list.append([1, undelete_lp])
         if kernelization.counter%f_deg3 == 0:     #TODO: we need to think about the order, shouldn't deg3 be before dom?
-            undo_list_deg3 = degree_three_rule()
+            S_kern_three, undo_list_deg3, k = degree_three_rule(k)
+            S_kern += S_kern_three
             if undo_list_deg3 != []: 
                 successful = True
-                undo_list.extend(undo_list_deg3)
+                undo_list += undo_list_deg3
             if k < 0 or is_edgeless(): break
         if not successful: break     # TODO: Try one last time! if haven't tried one of the above before (counter)
     return S_kern, undo_list, k
