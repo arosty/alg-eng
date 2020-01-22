@@ -635,7 +635,7 @@ def kernelization(k):
     return S_kern, undo_list, k
 
 
-def undo(S, undo_list):
+def undo(S, undo_list, undelete=True):
     """
     INPUT: undo_list is list of lists of int and list of int   >>>>> [[int, [vertices]]]
     calls the right function to undo a change on G, depending on the int before every list of changed items
@@ -643,14 +643,15 @@ def undo(S, undo_list):
     OUTPUT: None
     """
     for [indicator, vertices] in reversed(undo_list):
-        if indicator == 1: un_del_vert(vertices)
+        if indicator == 1:
+            if undelete: un_del_vert(vertices)
         elif indicator == 2:
             for vertex in reversed(vertices):
                 if S is not None and vertex in S:
                     v, u, w = vertex
                     for vert in [vertex, v]: S.remove(vert)
                     S += [u, w]
-            un_merge_vert(vertices)
+            if undelete: un_merge_vert(vertices)
     return S
 
 
@@ -784,7 +785,7 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, undo_list, _ = kernelization(nb_vertices - 1)
-        if is_edgeless(): S = S_kern
+        if is_edgeless(): S = undo(S_kern, undo_list, False)
         else:
             x = clique_bound()
             clique_bound.counter += 1
@@ -798,7 +799,7 @@ def vc():
                 for k in range(kmin, nb_vertices):
                     S = vc_branch(k)
                     if S is not None: break
-            S = undo(S_kern + S, undo_list)
+            S = undo(S_kern + S, undo_list, False)
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
