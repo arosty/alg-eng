@@ -705,7 +705,7 @@ def heuristic():
         if unmerge_new != []: undo_list.append([2, unmerge_new]) 
         if undelete_new != []: undo_list.append([1, undelete_new])
     S_heur = undo(S_heur, undo_list)
-    return len(S_heur)
+    return S_heur, len(S_heur)
 
 
 def vc_branch_constrained(sol_size, upper):
@@ -723,8 +723,10 @@ def vc_branch_constrained(sol_size, upper):
             upper = sol_size
     elif sol_size + bound() > upper: bound.counter += 1
     else:
-        heur_upper = heuristic()
-        upper = min(sol_size + heur_upper, upper)
+        S_heur, heur_upper = heuristic()
+        if sol_size + heur_upper < upper:
+            S = S_kern + S_heur
+            upper = sol_size + heur_upper
         u, neighbors = get_highest_degree_vertex()
         for vertices in u, neighbors:
             # 'Delete' first vertex from graph:    
