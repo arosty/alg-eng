@@ -786,7 +786,7 @@ def vc():
     if is_edgeless(): S = []
     else:
         S_kern, undo_list, _ = kernelization(nb_vertices - 1)
-        if is_edgeless(): S = S_kern
+        if is_edgeless(): S = undo(S_kern, undo_list)
         else:
             x = clique_bound()
             clique_bound.counter += 1
