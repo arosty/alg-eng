@@ -19,13 +19,13 @@ limit_kern_start = float('inf')
 #max number of kernelization loops allowed while branching
 limit_kern_branch = float('inf')
 #reduction rules' frequencies
-f_deg2 = 1
-f_deg2_heur = 1
-f_dom = 1
+f_deg2 = float('inf')
+f_deg2_heur = float('inf')
+f_dom = float('inf')
 f_deg3 = 1
-f_lp = 1
-f_clique_lb = 1
-f_lp_lb = 1
+f_lp = float('inf')
+f_clique_lb = float('inf')
+f_lp_lb = float('inf')
 #if True, second method of branching is used
 constrained_branching = True
 #if True, domination rule works with flags
@@ -684,7 +684,8 @@ def kernelization(k):
     kernelization.counter += 1
     undo_list = []
     # Execute reduction rules:
-    S_kern, undelete, k = basic_rules(k)
+    # S_kern, undelete, k = basic_rules(k)
+    S_kern, undelete = [], [] # DELETE
     if undelete != []: undo_list.append([1, undelete])
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
@@ -843,7 +844,8 @@ def vc_branch(k):
 
 def heuristic_processing(vertex, counter, dom_freq):
     del_vert([vertex])
-    S_one, undelete_one, _ = degree_one_rule(nb_vertices)
+    # S_one, undelete_one, _ = degree_one_rule(nb_vertices)
+    S_one, undelete_one = [], [] # DELETE
     S_new = [vertex] + S_one 
     undelete_new = [vertex] + undelete_one
     if kernelization.counter%f_deg2 == 0:
