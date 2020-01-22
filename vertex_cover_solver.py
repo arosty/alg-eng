@@ -785,11 +785,12 @@ def undo(S, undo_list, undelete=True):
             if undelete: un_merge_vert(vertices)
         elif indicator == 3:
             [(v,a,b,c), new_neigh_a, new_neigh_b, new_neigh_c] = vertices
-            # Change g back to how it was
-            cancel_neighborhood(a, new_neigh_a)
-            cancel_neighborhood(b, new_neigh_b + [a,c])
-            cancel_neighborhood(c, new_neigh_c)
-            un_del_vert([v])
+            if undelete:
+                # Change g back to how it was
+                cancel_neighborhood(a, new_neigh_a)
+                cancel_neighborhood(b, new_neigh_b + [a,c])
+                cancel_neighborhood(c, new_neigh_c)
+                un_del_vert([v])
             # Correct S according to deg3 rule
             if S is not None:
                 S = correct_deg3(S,v,a,b,c)
