@@ -629,8 +629,6 @@ def degree_three_rule():
     undo_list = []
     for vertex in degree_list[3]:
         [a,b,c] = get_all_neighbors(vertex)
-        if ('1224', ('1138', '6', '358'), ('1383', '580', ('1035', '375', '556'))) in [vertex,a,b,c]: print("## for the merged point: ",vertex,a,b,c)
-        if '683' in [vertex,a,b,c]: print("# for 683: ", vertex,a,b,c)
         independent_test = (b not in g[a][2]) & (c not in g[a][2]) & (c not in g[b][2])
         if independent_test:
             degree_three_rule.counter += 1
@@ -737,27 +735,23 @@ def correct_deg3 (S, v,a,b,c):
     if in_S_list == [b]:
         S.remove(b)
         S.append(v)
-        return S
     elif len(in_S_list) == 2:
         if in_S_list == [a,b]:
             S.remove(a)
             S.append(v)
-            return S
         elif in_S_list == [b,c]:
             S.remove(b)
             S.append(v)
-            return S
         elif in_S_list == [a,c]:
             S.remove(c)
             S.append(v)
-            return S
     elif len(in_S_list) == 3:
-        return S
+        pass
     else:
         print("# v,a,b,c: ", v,a,b,c)
         print("# in_S_list: ", in_S_list)
         raise ValueError("degree 3 rule undoing error: unexpected case when rebuilding actual vertex cover")
-
+    return S
 
 def undo(S, undo_list):
     """
@@ -783,7 +777,8 @@ def undo(S, undo_list):
             cancel_neighborhood(c, new_neigh_c)
             un_del_vert([v])
             # Correct S according to deg3 rule
-            S = correct_deg3(S,v,a,b,c)
+            if S is not None:
+                S = correct_deg3(S,v,a,b,c)
         else:
             raise ValueError("Unexpected Indicator in undo_list")
     return S
