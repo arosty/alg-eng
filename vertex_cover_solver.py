@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -26,7 +26,7 @@ f_lp = 1
 f_clique_lb = 1
 f_lp_lb = 1
 #if True, second method of branching is used
-constrained_branching = False
+constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
