@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -793,9 +793,7 @@ def vc():
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
-            if constrained_branching:
-                upper = nb_vertices
-                S, _ = vc_branch_constrained(0, upper)
+            if constrained_branching: S, _ = vc_branch_constrained(0, nb_vertices)
             else:
                 for k in range(kmin, nb_vertices):
                     S = vc_branch(k)
