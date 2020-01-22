@@ -794,7 +794,7 @@ def vc():
             kmin = max(x, y)
             first_lower_bound_difference = x - y
             if constrained_branching:
-                upper = nb_vertices - 1
+                upper = nb_vertices
                 S, _ = vc_branch_constrained(0, upper)
             else:
                 for k in range(kmin, nb_vertices):
