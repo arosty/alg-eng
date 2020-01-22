@@ -19,12 +19,12 @@ limit_kern_start = float('inf')
 #max number of kernelization loops allowed while branching
 limit_kern_branch = float('inf')
 #reduction rules' frequencies
-f_deg2 = float('inf')
-f_deg2_heur = float('inf')
-f_dom = float('inf')
+f_deg2 = 1
+f_deg2_heur = 1
+f_dom = 1
 f_deg3 = 1
 f_lp = 1
-f_clique_lb = float('inf')
+f_clique_lb = 1
 f_lp_lb = 1
 #if True, second method of branching is used
 constrained_branching = True
@@ -649,9 +649,12 @@ def degree_three_rule():
             # Delete vertex:
             del_vert([vertex])
             # adding edges to a, b and c:
-            new_neigh_a = add_neighborhood(a, get_all_neighbors(b))
-            new_neigh_b = add_neighborhood(b, get_all_neighbors(c))
-            new_neigh_c = add_neighborhood(c, get_all_neighbors(a))
+            all_neigh_a = get_all_neighbors(a)
+            all_neigh_b = get_all_neighbors(b)
+            all_neigh_c = get_all_neighbors(c)
+            new_neigh_a = add_neighborhood(a, all_neigh_b)
+            new_neigh_b = add_neighborhood(b, all_neigh_c)
+            new_neigh_c = add_neighborhood(c, all_neigh_a)
             add_edge([a,b])
             add_edge([b,c])
 
@@ -681,8 +684,7 @@ def kernelization(k):
     kernelization.counter += 1
     undo_list = []
     # Execute reduction rules:
-    # S_kern, undelete, k = basic_rules(k)
-    S_kern, undelete = [], [] # DELETE
+    S_kern, undelete, k = basic_rules(k)
     if undelete != []: undo_list.append([1, undelete])
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
@@ -841,8 +843,7 @@ def vc_branch(k):
 
 def heuristic_processing(vertex, counter, dom_freq):
     del_vert([vertex])
-    # S_one, undelete_one, _ = degree_one_rule(nb_vertices)
-    S_one, undelete_one = [], [] # DELETE
+    S_one, undelete_one, _ = degree_one_rule(nb_vertices)
     S_new = [vertex] + S_one 
     undelete_new = [vertex] + undelete_one
     if kernelization.counter%f_deg2 == 0:
@@ -955,6 +956,7 @@ def vc():
                     S = vc_branch(k)
                     if S is not None: break
             S = undo(S_kern + S, undo_list, False)
+    print('#------------------#')
     print_result(S)
     print("#solution size: %s" % len(S))
     print("#recursive steps: %s" % vc_branch.counter)
