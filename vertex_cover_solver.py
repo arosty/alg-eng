@@ -19,8 +19,8 @@ limit_kern_start = float('inf')
 #max number of kernelization loops allowed while branching
 limit_kern_branch = float('inf')
 #reduction rules' frequencies
-f_deg2 = float('inf')
-f_deg2_heur = float('inf')
+f_deg2 = 1
+f_deg2_heur = 1
 f_dom = float('inf')
 f_deg3 = 1
 f_lp = float('inf')
