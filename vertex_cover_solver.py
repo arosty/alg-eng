@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = True
+use_cplex = False
 
 # Import cplex only if set to True:
 if use_cplex:
