@@ -20,6 +20,7 @@ limit_kern_start = float('inf')
 limit_kern_branch = float('inf')
 #reduction rules' frequencies
 f_deg2 = 1
+f_deg2_heur = 1
 f_dom = 1
 f_deg3 = 1
 f_lp = 1
@@ -677,6 +678,7 @@ def kernelization(k):
     global f_lp
     global limit_kern_start
     global limit_kern_branch
+    kernelization.counter += 1
     undo_list = []
     # Execute reduction rules:
     S_kern, undelete, k = basic_rules(k)
@@ -687,25 +689,25 @@ def kernelization(k):
     while k >= 0 and not is_edgeless() and counter < limit:
         counter += 1
         successful = False
-        if vc_branch.counter%f_deg2 == 0:
+        if kernelization.counter%f_deg2 == 0:
             S_kern_two, undelete_two, unmerge_two, k = degree_two_rule(k)
             S_kern += S_kern_two
             if S_kern_two != []: successful = True
             if unmerge_two != []: undo_list.append([2, unmerge_two])
             if undelete_two != []: undo_list.append([1, undelete_two])
             if k < 0 or is_edgeless(): break
-        if vc_branch.counter%f_dom == 0:
+        if kernelization.counter%f_dom == 0:
             S_kern_dom, undelete_dom, k = domination_rule(k)
             S_kern += S_kern_dom
             if S_kern_dom != []: successful = True
             if undelete_dom != []: undo_list.append([1, undelete_dom])
             if k < 0 or is_edgeless(): break
-        if use_cplex and vc_branch.counter%f_lp == 0:
+        if use_cplex and kernelization.counter%f_lp == 0:
             S_lp, undelete_lp, k = lp_rule(k)
             S_kern += S_lp
             if S_lp != []: successful = True
             if undelete_lp != []: undo_list.append([1, undelete_lp])
-        if vc_branch.counter%f_deg3 == 0:     #TODO: we need to think about the order, shouldn't deg3 be before dom?
+        if kernelization.counter%f_deg3 == 0:     #TODO: we need to think about the order, shouldn't deg3 be before dom?
             undo_list_deg3 = degree_three_rule()
             if undo_list_deg3 != []: 
                 successful = True
@@ -839,9 +841,14 @@ def vc_branch(k):
 def heuristic_processing(vertex, counter, dom_freq):
     del_vert([vertex])
     S_one, undelete_one, _ = degree_one_rule(nb_vertices)
-    S_two, undelete_two, unmerge_new, _ = degree_two_rule(nb_vertices)
-    S_new = [vertex] + S_one + S_two
-    undelete_new = [vertex] + undelete_one + undelete_two
+    S_new = [vertex] + S_one 
+    undelete_new = [vertex] + undelete_one
+    if kernelization.counter%f_deg2 == 0:
+        S_two, undelete_two, unmerge_new, _ = degree_two_rule(nb_vertices)
+        S_new += S_two
+        undelete_new += undelete_two
+    else:
+        unmerge_new = []
     # if counter % dom_freq == 0:
     #     S_dom, undelete_dom = domination_rule(False)
     #     S_new += S_dom
@@ -919,6 +926,7 @@ def vc():
     global nb_vertices
     vc_branch.counter = 0
     vc_branch_constrained.counter = 0
+    kernelization.counter = 0
     first_lower_bound_difference = 0
     high_degree_rule.counter = 0
     degree_zero_rule.counter = 0
