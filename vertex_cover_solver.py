@@ -684,8 +684,7 @@ def kernelization(k):
     kernelization.counter += 1
     undo_list = []
     # Execute reduction rules:
-    # S_kern, undelete, k = basic_rules(k)
-    S_kern, undelete = [], [] # DELETE
+    S_kern, undelete, k = basic_rules(k)
     if undelete != []: undo_list.append([1, undelete])
     counter = 0
     if vc_branch.counter == 0: limit = limit_kern_start
@@ -844,8 +843,7 @@ def vc_branch(k):
 
 def heuristic_processing(vertex, counter, dom_freq):
     del_vert([vertex])
-    # S_one, undelete_one, _ = degree_one_rule(nb_vertices)
-    S_one, undelete_one = [], [] # DELETE
+    S_one, undelete_one, _ = degree_one_rule(nb_vertices)
     S_new = [vertex] + S_one 
     undelete_new = [vertex] + undelete_one
     if kernelization.counter%f_deg2 == 0:
