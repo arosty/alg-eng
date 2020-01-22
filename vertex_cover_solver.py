@@ -100,7 +100,7 @@ def print_result(vertices):
         print(vertex)
 
         
-def del_vert(vertices):
+def del_vert(vertices, really=False):
     """
     INPUT: vertices is list : vertices to 'delete'
     del_vert 'deletes' the given vertices and updates the number of edges of all adjacent vertices
@@ -130,6 +130,8 @@ def del_vert(vertices):
                 degree_adj_vert = g[adj_vert][1]
                 degree_list[degree_adj_vert+1].remove(adj_vert)
                 degree_list[degree_adj_vert].append(adj_vert)
+            if really: g[adj_vert][2].remove(vertex)
+        if really: del g[vertex]
     #If max_degree is obsolete, go through all degrees decreasing from max_degree to find the new value
     while (max_degree > 0) & (degree_list[max_degree] == []):
         max_degree -= 1
@@ -435,8 +437,7 @@ def merge_vert(vertex, u, w):
     merged_point = (vertex, u, w)
     del_vert([vertex, u, w])
     if merged_point in g:
-        un_del_vert([merged_point])
-        return merged_point
+        raise ValueError("merged point in g")
     #add merged vertex and delete vertex and its neighbors
     add_vertex(merged_point)
     nb_vertices += 1
@@ -466,7 +467,7 @@ def un_merge_vert(merged_points):
     """        
     for merged_point in reversed(merged_points):
         (vertex, u, w) = merged_point
-        del_vert([merged_point])
+        del_vert([merged_point], True)
         un_del_vert([vertex, u, w])
 
 
