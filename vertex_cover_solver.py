@@ -736,7 +736,7 @@ def vc_branch_constrained(sol_size, upper):
         if sol_size < upper:
             S = S_kern
             upper = sol_size
-    elif sol_size + lp_bound >= upper: lp_bound.counter += 1
+    elif sol_size + lp_bound() >= upper: lp_bound.counter += 1
     elif sol_size + clique_bound() >= upper: clique_bound.counter += 1
     else:
         S_heur, heur_upper = heuristic()
