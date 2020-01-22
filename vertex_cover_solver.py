@@ -728,7 +728,7 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size >= upper: return S, upper
         else: return [], sol_size
-    if vc_branch_constrained.counter > 1 and sol_size + lp_bound() >= upper: return S, upper
+    if use_cplex and vc_branch_constrained.counter > 1 and sol_size + lp_bound() >= upper: return S, upper
     if vc_branch_constrained.counter > 1 and sol_size + clique_bound() >= upper: return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
@@ -736,7 +736,7 @@ def vc_branch_constrained(sol_size, upper):
         if sol_size < upper:
             S = S_kern
             upper = sol_size
-    elif sol_size + lp_bound() >= upper: lp_bound.counter += 1
+    elif use_cplex and sol_size + lp_bound() >= upper: lp_bound.counter += 1
     elif sol_size + clique_bound() >= upper: clique_bound.counter += 1
     else:
         S_heur, heur_upper = heuristic()
