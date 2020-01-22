@@ -83,7 +83,7 @@ def get_data():
     nb_vertices = len(g)
     # Initializing degree_list:
     nb_vertices = len(g)
-    degree_list = [[] for i in range(nb_vertices)]
+    degree_list = [[] for i in range(max(4,nb_vertices))]
     for vertex in g:
         degree = g[vertex][1]
         # Append vertex to the list located at its degree in degree_list:
