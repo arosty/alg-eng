@@ -23,7 +23,8 @@ f_deg2 = 1
 f_dom = 1
 f_deg3 = 1
 f_lp = 1
-f_bound = 1
+f_clique_lb = 1
+f_lp_lb = 1
 #if True, second method of branching is used
 constrained_branching = False
 #if True, domination rule works with flags
@@ -248,7 +249,7 @@ def inspect_vertex(vertex):
         clique_list[best_clique_index].append(vertex)
 
 
-def bound():
+def clique_bound():
     """
     INPUT: None
     bound returns a lower bound using clique cover, starting by smallest degree
@@ -261,6 +262,64 @@ def bound():
         for vertex in list_degree_i:
             inspect_vertex(vertex)
     return nb_vertices - len(clique_list)
+
+
+def lpParam():
+    """
+    INPUT: NONE
+    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
+    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+    """
+    global nb_vertices
+    global nb_edges
+    #Objective function is sum with all factors set to 1
+    my_obj = [1]*nb_vertices
+    #all variables bounded by 0 (default) and 1
+    my_ub = [1]*nb_vertices
+    #All variables are integers
+    my_ctype = 'C'*nb_vertices
+    #each edge is a greater-than 1 constraint 
+    my_rhs = [1]*nb_edges
+    my_sense = 'G'*nb_edges
+    #name of the vertices and of the columns are left to fill
+    my_colnames = []
+    my_rownames = []
+    #Actual rows are going to be filled during the for loop
+    rows = []
+    for degree in range(max_degree+1):
+        for vertex in degree_list[degree]:
+            my_colnames.append(str(vertex))
+            for neigh in g[vertex][2]:
+                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
+                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
+                my_rownames.append("e %s %s" % (vertex,neigh))
+                rows.append([[str(vertex),str(neigh)],[1,1]])
+    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
+
+
+def lp():
+    #get parameters of the CPLEX problem
+    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
+    #initialize the CPLEX problem
+    prob = cplex.Cplex()
+    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
+    prob.set_results_stream(None)
+    prob.parameters.workmem = 1536
+    #fill the CPLEX problem with all correct parameters
+    prob.objective.set_sense(prob.objective.sense.minimize)
+    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
+    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
+    #Solve the CPLEX problem
+    prob.solve()
+    #print the solution 
+    numcols = prob.variables.get_num()
+    x = prob.solution.get_values()
+    return x, numcols, my_colnames
+
+
+def lp_bound():
+    x, _, _ = lp()
+    return sum(x)
 
 
 def append_to_S(S, vertices):
@@ -509,61 +568,14 @@ def domination_rule(k):
     return S_kern, undelete, k
 
 
-def lpParam():
-    """
-    INPUT: NONE
-    Under the assumption that all lists of neighbors are correctly updated, returns all the necessary objects to run CPLEX
-    OUTPUT: my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
-    """
-    global nb_vertices
-    global nb_edges
-    #Objective function is sum with all factors set to 1
-    my_obj = [1]*nb_vertices
-    #all variables bounded by 0 (default) and 1
-    my_ub = [1]*nb_vertices
-    #All variables are integers
-    my_ctype = 'C'*nb_vertices
-    #each edge is a greater-than 1 constraint 
-    my_rhs = [1]*nb_edges
-    my_sense = 'G'*nb_edges
-    #name of the vertices and of the columns are left to fill
-    my_colnames = []
-    my_rownames = []
-    #Actual rows are going to be filled during the for loop
-    rows = []
-    for degree in range(max_degree+1):
-        for vertex in degree_list[degree]:
-            my_colnames.append(str(vertex))
-            for neigh in g[vertex][2]:
-                if g[neigh][0] or g[neigh][1] < g[vertex][1]: continue
-                if g[neigh][1] == g[vertex][1] and [[str(neigh),str(vertex)],[1,1]] in rows: continue
-                my_rownames.append("e %s %s" % (vertex,neigh))
-                rows.append([[str(vertex),str(neigh)],[1,1]])
-    return my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows
-
-
 def lp_rule(k):
     """
     INPUT: None
     prints the vertex cover corresponding to global g using cplex solver
     OUTPUT: None
     """
-    #get parameters of the CPLEX problem
-    my_obj, my_ub, my_ctype, my_colnames, my_rhs, my_rownames, my_sense, rows = lpParam()
-    #initialize the CPLEX problem
-    prob = cplex.Cplex()
-    #To avoid printing the summary of the cplex resolution, to limit memory usage to 1.5GB and get more precise results on big graphs
-    prob.set_results_stream(None)
-    prob.parameters.workmem = 1536
-    #fill the CPLEX problem with all correct parameters
-    prob.objective.set_sense(prob.objective.sense.minimize)
-    prob.variables.add(obj=my_obj, ub=my_ub, types=my_ctype, names=my_colnames)
-    prob.linear_constraints.add(lin_expr=rows, senses=my_sense, rhs=my_rhs, names=my_rownames)
-    #Solve the CPLEX problem
-    prob.solve()
-    #print the solution 
-    numcols = prob.variables.get_num()
-    x = prob.solution.get_values()
+    x, numcols, my_colnames = lp()
+    if sum(x) > k: return [], [], -1
     S_lp, undelete = [], []
     for j in range(numcols):
         if x[j] in [0,1]:
@@ -648,7 +660,8 @@ def vc_branch(k):
     vc_branch returns a vertex cover of size k if it exists in this graph and None otherwise
     OUTPUT: list of length at most k or None
     """
-    global f_bound
+    global f_clique_lb
+    global f_lp_lb
     vc_branch.counter += 1
     S = None
     if k < 0: return S
@@ -659,7 +672,8 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     elif is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or (vc_branch.counter % f_bound == 0 and k < bound()): bound.counter += 1
+    elif k == 0 or (use_cplex and vc_branch.counter % f_lp_lb == 0 and k < lp_bound()): lp_bound.counter += 1
+    elif vc_branch.counter % f_clique_lb == 0 and k < clique_bound(): clique_bound.counter += 1
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -714,14 +728,16 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size > upper: return S, upper
         else: return [], sol_size
-    if vc_branch_constrained.counter > 1 and sol_size + bound() > upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + lp_bound() > upper: return S, upper
+    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() > upper: return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size <= upper:
             S = S_kern
             upper = sol_size
-    elif sol_size + bound() > upper: bound.counter += 1
+    elif sol_size + lp_bound > upper: lp_bound.counter += 1
+    elif sol_size + clique_bound() > upper: clique_bound.counter += 1
     else:
         S_heur, heur_upper = heuristic()
         if sol_size + heur_upper < upper:
@@ -765,14 +781,15 @@ def vc():
     degree_one_rule.counter = 0
     degree_two_rule.counter = 0
     domination_rule.counter = 0
-    bound.counter = 0
+    clique_bound.counter = 0
+    lp_bound.counter = 0
     if is_edgeless(): S = []
     else:
         S_kern, undo_list, _ = kernelization(nb_vertices - 1)
         if is_edgeless(): S = S_kern
         else:
-            x = bound()
-            bound.counter += 1
+            x = clique_bound()
+            clique_bound.counter += 1
             y = starter_reduction_rule()
             kmin = max(x, y)
             first_lower_bound_difference = x - y
@@ -795,7 +812,7 @@ def vc():
     print("#degree one rules: %s" % degree_one_rule.counter)
     print("#degree two rules: %s" % degree_two_rule.counter)
     print("#domination rules: %s" % domination_rule.counter)
-    print("#lower bounds: %s" % bound.counter)
+    print("#lower bounds: %s" % clique_bound.counter)
 
 
 get_data()
