@@ -249,7 +249,6 @@ def clique_bound():
     """
     # Declare clique list:
     global clique_list
-
     clique_list = []
     for list_degree_i in degree_list:
         for vertex in list_degree_i:  inspect_vertex(vertex)
@@ -785,7 +784,7 @@ def vc_branch(k):
             un_del_vert(vertices)
             # If vertex cover found return it plus the first vertex:
             if S is not None:
-                S = S_kern + S + vertices
+                S = S_kern + vertices + S
                 break
     return undo(S, undo_list)
 
@@ -859,13 +858,6 @@ def vc_branch_constrained(sol_size, upper):
             if S_new is not None: S = S_kern + vertices + S_new
     S = undo(S, undo_list)
     return S, upper
-
-
-def correct_output(S):
-    S_new = []
-    for vertex in S:
-        S_new = append_to_S(S_new, [vertex])
-    return S_new
 
 
 def vc():
