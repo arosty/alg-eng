@@ -14,22 +14,35 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
-#max number of kernelization loops allowed for preproccesing kern
-limit_kern_start = float('inf')
-#max number of kernelization loops allowed while branching
-limit_kern_branch = float('inf')
-#reduction rules' frequencies
-f_deg2 = 1
-f_deg2_heur = 1
-f_dom = 1
-f_deg3 = 1
-f_lp = 1
-f_clique_lb = 1
-f_lp_lb = 1
-#if True, second method of branching is used
-constrained_branching = False
-#if True, domination rule works with flags
-dom_opt = True
+try:
+    limit_kern_start = sys.argv[1]
+    limit_kern_branch = sys.argv[2]
+    f_deg2 = sys.argv[3]
+    f_deg2_heur = sys.argv[4]
+    f_dom = sys.argv[5]
+    f_deg3 = sys.argv[6]
+    f_lp = sys.argv[7]
+    f_clique_lb = sys.argv[8]
+    f_lp_lb = sys.argv[9]
+    constrained_branching = sys.argv[10] == 1
+    dom_opt = sys.argv[11] == 1
+except: 
+    #max number of kernelization loops allowed for preproccesing kern
+    limit_kern_start = float('inf')
+    #max number of kernelization loops allowed while branching
+    limit_kern_branch = float('inf')
+    #reduction rules' frequencies
+    f_deg2 = 1
+    f_deg2_heur = 1
+    f_dom = 1
+    f_deg3 = 1
+    f_lp = 1
+    f_clique_lb = 1
+    f_lp_lb = 1
+    #if True, second method of branching is used
+    constrained_branching = False
+    #if True, domination rule works with flags
+    dom_opt = True
 
 def add_vertex(vertex):
     """
