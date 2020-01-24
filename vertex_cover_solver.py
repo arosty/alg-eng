@@ -15,7 +15,7 @@ nb_vertices = 0
 nb_edges = 0
 
 parameter_input_length = len(sys.argv)
-if parameter_input_length > 5:
+if parameter_input_length > :
     for i in range(parameter_input_length-1):
         if sys.argv[i] == '-limit_kern_start': limit_kern_start = sys.argv[i+1]
         elif sys.argv[i] == '-limit_kern_branch': limit_kern_branch = sys.argv[i+1]
