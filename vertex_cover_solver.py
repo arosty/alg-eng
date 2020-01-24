@@ -17,17 +17,17 @@ nb_edges = 0
 parameter_input_length = len(sys.argv)
 if parameter_input_length > 5:
     for i in range(parameter_input_length-1):
-        if sys.argv[i] == '-limit_kern_start': limit_kern_start = sys.argv[i+1]
-        elif sys.argv[i] == '-limit_kern_branch': limit_kern_branch = sys.argv[i+1]
-        elif sys.argv[i] == '-f_deg2': f_deg2 = sys.argv[i+1]
-        elif sys.argv[i] == '-f_deg2_heur': f_deg2_heur = sys.argv[i+1]
-        elif sys.argv[i] == '-f_dom': f_dom = sys.argv[i+1]
-        elif sys.argv[i] == '-f_deg3': f_deg3 = sys.argv[i+1]
-        elif sys.argv[i] == '-f_lp': f_lp = sys.argv[i+1]
-        elif sys.argv[i] == '-f_clique_lb': f_clique_lb = sys.argv[i+1]
-        elif sys.argv[i] == '-f_lp_lb': f_lp_lb = sys.argv[i+1]
-        elif sys.argv[i] == '-constrained_branching': constrained_branching = sys.argv[i+1] == 1
-        elif sys.argv[i] == '-dom_opt': dom_opt = sys.argv[i+1] == 1
+        if sys.argv[i] == '-limit_kern_start': limit_kern_start = int(sys.argv[i+1])
+        elif sys.argv[i] == '-limit_kern_branch': limit_kern_branch = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg2': f_deg2 = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg2_heur': f_deg2_heur = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_dom': f_dom = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg3': f_deg3 = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_lp': f_lp = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_clique_lb': f_clique_lb = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_lp_lb': f_lp_lb = int(sys.argv[i+1])
+        elif sys.argv[i] == '-constrained_branching': constrained_branching = int(sys.argv[i+1]) == 1
+        elif sys.argv[i] == '-dom_opt': dom_opt = int(sys.argv[i+1]) == 1
 else: 
     #max number of kernelization loops allowed for preproccesing kern
     limit_kern_start = float('inf')
