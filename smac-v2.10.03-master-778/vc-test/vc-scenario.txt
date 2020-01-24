@@ -1,6 +1,6 @@
 pcs-file = vc-test/params.pcs
 runObj = RUNTIME
-cutoffTime = 2
+cutoffTime = 30
 wallclock-limit = 600
 deterministic = 1
 instances = vc-test/training-instances
