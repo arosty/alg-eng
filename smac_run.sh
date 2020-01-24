@@ -46,6 +46,8 @@ rm -f prog_out.txt
 time=$(cat time.txt);
 
 if [ -s time.txt ]; then
+    echo "NO TIMEOUT"
+else
     echo "TIMEOUT"
 fi
 echo "Result for SMAC: SUCCESS, $time, 0, 0, $seed"
