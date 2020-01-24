@@ -1,4 +1,4 @@
-echo $1
+echo $#
 while read line
 do
   echo "$line"

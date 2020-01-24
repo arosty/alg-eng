@@ -39,11 +39,6 @@ rm -f prog_out.txt
 
 time=$(cat time.txt);
 
-echo -e $INSTANCE"\t"$time"\t"$k"\t"$recursiveSteps"\t"$firstLowerBoundDifference"\t"$highDegreeRules"\t"$degreeZeroRules"\t"$extremeReductionRules"\t"$degreeOneRules"\t"$degreeTwoRules"\t"$dominationRules"\t"$degreeThreeRules"\t"$lowerBounds"\t"$finished"\t"$verify
 echo "Result for SMAC: SUCCESS, $time, 0, 0, $seed"
-echo ""
 
 rm -f time.txt
-
-now=$(date +%s);
-elapsed=`expr $now - $overallTime`;
