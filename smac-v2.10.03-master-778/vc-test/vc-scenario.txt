@@ -1,9 +1,9 @@
 pcs-file = vc-test/params.pcs
 runObj = RUNTIME
-cutoffTime = 80
+cutoffTime = 30
 wallclock-limit = 600
 deterministic = 1
 instance_file = vc-test/training-instances
 test_instance_file = vc-test/test-instances
 instance-suffix = input
-algo = ../vertex_cover_solver.py
+algo = bash ../smac_run.sh
