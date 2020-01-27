@@ -1,7 +1,7 @@
 PROGRAMM_NAME="python3 ../vertex_cover_solver.py"
 INSTANCE="$1"
 SPECIFICS=$2
-runTimeCutOff=$3
+runTimeCutOff=${3%.*}
 runLength=$4
 seed=$5
 
