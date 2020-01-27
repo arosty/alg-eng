@@ -43,14 +43,14 @@ cat prog_out.txt >> $LOG
 
 rm -f prog_out.txt
 
-time=$(cat time.txt);
-
 if [ -s time.txt ]; then
-    echo "NO TIMEOUT"
+    time=$(cat time.txt);
+    result="SUCCESS";
 else
-    echo "TIMEOUT"
+    time=0;
+    result="TIMEOUT";
 fi
-echo "Result for SMAC: SUCCESS, $time, 0, 0, $seed"
+echo "Result for SMAC: $result, $time, 0, 0, $seed"
 echo "" >> $LOG
 
 rm -f time.txt
