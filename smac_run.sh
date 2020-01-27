@@ -1,4 +1,4 @@
-PROGRAMM_NAME="python3 vertex_cover_solver.py"
+PROGRAMM_NAME="python3 ../vertex_cover_solver.py"
 INSTANCE="$1"
 SPECIFICS=$2
 runTimeCutOff=${3%.*}
