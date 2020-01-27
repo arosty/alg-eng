@@ -24,10 +24,10 @@ f_deg2_heur = 1
 f_dom = 1
 f_deg3 = 1
 f_lp = 1
-f_clique_lb = 3
-f_lp_lb = 2
+f_clique_lb = 2
+f_lp_lb = 3
 #if True, second method of branching is used
-constrained_branching = True
+constrained_branching = False
 #if True, domination rule works with flags
 dom_opt = True
 
