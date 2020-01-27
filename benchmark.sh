@@ -7,6 +7,7 @@ run_ce_solver()
 	maxSec=$3
 	maxSecPerInstance=$4
 	maxNotSolved=$5
+	parameters="${@:6}"
 	
 	
 	FILES=$(ls random/*.input)
@@ -31,7 +32,7 @@ run_ce_solver()
 		if [ $elapsed -le $maxSec -a $notSolved -le $maxNotSolved ]; then
 			echo $f >> $LOG
 			# start everything in a new process group such that we can kill everything if necessary
-			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME< $f 1> prog_out.txt 2>&1) & PID=$!
+			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME $parameters < $f 1> prog_out.txt 2>&1) & PID=$!
 
 			# kill processes on exit
 			trap "{ kill -$PID 2>/dev/null; }" TERM

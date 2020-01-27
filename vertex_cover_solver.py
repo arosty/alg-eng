@@ -1,5 +1,5 @@
 # Set False if cplex not installed on current machine:
-use_cplex = False
+use_cplex = True
 
 # Import cplex only if set to True:
 if use_cplex:
@@ -14,22 +14,37 @@ degree_list = []
 nb_vertices = 0
 nb_edges = 0
 
-#max number of kernelization loops allowed for preproccesing kern
-limit_kern_start = float('inf')
-#max number of kernelization loops allowed while branching
-limit_kern_branch = float('inf')
-#reduction rules' frequencies
-f_deg2 = 1
-f_deg2_heur = 1
-f_dom = 1
-f_deg3 = 1
-f_lp = 1
-f_clique_lb = 1
-f_lp_lb = 1
-#if True, second method of branching is used
-constrained_branching = False
-#if True, domination rule works with flags
-dom_opt = True
+parameter_input_length = len(sys.argv)
+if parameter_input_length > 5:
+    for i in range(parameter_input_length-1):
+        if sys.argv[i] == '-limit_kern_start': limit_kern_start = int(sys.argv[i+1])
+        elif sys.argv[i] == '-limit_kern_branch': limit_kern_branch = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg2': f_deg2 = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg2_heur': f_deg2_heur = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_dom': f_dom = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_deg3': f_deg3 = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_lp': f_lp = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_clique_lb': f_clique_lb = int(sys.argv[i+1])
+        elif sys.argv[i] == '-f_lp_lb': f_lp_lb = int(sys.argv[i+1])
+        elif sys.argv[i] == '-constrained_branching': constrained_branching = int(sys.argv[i+1]) == 1
+        elif sys.argv[i] == '-dom_opt': dom_opt = int(sys.argv[i+1]) == 1
+else: 
+    #max number of kernelization loops allowed for preproccesing kern
+    limit_kern_start = float('inf')
+    #max number of kernelization loops allowed while branching
+    limit_kern_branch = float('inf')
+    #reduction rules' frequencies
+    f_deg2 = 1
+    f_deg2_heur = 1
+    f_dom = 1
+    f_deg3 = 1
+    f_lp = 1
+    f_clique_lb = 1
+    f_lp_lb = 1
+    #if True, second method of branching is used
+    constrained_branching = False
+    #if True, domination rule works with flags
+    dom_opt = True
 
 def add_vertex(vertex):
     """
