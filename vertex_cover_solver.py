@@ -27,7 +27,7 @@ f_lp = 1
 f_clique_lb = 1
 f_lp_lb = 1
 #if True, second method of branching is used
-constrained_branching = False
+constrained_branching = True
 #if True, domination rule works with flags
 dom_opt = True
 
