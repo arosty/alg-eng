@@ -1,7 +1,7 @@
 pcs-file = smac-v2.10.03-master-778/vc-test/params.pcs
 runObj = RUNTIME
-cutoffTime = 30
-wallclock-limit = 600
+cutoffTime = 300
+wallclock-limit = 30000
 deterministic = 1
 instances = vc-test/training-instances
 test-instances = vc-test/test-instances
