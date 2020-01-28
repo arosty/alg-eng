@@ -30,19 +30,19 @@ if parameter_input_length > 5:
         elif sys.argv[i] == '-dom_opt': dom_opt = int(sys.argv[i+1]) == 1
 else: 
     #max number of kernelization loops allowed for preproccesing kern
-    limit_kern_start = float('inf')
+    limit_kern_start = 33722
     #max number of kernelization loops allowed while branching
-    limit_kern_branch = float('inf')
+    limit_kern_branch = 33740
     #reduction rules' frequencies
-    f_deg2 = 1
-    f_deg2_heur = 1
-    f_dom = 1
-    f_deg3 = 1
-    f_lp = 1
-    f_clique_lb = 1
-    f_lp_lb = 1
+    f_deg2 = 16282
+    f_deg2_heur = 4975
+    f_dom = 36232
+    f_deg3 = 5803
+    f_lp = 24782
+    f_clique_lb = 20954
+    f_lp_lb = 15668
     #if True, second method of branching is used
-    constrained_branching = False
+    constrained_branching = True
     #if True, domination rule works with flags
     dom_opt = True
 
