@@ -26,6 +26,7 @@ if parameter_input_length > 5:
         elif sys.argv[i] == '-f_lp': f_lp = int(sys.argv[i+1])
         elif sys.argv[i] == '-f_clique_lb': f_clique_lb = int(sys.argv[i+1])
         elif sys.argv[i] == '-f_lp_lb': f_lp_lb = int(sys.argv[i+1])
+        elif sys.argv[i] == '-lb_opt': lb_opt = int(sys.argv[i+1]) == 1
         elif sys.argv[i] == '-constrained_branching': constrained_branching = int(sys.argv[i+1]) == 1
         elif sys.argv[i] == '-dom_opt': dom_opt = int(sys.argv[i+1]) == 1
 else: 
@@ -41,6 +42,7 @@ else:
     f_lp = 1
     f_clique_lb = 1
     f_lp_lb = 1
+    lb_opt = True # True if starts with lp
     #if True, second method of branching is used
     constrained_branching = False
     #if True, domination rule works with flags
@@ -785,8 +787,8 @@ def vc_branch(k):
     # Return one degree neighbors list if no edges left:
     elif is_edgeless(): S = S_kern
     # If k is smaller than lower bound, no need to branch:
-    elif k == 0 or (use_cplex and vc_branch.counter % f_lp_lb == 0 and k < lp_bound()): lp_bound.counter += 1
-    elif vc_branch.counter % f_clique_lb == 0 and k < clique_bound(): clique_bound.counter += 1
+    elif k == 0 or (use_cplex and (vc_branch.counter+lb_opt*1) % f_lp_lb == 0 and k < lp_bound()): lp_bound.counter += 1
+    elif (vc_branch.counter+(not lb_opt)*1) % f_clique_lb == 0 and k < clique_bound(): clique_bound.counter += 1
     else:
         # Get vertices of first edge:
         u, neighbors = get_highest_degree_vertex()
@@ -846,16 +848,20 @@ def vc_branch_constrained(sol_size, upper):
     if is_edgeless():
         if sol_size >= upper: return S, upper
         else: return [], sol_size
-    if use_cplex and vc_branch_constrained.counter > 1 and sol_size + lp_bound() >= upper: return S, upper
-    if vc_branch_constrained.counter > 1 and sol_size + clique_bound() >= upper: return S, upper
+    if use_cplex and vc_branch_constrained.counter > 1 and (2*vc_branch_constrained.counter-1+lb_opt*1) % f_clique_lb == 0 and sol_size + lp_bound() >= upper:
+        lp_bound.counter += 1
+        return S, upper
+    if vc_branch_constrained.counter > 1 and (2*vc_branch_constrained.counter-1+(not lb_opt)*1) % f_lp_lb == 0 and sol_size + clique_bound() >= upper:
+        clique_bound.counter += 1
+        return S, upper
     S_kern, undo_list, _ = kernelization(upper)
     sol_size += len(S_kern)
     if is_edgeless():
         if sol_size < upper:
             S = S_kern
             upper = sol_size
-    elif use_cplex and sol_size + lp_bound() >= upper: lp_bound.counter += 1
-    elif sol_size + clique_bound() >= upper: clique_bound.counter += 1
+    elif use_cplex and (2*vc_branch_constrained.counter+lb_opt*1) % f_clique_lb == 0 and sol_size + lp_bound() >= upper: lp_bound.counter += 1
+    elif (2*vc_branch_constrained.counter+(not lb_opt)*1) % f_lp_lb == 0 and sol_size + clique_bound() >= upper: clique_bound.counter += 1
     else:
         S_heur, heur_upper = heuristic()
         if sol_size + heur_upper < upper:
