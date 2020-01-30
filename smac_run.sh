@@ -6,6 +6,7 @@ runLength=$4
 seed=$5
 
 LOG=log.txt
+TimeLog=time_log.txt
 
 rm -f time.txt
 
@@ -14,6 +15,7 @@ now=$(date +%s);
 elapsed=`expr $now - $overallTime`;
 
 echo $INSTANCE >> $LOG
+echo $INSTANCE >> $TimeLog
 
 # start everything in a new process group such that we can kill everything if necessary
 (setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME< $INSTANCE 1> prog_out.txt 2>&1) & PID=$!
@@ -50,7 +52,11 @@ else
     time=0;
     result="TIMEOUT";
 fi
+
+echo $time >> $TimeLog
+
 echo "Result for SMAC: $result, $time, 0, 0, $seed"
 echo "" >> $LOG
+echo "" >> $TimeLog
 
 rm -f time.txt
