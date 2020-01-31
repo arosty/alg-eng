@@ -1,0 +1,535 @@
+17:24:02.900 [main] INFO  c.u.c.b.a.l.ComplexLoggingOptions - Logging to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-run100.txt
+17:24:02.917 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Algorithm Execution & Abstraction Toolkit is v2.10.03-master-814 (ebf4c8c913d5) 
+17:24:02.918 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Java Runtime Environment is OpenJDK 64-Bit Server VM (11.0.4) 
+17:24:02.918 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of OS is Linux 4.15.0-65-generic (amd64) 
+17:24:02.918 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Random Forest Library is v1.10.01-master-120 (b68439c2c391) 
+17:24:02.918 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2) 
+17:24:02.918 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - Call String: smac --scenario-file vc-test/vc-scenario.txt --seed 100 
+17:24:02.919 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ********** The next bit of output can be ignored, it is merely useful for debugging **********
+17:24:02.919 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========Enviroment Variables===========
+CPLEX_HOME=/opt/solvers/cplex1290/cplex
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1242296/bus
+GRB_LICENSE_FILE=/local/users/arosty/.licenses/gurobi.lic
+GTK_MODULES=appmenu-gtk-module
+GUROBI_HOME=/opt/solvers/gurobi811
+HISTCONTROL=ignoreboth
+HOME=/home/users/a/arosty
+ILOG_LICENSE_FILE=/local/users/arosty/.licenses/access.ilm
+KRB5CCNAME=/tmp/krb5cc_1242296_iVimaA
+LANG=en_US.UTF-8
+LANGUAGE=en_US:en
+LC_NUMERIC=en_US.UTF-8
+LC_TIME=en_US.UTF-8
+LD_LIBRARY_PATH=:/opt/solvers/cplex1290/cplex/lib:/opt/solvers/cplex1290/cplex/lib/x86-64_linux/static_pic:/opt/solvers/cplex1290/cplex/bin/x86-64_linux/:/opt/solvers/gurobi811/lib:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/native/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/
+LD_LIBRARY_PATH_SCREEN=:/opt/solvers/cplex1290/cplex/lib:/opt/solvers/cplex1290/cplex/lib/x86-64_linux/static_pic:/opt/solvers/cplex1290/cplex/bin/x86-64_linux/:/opt/solvers/gurobi811/lib
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LESSOPEN=| /usr/bin/lesspipe %s
+LOGNAME=arosty
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+MAIL=/var/mail/arosty
+OLDPWD=/local/users/arosty/alg-eng
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/opt/bin:/snap/bin:/opt/solvers/cplex1290/cplex/bin/x86-64_linux:/opt/solvers/cplex1290/cplex/python/3.6/x86-64_linux:/opt/solvers/cplex1290/cplex/python/2.7/x86-64_linux:/opt/solvers/gurobi811/bin
+PWD=/local/users/arosty/alg-eng/smac-v2.10.03-master-778
+SHELL=/bin/bash
+SHLVL=4
+SSH_CLIENT=88.130.155.76 21778 22
+SSH_CONNECTION=88.130.155.76 21778 130.149.25.85 22
+SSH_TTY=/dev/pts/5
+STY=27597..aba05
+TERM=screen
+TERMCAP=SC|screen|VT 100/ANSI X3.64 virtual terminal:\
+	:DO=\E[%dB:LE=\E[%dD:RI=\E[%dC:UP=\E[%dA:bs:bt=\E[Z:\
+	:cd=\E[J:ce=\E[K:cl=\E[H\E[J:cm=\E[%i%d;%dH:ct=\E[3g:\
+	:do=^J:nd=\E[C:pt:rc=\E8:rs=\Ec:sc=\E7:st=\EH:up=\EM:\
+	:le=^H:bl=^G:cr=^M:it#8:ho=\E[H:nw=\EE:ta=^I:is=\E)0:\
+	:li#24:co#80:am:xn:xv:LP:sr=\EM:al=\E[L:AL=\E[%dL:\
+	:cs=\E[%i%d;%dr:dl=\E[M:DL=\E[%dM:dc=\E[P:DC=\E[%dP:\
+	:im=\E[4h:ei=\E[4l:mi:IC=\E[%d@:ks=\E[?1h\E=:\
+	:ke=\E[?1l\E>:vi=\E[?25l:ve=\E[34h\E[?25h:vs=\E[34l:\
+	:ti=\E[?1049h:te=\E[?1049l:Km=\E[M:k0=\E[10~:k1=\EOP:\
+	:k2=\EOQ:k3=\EOR:k4=\EOS:k5=\E[15~:k6=\E[17~:k7=\E[18~:\
+	:k8=\E[19~:k9=\E[20~:k;=\E[21~:F1=\E[23~:F2=\E[24~:\
+	:kh=\E[1~:@1=\E[1~:kH=\E[4~:@7=\E[4~:kN=\E[6~:kP=\E[5~:\
+	:kI=\E[2~:kD=\E[3~:ku=\EOA:kd=\EOB:kr=\EOC:kl=\EOD:
+UBUNTU_MENUPROXY=1
+USER=arosty
+WINDOW=0
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+XDG_RUNTIME_DIR=/run/user/1242296
+XDG_SESSION_ID=8989
+
+17:24:02.919 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Hostname:aba05
+17:24:02.919 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========System Properties==============
+ERRLOG=/local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-err100.txt
+NUMRUN=100
+OUTPUTDIR=/local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario
+ROOT-LEVEL=INFO
+RUNLOG=/local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-run100.txt
+STDOUT-LEVEL=INFO
+WARNLOG=/local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-warn100.txt
+awt.toolkit=sun.awt.X11.XToolkit
+file.encoding=UTF-8
+file.separator=/
+java.awt.graphicsenv=sun.awt.X11GraphicsEnvironment
+java.awt.printerjob=sun.print.PSPrinterJob
+java.class.path=/local/users/arosty/alg-eng/smac-v2.10.03-master-778/conf/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/patches/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/aeatk.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/aeatk-src.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/commons-collections-3.2.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/commons-collections-3.2.1-sources.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/commons-io-2.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/commons-math-2.2.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/commons-math3-3.3.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/DomainInter.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/exp4j-0.3.10.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/exp4j-0.4.3.BETA-3.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/fastrf.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/fastrf-src.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/guava-14.0.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jackson-annotations-2.3.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jackson-core-2.3.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jackson-databind-2.3.1.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/Jama-1.0.2.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jcip-annotations.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jcip-annotations-src.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jcommander.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/jmatharray.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/logback-access-1.1.2.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/logback-classic-1.1.2.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/logback-core-1.1.2.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/numerics4j-1.3.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/opencsv-2.3.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/slf4j-api-1.7.5.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/smac.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/smac-src.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/spi-0.2.4.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/*.jar:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/patches/
+java.class.version=55.0
+java.home=/usr/lib/jvm/java-11-openjdk-amd64
+java.io.tmpdir=/tmp
+java.library.path=:/opt/solvers/cplex1290/cplex/lib:/opt/solvers/cplex1290/cplex/lib/x86-64_linux/static_pic:/opt/solvers/cplex1290/cplex/bin/x86-64_linux/:/opt/solvers/gurobi811/lib:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/native/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/lib/:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/:/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib
+java.runtime.name=OpenJDK Runtime Environment
+java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
+java.specification.name=Java Platform API Specification
+java.specification.vendor=Oracle Corporation
+java.specification.version=11
+java.vendor=Ubuntu
+java.vendor.url=https://ubuntu.com/
+java.vendor.url.bug=https://bugs.launchpad.net/ubuntu/+source/openjdk-lts
+java.version=11.0.4
+java.version.date=2019-07-16
+java.vm.compressedOopsMode=32-bit
+java.vm.info=mixed mode, sharing
+java.vm.name=OpenJDK 64-Bit Server VM
+java.vm.specification.name=Java Virtual Machine Specification
+java.vm.specification.vendor=Oracle Corporation
+java.vm.specification.version=11
+java.vm.vendor=Ubuntu
+java.vm.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
+jdk.debug=release
+line.separator=
+
+logback.configurationFile=ca/ubc/cs/beta/aeatk/logging/complex-logback.xml
+os.arch=amd64
+os.name=Linux
+os.version=4.15.0-65-generic
+path.separator=:
+sun.arch.data.model=64
+sun.boot.library.path=/usr/lib/jvm/java-11-openjdk-amd64/lib
+sun.cpu.endian=little
+sun.cpu.isalist=
+sun.io.unicode.encoding=UnicodeLittle
+sun.java.command=ca.ubc.cs.beta.aeatk.ant.execscript.Launcher ca.ubc.cs.beta.smac.executors.SMACExecutor --scenario-file vc-test/vc-scenario.txt --seed 100
+sun.java.launcher=SUN_STANDARD
+sun.jnu.encoding=UTF-8
+sun.management.compiler=HotSpot 64-Bit Tiered Compilers
+sun.os.patch.level=unknown
+user.country=US
+user.dir=/local/users/arosty/alg-eng/smac-v2.10.03-master-778
+user.home=/home/users/a/arosty
+user.language=en
+user.name=arosty
+user.timezone=Europe/Berlin
+
+17:24:02.922 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - ==========Configuration Options==========
+[SMACOptions]
+ adaptiveCapping = true
+ alwaysRunInitialConfiguration = false
+ capAddSlack = 1.0
+ capSlack = 1.3
+classicInitModeOpts = [ClassicInitializationProcedureOptions]
+		 initialIncumbentRuns = 1
+
+dciModeOpts = [DoublingCappingInitializationProcedureOptions]
+		 numberOfChallengers = 2
+		 numberOfRunsPerChallenger = 2
+
+ucip = [UnbiasChallengerInitializationProcedureOptions]
+		 numberOfChallengers = 2
+		 numberOfRunsPerChallenger = 2
+		 cpulimit = 0
+
+ deterministicInstanceOrdering = false
+ doValidation = true
+ execMode = SMAC
+ experimentDir = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/
+ expFunc = null
+help = [HelpOptions]
+		 showHiddenParameters = false
+		 showHelp = false
+		 helpLevel = BASIC
+		 showVersion = false
+		 helpDefaults = /home/users/a/arosty/.aeatk/help.opt
+
+ initialChallengeRuns = 1
+ initialIncumbent = DEFAULT
+ initializationMode = CLASSIC
+ intensificationPercentage = 0.5
+ initialChallengers = []
+ initialChallengersIntensificationTime = 2147483647
+ iterativeCappingBreakOnFirstCompletion = false
+ iterativeCappingK = 1
+logOptions = [ComplexLoggingOptions]
+		 consoleLogLevel = INFO
+		 logLevel = INFO
+
+ maxIncumbentRuns = 2000
+mbOptions = [ModelBuildingOptions]
+		 maskCensoredDataAsKappaMax = false
+		 maskInactiveConditionalParametersAsDefaultValue = true
+		 maskCensoredDataAsUncensored = false
+		 imputationIterations = 2
+
+ modelHashCodeFile = null
+ numberOfChallengers = 10
+ numberOfRandomConfigsInEI = 10000
+ numberOfRandomConfigsUsedForLocalSearch = 0
+ numPCA = 7
+ optionFile = null
+ optionFile2 = null
+randomForestOptions = [RandomForestOptions]
+		 brokenVarianceCalculation = false
+		 freeMemoryPercentageToSubsample = 0.25
+		 fullTreeBootstrap = false
+		 ignoreConditionality = false
+		 imputeMean = false
+		 logModel = true
+		 minVariance = 1.0E-14
+		 numTrees = 10
+		 penalizeImputedValues = false
+		 preprocessMarginal = true
+		 ratioFeatures = 0.8333333333333334
+		 shuffleImputedValues = false
+		 splitMin = 10
+		 storeDataInLeaves = false
+		 subsamplePercentage = 0.9
+		 subsampleValuesWhenLowMemory = false
+
+runGroupOptions = [RunGroupOptions]
+		 runGroupName = %SCENARIO_NAME
+		 runGroupExit = false
+		 replacementChar = %
+
+scenarioConfig = [ScenarioOptions]
+		 _runObj = RUNTIME
+		 intraInstanceObj = null
+		 interInstanceObj = MEAN
+		limitOptions = [TerminationCriteriaOptions]
+				 tunerTimeout = 2147483647
+				 numIterations = 2147483647
+				 runtimeLimit = 83000
+				 totalNumRunsLimit = 9223372036854775807
+				 countSMACTimeAsTunerTime = true
+				 challengeIncumbentAttempts = 1000
+				 fileToWatch = null
+
+		instanceOptions = [ProblemInstanceOptions]
+				 instanceFile = vc-test/training-instances
+				 instanceFeatureFile = null
+				 testInstanceFile = vc-test/test-instances
+				 checkInstanceFilesExist = false
+				 useInstances = true
+				 instanceSuffix = dimacs
+				 testInstanceSuffix = null
+				 ignoreFeatures = false
+
+		 scenarioFile = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/vc-test/vc-scenario.txt
+		 outputDirectory = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output
+		 invalidScenarioReason = null
+		algoExecOptions = [AlgorithmExecutionOptions]
+				 algoExec = bash ../smac_run.sh
+				 algoExecDir = /local/users/arosty/alg-eng/smac-v2.10.03-master-778
+				 deterministic = true
+				 cutoffTime = 300.0
+				 cutoffLength = -1.0
+				 additionalContext = {}
+				taeOpts = [TargetAlgorithmEvaluatorOptions]
+						 targetAlgorithmEvaluator = CLI
+						 abortOnCrash = false
+						 abortOnFirstRunCrash = true
+						 retryCount = 0
+						 cacheRuns = false
+						 cacheDebug = false
+						 useDynamicCappingExclusively = false
+						 reportStrictlyIncreasingRuntimes = false
+						 boundRuns = false
+						 maxConcurrentAlgoExecs = 1
+						 exitOnFailure = false
+						 runHashCodeFile = null
+						 leakMemory = false
+						 leakMemoryAmount = 1024
+						 verifySAT = null
+						 checkSATConsistency = true
+						 checkSATConsistencyException = true
+						 callObserverBeforeCompletion = true
+						prePostOptions = [PrePostCommandOptions]
+								 preCommand = null
+								 postCommand = null
+								 exceptionOnError = false
+								 logOutput = true
+								 directory = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/.
+
+						 checkResultOrderConsistent = false
+						 skipOutstandingEvaluationsTAE = false
+						 logRequestResponses = false
+						 logRequestResponsesRCOnly = false
+						 trackRunsScheduled = false
+						 trackRunsScheduledResolution = 1.0
+						 uncleanShutdownCheck = true
+						 killCaptimeExceedingRun = true
+						 killCaptimeExceedingRunFactor = 10.0
+						 checkRunConfigsUnique = true
+						 checkRunConfigsUniqueException = true
+						 observeWalltimeIfNoRuntime = true
+						 observeWalltimeScale = 0.95
+						 observeWalltimeDelay = 5.0
+						 synchronousObserver = true
+						 taeDefaults = /home/users/a/arosty/.aeatk/tae.opt
+						ttaedo = [TransformTargetAlgorithmEvaluatorDecoratorOptions]
+								 transform = false
+								 transformValidValuesOnly = true
+								 SAT_runtime_transform = R
+								 SAT_quality_transform = Q
+								 UNSAT_runtime_transform = R
+								 UNSAT_quality_transform = Q
+								 TIMEOUT_runtime_transform = R
+								 TIMEOUT_quality_transform = Q
+								 other_runtime_transform = R
+								 other_quality_transform = Q
+
+						tForkOptions = [ForkingTargetAlgorithmEvaluatorDecoratorOptions]
+								 forkToTAE = null
+								fPolicyOptions = [ForkingTargetAlgorithmEvaluatorDecoratorPolicyOptions]
+										 fPolicy = null
+										 duplicateOnSlaveQuickTimeout = 5
+
+
+						 fileToWatch = null
+						 warnIfNoResponseFromTAE = 120
+						 taeStopProcessingOnShutdown = true
+						 filecache = false
+						 fileCacheSource = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/./runcache
+						 fileCacheOutput = /local/users/arosty/alg-eng/smac-v2.10.03-master-778/./runcache
+						 fileCacheCrashOnMiss = false
+						 transformCrashedQuality = true
+						 transformCrashedQualityValue = 1.0E9
+						 filterZeroCutoffRuns = true
+
+				paramFileDelegate = [ParamConfigurationSpaceOptions]
+						 paramFile = smac-v2.10.03-master-778/vc-test/params.pcs
+						 searchSubspace = null
+						 searchSubspaceFile = null
+						 continuousNeighbours = 4
+
+
+
+seedOptions = [SeedOptions]
+		 seedOffset = 0
+		 numRun = 100
+		 initialSeedMap = {}
+
+ smacDefaults = /home/users/a/arosty/.aeatk/smac.opt
+stateOpts = [StateFactoryOptions]
+		 stateSerializer = LEGACY
+		 statedeSerializer = LEGACY
+		 restoreStateFrom = null
+		 restoreIteration = null
+		 restoreScenario = null
+		 cleanOldStatesOnSuccess = true
+		 saveContextWithState = true
+
+trackingOptions = [ParamConfigurationOriginTrackingOptions]
+		 configTracking = false
+
+validationOptions = [ValidationOptions]
+		 maxTimestamp = -1.0
+		 minTimestamp = 0.0
+		 multFactor = 2.0
+		 numberOfTestInstances = 2147483647
+		 numberOfTestSeedsPerInstance = 1000
+		 numberOfValidationRuns = 1
+		 outputFileSuffix = 
+		 saveStateFile = false
+		 useWallClockTime = true
+		 validateAll = false
+		 validateOnlyIfTunerTimeReached = 0.0
+		 validateOnlyIfWallTimeReached = 0.0
+		 validateOnlyLastIncumbent = true
+		 validationHeaders = true
+		 validationRoundingMode = UP
+
+warmStartOptions = [WarmStartOptions]
+		 warmStartStateFrom = null
+		 restoreIteration = 2147483647
+
+ validationSeed = 0
+ saveRunsEveryIteration = false
+ stateQuickSaves = true
+ shutdownTAEWhenDone = true
+ validationCores = null
+ shareModelMode = false
+ shareRunDataFrequency = 300
+ shareModeModeTAE = true
+ writeRunData = true
+ defaultHandler = USE_ALL
+ sharedModeModeAssymetricMode = false
+
+[AnalyticTargetAlgorithmEvaluatorOptions]
+ simulateDelay = false
+ cores = 0
+ observerFrequency = 100
+ func = CAMELBACK
+ scaleDelay = 1.0
+
+[BlackHoleTargetAlgorithmEvaluatorOptions]
+ warnings = true
+
+[CommandLineTargetAlgorithmEvaluatorOptions]
+ observerFrequency = 500
+ concurrentExecution = true
+ cores = 1
+ logAllCallStrings = false
+ logAllResultLines = false
+ logAllCallsAndResultLines = false
+ logAllProcessOutput = false
+ listenForUpdates = true
+ paramArgumentsContainQuotes = false
+ pgEnvKillCommand = null
+ pgNiceKillCommand = bash -c "kill -s TERM -%pid"
+ pgForceKillCommand = bash -c "kill -s KILL -%pid"
+ procNiceKillCommand = kill -s TERM %pid
+ procForceKillCommand = kill -s KILL %pid
+ smacDefaults = /home/users/a/arosty/.aeatk/cli-tae.opt
+
+[ConstantTargetAlgorithmEvaluatorOptions]
+ runResult = SAT
+ runtime = 1.0
+ quality = 0.0
+ runlength = 0.0
+ additionalRunData = 
+
+[IPCTargetAlgorithmEvaluatorOptions]
+ persistent = false
+ ipcMechanism = UDP
+ encodingMechanism = CALL_STRING
+ remoteHost = 127.0.0.1
+ remotePort = 5050
+ udpPacketSize = 4096
+ localPort = 0
+ execScript = null
+ execScriptOutput = false
+ poolConnections = false
+ ipcDefaults = /home/users/a/arosty/.aeatk/ipc-tae.opt
+ asyncThreads = 5
+
+[PreloadedResponseTargetAlgorithmEvaluatorOptions]
+ preloadedResponses = 
+ runLength = -1.0
+ quality = 0.0
+ additionalRunData = 
+
+[RandomResponseTargetAlgorithmEvaluatorOptions]
+ simulateDelay = false
+ additionalRunData = 
+ cores = 0
+ maxResponse = 10.0
+ minResponse = 0.0
+ observerFrequency = 500
+ trendCoefficient = 0.0
+ seed = 1580401442215
+ persistent = false
+ scaleDelay = 1.0
+
+
+17:24:02.929 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 26 instances for training with suffix dimacs 
+17:24:02.944 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 23 instances for testing with suffix dimacs 
+17:24:03.237 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - SMAC started at: Jan 30, 2020, 5:24:03 PM. Minimizing penalized average runtime (PAR10).
+17:29:06.766 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - First incumbent: config 1 (internal ID: 0x0009), with penalized average runtime (PAR10): 3000.0; estimate based on 1 runs.
+17:29:06.771 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/loc-gowalla_edges.txt.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '1' -f_clique_lb '1' -f_clique_lb_c '1' -f_deg2 '1' -f_deg2_heur '1' -f_deg3 '1' -f_dom '1' -f_lp '1' -f_lp_lb '1' -f_lp_lb_c '1' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '500' -limit_kern_start '500'  
+17:29:11.352 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 1501.8200000000002; estimate now based on 2 runs.
+17:34:18.775 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 2 (internal ID: 0x3358), with penalized average runtime (PAR10): 1501.315; estimate based on 2 runs.
+17:34:18.776 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 2 (internal ID: 0x3358): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/loc-gowalla_edges.txt.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '49' -f_clique_lb_c '10' -f_deg2 '7' -f_deg2_heur '86' -f_deg3 '13' -f_dom '88' -f_lp '20' -f_lp_lb '79' -f_lp_lb_c '18' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '425' -limit_kern_start '368'  
+17:34:20.845 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 1001.39; estimate now based on 3 runs.
+17:39:34.566 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 751.7674999999999; estimate now based on 4 runs.
+17:44:47.140 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 601.4759999999999; estimate now based on 5 runs.
+17:44:55.542 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 501.6433333333333; estimate now based on 6 runs.
+17:55:10.462 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 858.5514285714285; estimate now based on 7 runs.
+18:00:24.329 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 751.3325; estimate now based on 8 runs.
+18:00:35.493 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 668.4922222222223; estimate now based on 9 runs.
+18:09:39.902 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 623.5769999999999; estimate now based on 10 runs.
+18:15:20.384 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 576.8599999999999; estimate now based on 11 runs.
+18:15:24.766 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 528.8050000000001; estimate now based on 12 runs.
+18:15:32.922 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 488.16692307692307; estimate now based on 13 runs.
+18:16:41.349 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 457.47214285714284; estimate now based on 14 runs.
+18:34:15.602 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 427.50133333333326; estimate now based on 15 runs.
+18:41:20.397 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 413.15; estimate now based on 16 runs.
+18:41:26.555 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 388.87705882352947; estimate now based on 17 runs.
+18:44:25.507 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 372.6011111111111; estimate now based on 18 runs.
+18:44:45.843 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 353.2673684210526; estimate now based on 19 runs.
+18:45:42.199 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 338.19500000000005; estimate now based on 20 runs.
+18:45:48.282 [main] WARN  c.u.c.b.a.t.d.s.TimingCheckerTargetAlgorithmEvaluator - Algorithm Run Result reported a runtime of 5.7 (secs) that exceeded it's cutoff time of 4.421600073921681 (secs) by 1.2783999260783192 (secs). Next warning at 2.278399926078319 (secs)  
+18:45:50.353 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 322.12857142857143; estimate now based on 21 runs.
+18:47:21.756 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 311.00636363636363; estimate now based on 22 runs.
+18:57:48.501 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 297.4908695652174; estimate now based on 23 runs.
+19:22:37.788 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 285.11625; estimate now based on 24 runs.
+19:24:18.044 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 273.728; estimate now based on 25 runs.
+19:30:37.981 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 263.2653846153846; estimate now based on 26 runs.
+19:55:06.243 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 28 (internal ID: 0x6F078), with penalized average runtime (PAR10): 262.2053846153847; estimate based on 26 runs.
+19:55:06.247 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 28 (internal ID: 0x6F078): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '0' -f_clique_lb '84' -f_clique_lb_c '6' -f_deg2 '48' -f_deg2_heur '52' -f_deg3 '26' -f_dom '51' -f_lp '56' -f_lp_lb '24' -f_lp_lb_c '9' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '167' -limit_kern_start '210'  
+21:12:35.741 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 39 (internal ID: 0x9E8FD), with penalized average runtime (PAR10): 261.32807692307694; estimate based on 26 runs.
+21:12:35.765 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 39 (internal ID: 0x9E8FD): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '1' -f_clique_lb '66' -f_clique_lb_c '15' -f_deg2 '5' -f_deg2_heur '36' -f_deg3 '35' -f_dom '69' -f_lp '84' -f_lp_lb '23' -f_lp_lb_c '4' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '376' -limit_kern_start '335'  
+22:00:26.927 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 40 (internal ID: 0x9F289), with penalized average runtime (PAR10): 261.2603846153846; estimate based on 26 runs.
+22:00:26.952 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 40 (internal ID: 0x9F289): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '1' -f_clique_lb '67' -f_clique_lb_c '4' -f_deg2 '84' -f_deg2_heur '43' -f_deg3 '93' -f_dom '87' -f_lp '82' -f_lp_lb '21' -f_lp_lb_c '3' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '94' -limit_kern_start '131'  
+00:30:38.561 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 76 (internal ID: 0x133A47), with penalized average runtime (PAR10): 260.76384615384615; estimate based on 26 runs.
+00:30:38.562 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 76 (internal ID: 0x133A47): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '1' -f_clique_lb '67' -f_clique_lb_c '4' -f_deg2 '91' -f_deg2_heur '36' -f_deg3 '83' -f_dom '87' -f_lp '43' -f_lp_lb '53' -f_lp_lb_c '2' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '135' -limit_kern_start '131'  
+06:39:28.425 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 192 (internal ID: 0x30794F), with penalized average runtime (PAR10): 260.4465384615384; estimate based on 26 runs.
+06:39:28.426 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 192 (internal ID: 0x30794F): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '70' -f_clique_lb_c '7' -f_deg2 '71' -f_deg2_heur '25' -f_deg3 '71' -f_dom '65' -f_lp '8' -f_lp_lb '68' -f_lp_lb_c '9' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '324' -limit_kern_start '143'  
+09:49:05.172 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 255 (internal ID: 0x4074CF), with penalized average runtime (PAR10): 259.84576923076924; estimate based on 26 runs.
+09:49:05.205 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 255 (internal ID: 0x4074CF): 
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '21' -f_clique_lb_c '11' -f_deg2 '29' -f_deg2_heur '6' -f_deg3 '57' -f_dom '32' -f_lp '8' -f_lp_lb '95' -f_lp_lb_c '11' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '8' -limit_kern_start '311'  
+16:28:20.462 [main] INFO  c.u.c.b.a.e.h.LogRuntimeStatistics - *****Developer Statistics*****
+ Count: 188
+ Incumbent ID: 255 (internal ID:0x4074CF)
+ Number of PISPs for Incumbent: 26
+ Number of Instances for Incumbent: 26
+ Number of Configurations Run: 358
+ Performance of the Incumbent: 259.846
+ Configuration Time Budget used: 47885.59 s (0%)
+ Configuration Time Budget remaining: 2.15E9 s
+ Wall-clock Time Budget used: 83057.20 s (100%)
+ Wall-clock Time Budget remaining: -57.20 s
+ Algorithm Runs used: 1449.00  (0%)
+ Algorithm Runs remaining: 9.22E18 
+ Model/Iteration used: 187.00  (0%)
+ Model/Iteration remaining: 2.15E9 
+ Sum of Target Algorithm Execution Times (treating minimum value as 0.1): 47427.110 s
+ CPU time of Configurator: 458.483 s
+ User time of Configurator: 458.482 s
+ Outstanding Runs on Target Algorithm Evaluator: 0
+ Outstanding Requests on Target Algorithm Evaluator: 0
+ Total Reported Algorithm Runtime: 47413.810 s
+ Sum of Measured Wallclock Runtime: 82949.982 s
+ Max Memory: 1024 MB
+ Total Java Memory: 60 MB
+ Free Java Memory: 20 MB
+ * PISP count is roughly the number of runs, but doesn't included redundant runs on the same problem instance & seed
+16:28:20.465 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+=======================================================================================
+SMAC has finished. Reason: wall-clock time limit (83057.243 s) has been reached.   
+Total number of runs performed: 1449, total configurations tried: 358.
+Total CPU time used: 47886 s, total wallclock time used: 83057 s.
+SMAC's final incumbent: config 255 (internal ID: 0x4074CF), with estimated penalized average runtime (PAR10): 259.84576923076924, based on 26 run(s) on 26 training instance(s).
+Sample call for this final incumbent:
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '21' -f_clique_lb_c '11' -f_deg2 '29' -f_deg2_heur '6' -f_deg3 '57' -f_dom '32' -f_lp '8' -f_lp_lb '95' -f_lp_lb_c '11' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '8' -limit_kern_start '311'
+=======================================================================================
+16:28:20.466 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Now starting offline validation.
+16:28:20.643 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation needs 23 algorithm runs to validate 1 configurations found, each on 23 problem instance seed pairs
+16:28:20.644 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation start time: Jan 31, 2020, 4:28:20 PM. Approximate worst-case end time: Jan 31, 2020, 6:34:50 PM
+16:40:29.840 [CLI TAE Callback Threads (1457-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation Call Strings written to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationCallStrings-traj-run-100-walltime.csv
+16:40:29.913 [CLI TAE Callback Threads (1457-1)] INFO  c.u.c.beta.smac.validation.Validator - Instance performance (for debug) written to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationPerformanceDebug-traj-run-100-walltime.csv
+16:40:29.927 [CLI TAE Callback Threads (1457-1)] INFO  c.u.c.beta.smac.validation.Validator - Main validation results file written to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationResults-traj-run-100-walltime.csv
+16:40:29.960 [CLI TAE Callback Threads (1457-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationObjectiveMatrix-traj-run-100-walltime.csv
+16:40:29.961 [CLI TAE Callback Threads (1457-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationRunResultLineMatrix-traj-run-100-walltime.csv
+16:40:29.965 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 255 (internal ID: 0x4074CF) on test set: 147.81304347826085, based on 23 run(s) on 23 test instance(s).
+Sample call for the final incumbent:
+cd /local/users/arosty/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000800_000000008000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '21' -f_clique_lb_c '11' -f_deg2 '29' -f_deg2_heur '6' -f_deg3 '57' -f_dom '32' -f_lp '8' -f_lp_lb '95' -f_lp_lb_c '11' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '8' -limit_kern_start '311' 
+Additional information about run 100 in:/local/users/arosty/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
