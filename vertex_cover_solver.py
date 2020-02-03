@@ -34,26 +34,26 @@ if parameter_input_length > 5:
         elif sys.argv[i] == '-dom_opt': dom_opt = int(sys.argv[i+1]) == 1
 else: 
     #max number of kernelization loops allowed for preproccesing kern
-    limit_kern_start = 311
+    limit_kern_start = 440
     #max number of kernelization loops allowed while branching
-    limit_kern_branch = 8
+    limit_kern_branch = 127
     #reduction rules' frequencies
-    f_deg2 = 1
-    f_deg2_heur = 1
-    f_dom = 1
-    f_deg3 = 1
-    f_lp = 1
-    f_clique_lb = 1
-    f_lp_lb = 1
+    f_deg2 = 10
+    f_deg2_heur = 6
+    f_dom = 9
+    f_deg3 = 2
+    f_lp = 10
+    f_clique_lb = 9
+    f_lp_lb = 7
     lb_opt = True # True if starts with lp
     #constrained:
-    f_clique_lb_c = 1
-    f_lp_lb_c = 1
-    lb_opt_c = True
+    f_clique_lb_c = 6
+    f_lp_lb_c = 5
+    lb_opt_c = False
     #if True, second method of branching is used
     constrained_branching = True
     #if True, domination rule works with flags
-    dom_opt = True
+    dom_opt = False
 
 def add_vertex(vertex):
     """
