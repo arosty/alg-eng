@@ -1,12 +1,12 @@
-17:44:28.072 [main] INFO  c.u.c.b.a.l.ComplexLoggingOptions - Logging to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-run1.txt
-17:44:28.091 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Algorithm Execution & Abstraction Toolkit is v2.10.03-master-814 (ebf4c8c913d5) 
-17:44:28.092 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Java Runtime Environment is OpenJDK 64-Bit Server VM (11.0.4) 
-17:44:28.092 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of OS is Linux 4.15.0-65-generic (amd64) 
-17:44:28.092 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Random Forest Library is v1.10.01-master-120 (b68439c2c391) 
-17:44:28.092 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2) 
-17:44:28.093 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - Call String: smac --scenario-file vc-test/vc-scenario.txt --seed 1 
-17:44:28.094 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ********** The next bit of output can be ignored, it is merely useful for debugging **********
-17:44:28.094 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========Enviroment Variables===========
+14:35:24.577 [main] INFO  c.u.c.b.a.l.ComplexLoggingOptions - Logging to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-run1.txt
+14:35:24.596 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Algorithm Execution & Abstraction Toolkit is v2.10.03-master-814 (ebf4c8c913d5) 
+14:35:24.596 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Java Runtime Environment is OpenJDK 64-Bit Server VM (11.0.4) 
+14:35:24.597 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of OS is Linux 4.15.0-65-generic (amd64) 
+14:35:24.597 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of Random Forest Library is v1.10.01-master-120 (b68439c2c391) 
+14:35:24.597 [main] INFO  c.u.c.b.a.m.version.VersionTracker - Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2) 
+14:35:24.598 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - Call String: smac --scenario-file vc-test/vc-scenario.txt --seed 1 
+14:35:24.598 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ********** The next bit of output can be ignored, it is merely useful for debugging **********
+14:35:24.598 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========Enviroment Variables===========
 CPLEX_HOME=/opt/solvers/cplex1290/cplex
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1265377/bus
 GRB_LICENSE_FILE=/local/users/pbinetruy/.licenses/gurobi.lic
@@ -58,8 +58,8 @@ XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
 XDG_RUNTIME_DIR=/run/user/1265377
 XDG_SESSION_ID=9808
 
-17:44:28.095 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Hostname:aba05
-17:44:28.095 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========System Properties==============
+14:35:24.598 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Hostname:aba05
+14:35:24.599 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - ==========System Properties==============
 ERRLOG=/local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/log-err1.txt
 NUMRUN=1
 OUTPUTDIR=/local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario
@@ -120,7 +120,7 @@ user.language=en
 user.name=pbinetruy
 user.timezone=Europe/Berlin
 
-17:44:28.098 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - ==========Configuration Options==========
+14:35:24.602 [main] INFO  c.u.c.b.a.m.j.JCommanderHelper - ==========Configuration Options==========
 [SMACOptions]
  adaptiveCapping = true
  alwaysRunInitialConfiguration = false
@@ -425,96 +425,103 @@ warmStartOptions = [WarmStartOptions]
  minResponse = 0.0
  observerFrequency = 500
  trendCoefficient = 0.0
- seed = 1580402667138
+ seed = 1580736923592
  persistent = false
  scaleDelay = 1.0
 
 
-17:44:28.107 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 23 instances for training with suffix dimacs 
-17:44:28.130 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 26 instances for testing with suffix dimacs 
-17:44:28.521 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - SMAC started at: Jan 30, 2020, 5:44:28 PM. Minimizing penalized average runtime (PAR10).
-17:45:18.792 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - First incumbent: config 1 (internal ID: 0x0009), with penalized average runtime (PAR10): 49.54; estimate based on 1 runs.
-17:45:18.798 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 1 (internal ID: 0x0009): 
+14:35:24.609 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 23 instances for training with suffix dimacs 
+14:35:24.631 [main] INFO  c.u.c.b.a.p.ProblemInstanceOptions - Detected 26 instances for testing with suffix dimacs 
+14:35:24.749 [main] INFO  c.u.c.b.a.s.l.LegacyStateFactory - Found previous run data in state output folder: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario , renamed to: old-state-state-run1-1580736924749
+14:35:25.069 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - SMAC started at: Feb 3, 2020, 2:35:25 PM. Minimizing penalized average runtime (PAR10).
+14:36:21.781 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - First incumbent: config 1 (internal ID: 0x0009), with penalized average runtime (PAR10): 55.55; estimate based on 1 runs.
+14:36:21.782 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 1 (internal ID: 0x0009): 
 cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/soc-Slashdot0902.txt.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '1' -f_clique_lb '3' -f_clique_lb_c '3' -f_deg2 '1' -f_deg2_heur '1' -f_deg3 '2' -f_dom '2' -f_lp '3' -f_lp_lb '3' -f_lp_lb_c '3' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '500' -limit_kern_start '500'  
-17:45:33.402 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 31.229999999999997; estimate now based on 2 runs.
-17:46:43.658 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 21.156666666666666; estimate now based on 3 runs.
-17:48:00.334 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 16.0475; estimate now based on 4 runs.
-17:49:16.792 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 13.008; estimate now based on 5 runs.
-17:55:32.816 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 510.84; estimate now based on 6 runs.
-18:01:50.715 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 437.93428571428575; estimate now based on 7 runs.
-18:02:57.106 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 383.505; estimate now based on 8 runs.
-18:02:59.177 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 341.0655555555556; estimate now based on 9 runs.
-18:03:09.708 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 306.998; estimate now based on 10 runs.
-18:03:13.857 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 279.18454545454546; estimate now based on 11 runs.
-18:04:23.334 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 255.93166666666664; estimate now based on 12 runs.
-18:10:53.574 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 236.25769230769234; estimate now based on 13 runs.
-18:17:26.043 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 219.65928571428572; estimate now based on 14 runs.
-18:18:24.213 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 208.75; estimate now based on 15 runs.
-18:19:40.803 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 195.898125; estimate now based on 16 runs.
-18:20:41.083 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 184.52235294117648; estimate now based on 17 runs.
-18:28:04.270 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 174.28277777777777; estimate now based on 18 runs.
-18:28:56.601 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 167.46947368421053; estimate now based on 19 runs.
-18:35:34.430 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 163.4335; estimate now based on 20 runs.
-18:36:58.647 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 157.44333333333336; estimate now based on 21 runs.
-18:46:29.568 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 150.30318181818183; estimate now based on 22 runs.
-18:47:15.890 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 145.38478260869564; estimate now based on 23 runs.
-19:06:53.958 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 23 (internal ID: 0x562E8), with penalized average runtime (PAR10): 145.04478260869567; estimate based on 23 runs.
-19:06:53.959 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 23 (internal ID: 0x562E8): 
-cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/adjnoun.graph.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '1' -f_clique_lb '16' -f_clique_lb_c '2' -f_deg2 '90' -f_deg2_heur '74' -f_deg3 '13' -f_dom '5' -f_lp '98' -f_lp_lb '94' -f_lp_lb_c '11' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '139' -limit_kern_start '325'  
-21:57:07.455 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 107 (internal ID: 0x1AC990), with penalized average runtime (PAR10): 144.68695652173912; estimate based on 23 runs.
-21:57:07.726 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 107 (internal ID: 0x1AC990): 
-cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/adjnoun.graph.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '0' -f_clique_lb '77' -f_clique_lb_c '15' -f_deg2 '54' -f_deg2_heur '6' -f_deg3 '32' -f_dom '3' -f_lp '14' -f_lp_lb '85' -f_lp_lb_c '14' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '60' -limit_kern_start '485'  
-04:58:39.692 [main] WARN  c.u.c.b.a.t.d.s.TimingCheckerTargetAlgorithmEvaluator - Algorithm Run Result reported a runtime of 9.69 (secs) that exceeded it's cutoff time of 8.433400716978312 (secs) by 1.2565992830216874 (secs). Next warning at 2.2565992830216874 (secs)  
-16:45:32.074 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 768 (internal ID: 0xC1EC4A), with penalized average runtime (PAR10): 141.30739130434785; estimate based on 23 runs.
-16:45:32.496 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 768 (internal ID: 0xC1EC4A): 
-cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '43' -f_clique_lb_c '5' -f_deg2 '92' -f_deg2_heur '85' -f_deg3 '67' -f_dom '75' -f_lp '66' -f_lp_lb '41' -f_lp_lb_c '19' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '94' -limit_kern_start '148'  
-16:51:14.843 [main] INFO  c.u.c.b.a.e.h.LogRuntimeStatistics - *****Developer Statistics*****
- Count: 404
- Incumbent ID: 768 (internal ID:0xC1EC4A)
+14:36:34.522 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 33.525; estimate now based on 2 runs.
+14:36:48.722 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 22.726666666666663; estimate now based on 3 runs.
+14:37:50.946 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 3 (internal ID: 0x7571), with penalized average runtime (PAR10): 20.256666666666668; estimate based on 3 runs.
+14:37:50.947 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 3 (internal ID: 0x7571): 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/ca-CondMat.txt.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '1' -f_clique_lb '20' -f_clique_lb_c '7' -f_deg2 '19' -f_deg2_heur '93' -f_deg3 '83' -f_dom '30' -f_lp '56' -f_lp_lb '12' -f_lp_lb_c '9' -lb_opt '1' -lb_opt_c '0' -limit_kern_branch '187' -limit_kern_start '486'  
+14:37:53.292 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 15.317499999999999; estimate now based on 4 runs.
+14:38:11.447 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 12.386; estimate now based on 5 runs.
+14:44:20.717 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 510.32166666666666; estimate now based on 6 runs.
+14:44:22.791 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 437.55285714285714; estimate now based on 7 runs.
+14:50:36.668 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 6 (internal ID: 0x163E0), with penalized average runtime (PAR10): 437.31428571428575; estimate based on 7 runs.
+14:50:36.669 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 6 (internal ID: 0x163E0): 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/ca-CondMat.txt.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '0' -f_clique_lb '10' -f_clique_lb_c '1' -f_deg2 '96' -f_deg2_heur '5' -f_deg3 '88' -f_dom '43' -f_lp '32' -f_lp_lb '44' -f_lp_lb_c '18' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '429' -limit_kern_start '71'  
+14:50:41.060 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 383.00875; estimate now based on 8 runs.
+14:56:00.595 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 340.67333333333335; estimate now based on 9 runs.
+14:57:03.216 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 306.651; estimate now based on 10 runs.
+14:57:07.356 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 278.9227272727273; estimate now based on 11 runs.
+15:03:23.165 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 255.69; estimate now based on 12 runs.
+15:09:59.519 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 236.0430769230769; estimate now based on 13 runs.
+15:11:06.089 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 219.4457142857143; estimate now based on 14 runs.
+15:18:12.067 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 208.49; estimate now based on 15 runs.
+15:25:59.884 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 195.68812499999999; estimate now based on 16 runs.
+15:27:14.184 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 184.3735294117647; estimate now based on 17 runs.
+15:27:22.645 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 174.14388888888888; estimate now based on 18 runs.
+15:29:19.988 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 167.5715789473684; estimate now based on 19 runs.
+15:31:44.479 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 162.92100000000002; estimate now based on 20 runs.
+15:41:40.051 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 156.56714285714287; estimate now based on 21 runs.
+15:44:11.362 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 149.46636363636364; estimate now based on 22 runs.
+15:46:49.899 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Updated estimated penalized average runtime (PAR10) of the same incumbent: 144.76826086956524; estimate now based on 23 runs.
+00:23:20.037 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 172 (internal ID: 0x2B793E), with penalized average runtime (PAR10): 144.6495652173913; estimate based on 23 runs.
+00:23:20.038 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 172 (internal ID: 0x2B793E): 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/adjnoun.graph.dimacs 0 300.0 2147483647 -1 -constrained_branching '1' -dom_opt '0' -f_clique_lb '45' -f_clique_lb_c '1' -f_deg2 '6' -f_deg2_heur '48' -f_deg3 '65' -f_dom '65' -f_lp '67' -f_lp_lb '27' -f_lp_lb_c '6' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '140' -limit_kern_start '365'  
+06:11:24.631 [main] WARN  c.u.c.b.a.t.d.s.TimingCheckerTargetAlgorithmEvaluator - Algorithm Run Result reported a runtime of 49.37 (secs) that exceeded it's cutoff time of 48.32780060206652 (secs) by 1.04219939793348 (secs). Next warning at 2.04219939793348 (secs)  
+10:51:42.387 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 536 (internal ID: 0x89F4B6), with penalized average runtime (PAR10): 144.62782608695653; estimate based on 23 runs.
+10:51:42.387 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 536 (internal ID: 0x89F4B6): 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '69' -f_clique_lb_c '4' -f_deg2 '34' -f_deg2_heur '24' -f_deg3 '41' -f_dom '62' -f_lp '86' -f_lp_lb '13' -f_lp_lb_c '3' -lb_opt '0' -lb_opt_c '0' -limit_kern_branch '7' -limit_kern_start '22'  
+12:49:31.122 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Incumbent changed to: config 590 (internal ID: 0x9858AA), with penalized average runtime (PAR10): 143.9234782608696; estimate based on 23 runs.
+12:49:31.123 [main] INFO  c.u.c.b.s.c.SequentialModelBasedAlgorithmConfiguration - Sample call for new incumbent config 590 (internal ID: 0x9858AA): 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '13' -f_clique_lb_c '8' -f_deg2 '63' -f_deg2_heur '38' -f_deg3 '28' -f_dom '96' -f_lp '49' -f_lp_lb '41' -f_lp_lb_c '10' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '150' -limit_kern_start '215'  
+13:39:05.071 [main] INFO  c.u.c.b.a.e.h.LogRuntimeStatistics - *****Developer Statistics*****
+ Count: 327
+ Incumbent ID: 590 (internal ID:0x9858AA)
  Number of PISPs for Incumbent: 23
  Number of Instances for Incumbent: 23
- Number of Configurations Run: 770
- Performance of the Incumbent: 141.307
- Configuration Time Budget used: 40067.29 s (0%)
+ Number of Configurations Run: 609
+ Performance of the Incumbent: 143.923
+ Configuration Time Budget used: 38872.18 s (0%)
  Configuration Time Budget remaining: 2.15E9 s
- Wall-clock Time Budget used: 83206.30 s (100%)
- Wall-clock Time Budget remaining: -206.30 s
- Algorithm Runs used: 2514.00  (0%)
+ Wall-clock Time Budget used: 83020.02 s (100%)
+ Wall-clock Time Budget remaining: -20.02 s
+ Algorithm Runs used: 2376.00  (0%)
  Algorithm Runs remaining: 9.22E18 
- Model/Iteration used: 403.00  (0%)
+ Model/Iteration used: 326.00  (0%)
  Model/Iteration remaining: 2.15E9 
- Sum of Target Algorithm Execution Times (treating minimum value as 0.1): 39466.230 s
- CPU time of Configurator: 601.058 s
- User time of Configurator: 601.058 s
+ Sum of Target Algorithm Execution Times (treating minimum value as 0.1): 38325.450 s
+ CPU time of Configurator: 546.727 s
+ User time of Configurator: 546.726 s
  Outstanding Runs on Target Algorithm Evaluator: 0
  Outstanding Requests on Target Algorithm Evaluator: 0
- Total Reported Algorithm Runtime: 39446.020 s
- Sum of Measured Wallclock Runtime: 82918.650 s
+ Total Reported Algorithm Runtime: 38303.840 s
+ Sum of Measured Wallclock Runtime: 82788.207 s
  Max Memory: 1024 MB
  Total Java Memory: 60 MB
- Free Java Memory: 19 MB
+ Free Java Memory: 22 MB
  * PISP count is roughly the number of runs, but doesn't included redundant runs on the same problem instance & seed
-16:51:14.851 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+13:39:05.075 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
 =======================================================================================
-SMAC has finished. Reason: wall-clock time limit (83206.35 s) has been reached.   
-Total number of runs performed: 2514, total configurations tried: 770.
-Total CPU time used: 40067 s, total wallclock time used: 83206 s.
-SMAC's final incumbent: config 768 (internal ID: 0xC1EC4A), with estimated penalized average runtime (PAR10): 141.30739130434785, based on 23 run(s) on 23 training instance(s).
+SMAC has finished. Reason: wall-clock time limit (83020.029 s) has been reached.   
+Total number of runs performed: 2376, total configurations tried: 609.
+Total CPU time used: 38872 s, total wallclock time used: 83020 s.
+SMAC's final incumbent: config 590 (internal ID: 0x9858AA), with estimated penalized average runtime (PAR10): 143.9234782608696, based on 23 run(s) on 23 training instance(s).
 Sample call for this final incumbent:
-cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '43' -f_clique_lb_c '5' -f_deg2 '92' -f_deg2_heur '85' -f_deg3 '67' -f_dom '75' -f_lp '66' -f_lp_lb '41' -f_lp_lb_c '19' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '94' -limit_kern_start '148'
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '13' -f_clique_lb_c '8' -f_deg2 '63' -f_deg2_heur '38' -f_deg3 '28' -f_dom '96' -f_lp '49' -f_lp_lb '41' -f_lp_lb_c '10' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '150' -limit_kern_start '215'
 =======================================================================================
-16:51:14.851 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Now starting offline validation.
-16:51:15.393 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation needs 26 algorithm runs to validate 1 configurations found, each on 26 problem instance seed pairs
-16:51:15.428 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation start time: Jan 31, 2020, 4:51:15 PM. Approximate worst-case end time: Jan 31, 2020, 7:14:15 PM
-17:12:18.006 [CLI TAE Callback Threads (2519-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation Call Strings written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationCallStrings-traj-run-1-walltime.csv
-17:12:18.071 [CLI TAE Callback Threads (2519-1)] INFO  c.u.c.beta.smac.validation.Validator - Instance performance (for debug) written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationPerformanceDebug-traj-run-1-walltime.csv
-17:12:18.108 [CLI TAE Callback Threads (2519-1)] INFO  c.u.c.beta.smac.validation.Validator - Main validation results file written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationResults-traj-run-1-walltime.csv
-17:12:18.109 [CLI TAE Callback Threads (2519-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationObjectiveMatrix-traj-run-1-walltime.csv
-17:12:18.109 [CLI TAE Callback Threads (2519-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationRunResultLineMatrix-traj-run-1-walltime.csv
-17:12:18.115 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
+13:39:05.075 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - Now starting offline validation.
+13:39:05.528 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation needs 26 algorithm runs to validate 1 configurations found, each on 26 problem instance seed pairs
+13:39:05.529 [main] INFO  c.u.c.beta.smac.validation.Validator - Validation start time: Feb 4, 2020, 1:39:05 PM. Approximate worst-case end time: Feb 4, 2020, 4:02:05 PM
+14:01:24.182 [CLI TAE Callback Threads (2382-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation Call Strings written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationCallStrings-traj-run-1-walltime.csv
+14:01:24.608 [CLI TAE Callback Threads (2382-1)] INFO  c.u.c.beta.smac.validation.Validator - Instance performance (for debug) written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationPerformanceDebug-traj-run-1-walltime.csv
+14:01:24.609 [CLI TAE Callback Threads (2382-1)] INFO  c.u.c.beta.smac.validation.Validator - Main validation results file written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationResults-traj-run-1-walltime.csv
+14:01:24.610 [CLI TAE Callback Threads (2382-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationObjectiveMatrix-traj-run-1-walltime.csv
+14:01:24.610 [CLI TAE Callback Threads (2382-1)] INFO  c.u.c.beta.smac.validation.Validator - Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario/validationRunResultLineMatrix-traj-run-1-walltime.csv
+14:01:24.616 [main] INFO  c.u.c.b.smac.executors.SMACExecutor - 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Estimated mean quality of final incumbent config 768 (internal ID: 0xC1EC4A) on test set: 254.80807692307692, based on 26 run(s) on 26 test instance(s).
+Estimated mean quality of final incumbent config 590 (internal ID: 0x9858AA) on test set: 257.7819230769231, based on 26 run(s) on 26 test instance(s).
 Sample call for the final incumbent:
-cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '43' -f_clique_lb_c '5' -f_deg2 '92' -f_deg2_heur '85' -f_deg3 '67' -f_dom '75' -f_lp '66' -f_lp_lb '41' -f_lp_lb_c '19' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '94' -limit_kern_start '148' 
+cd /local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778; bash ../smac_run.sh vc-test/training-instances/000900_000000009000.input.dimacs 0 300.0 2147483647 -1 -constrained_branching '0' -dom_opt '0' -f_clique_lb '13' -f_clique_lb_c '8' -f_deg2 '63' -f_deg2_heur '38' -f_deg3 '28' -f_dom '96' -f_lp '49' -f_lp_lb '41' -f_lp_lb_c '10' -lb_opt '1' -lb_opt_c '1' -limit_kern_branch '150' -limit_kern_start '215' 
 Additional information about run 1 in:/local/users/pbinetruy/alg-eng/smac-v2.10.03-master-778/smac-output/vc-scenario
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
