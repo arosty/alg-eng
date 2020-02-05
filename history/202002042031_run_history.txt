@@ -1,0 +1,204 @@
+202002042031_run_history
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000002_000000000002.input	0.13s	0	0	0	0	0	0	0	0	0	0	0	1	correct
+random/000002_000000000006.input	0.09s	1	0	0	0	1	0	1	0	0	0	0	1	correct
+random/000002_000000000012.input	0.13s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000002_000000000020.input	0.09s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000004_000000000004.input	0.09s	0	0	0	0	0	0	0	0	0	0	0	1	correct
+random/000004_000000000012.input	0.09s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000004_000000000024.input	0.09s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000004_000000000040.input	0.09s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000006_000000000007.input	0.13s	1	0	0	0	1	0	1	0	0	0	0	1	correct
+random/000006_000000000018.input	0.10s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000006_000000000036.input	0.10s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000006_000000000060.input	0.10s	5	0	0	0	5	0	5	0	0	0	0	1	correct
+random/000008_000000000009.input	0.09s	1	0	0	0	1	0	1	0	0	0	0	1	correct
+random/000008_000000000024.input	0.09s	5	0	0	0	5	0	5	0	0	0	0	1	correct
+random/000008_000000000048.input	0.09s	7	0	0	0	7	0	7	0	0	0	0	1	correct
+random/000008_000000000080.input	0.09s	7	0	0	0	7	0	7	0	0	0	0	1	correct
+random/000010_000000000012.input	0.09s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000010_000000000030.input	0.09s	8	0	0	0	8	0	8	0	0	0	0	1	correct
+random/000010_000000000060.input	0.09s	10	0	0	0	10	0	10	0	0	0	0	1	correct
+random/000010_000000000100.input	0.09s	10	0	0	0	10	0	10	0	0	0	0	1	correct
+random/000012_000000000014.input	0.09s	1	0	0	0	1	0	1	0	0	0	0	1	correct
+random/000012_000000000036.input	0.09s	10	0	0	0	10	0	10	0	0	0	0	1	correct
+random/000012_000000000072.input	0.09s	11	0	0	0	11	0	11	0	0	0	0	1	correct
+random/000012_000000000120.input	0.09s	11	0	0	0	11	0	11	0	0	0	0	1	correct
+random/000014_000000000016.input	0.09s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000014_000000000042.input	0.13s	8	0	0	0	8	0	8	0	0	0	0	1	correct
+random/000014_000000000084.input	0.09s	13	0	0	0	13	0	13	0	0	0	0	1	correct
+random/000014_000000000140.input	0.09s	13	0	0	0	13	0	13	0	0	0	0	1	correct
+random/000016_000000000019.input	0.09s	1	0	0	0	1	0	1	0	0	0	0	1	correct
+random/000016_000000000048.input	0.09s	11	0	0	0	11	0	11	0	0	0	0	1	correct
+random/000016_000000000096.input	0.09s	15	0	0	0	15	0	15	0	0	0	0	1	correct
+random/000016_000000000160.input	0.09s	15	0	0	0	15	0	15	0	0	0	0	1	correct
+random/000018_000000000021.input	0.09s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000018_000000000054.input	0.09s	11	0	0	0	11	0	11	0	0	0	0	1	correct
+random/000018_000000000108.input	0.09s	15	0	0	0	15	0	15	0	0	0	0	1	correct
+random/000018_000000000180.input	0.09s	17	0	0	0	17	0	17	0	0	0	0	1	correct
+random/000020_000000000024.input	0.13s	2	0	0	0	2	0	2	0	0	0	0	1	correct
+random/000020_000000000060.input	0.09s	15	0	0	0	15	0	15	0	0	0	0	1	correct
+random/000020_000000000120.input	0.09s	18	0	0	0	18	0	18	0	0	0	0	1	correct
+random/000020_000000000200.input	0.09s	18	0	0	0	18	0	18	0	0	0	0	1	correct
+random/000022_000000000026.input	0.13s	3	0	0	0	3	0	3	0	0	0	0	1	correct
+random/000022_000000000066.input	0.09s	15	0	0	0	15	0	15	0	0	0	0	1	correct
+random/000022_000000000132.input	0.09s	19	0	0	0	19	0	19	0	0	0	0	1	correct
+random/000022_000000000220.input	0.09s	20	0	0	0	20	0	20	0	0	0	0	1	correct
+random/000024_000000000028.input	0.09s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000024_000000000072.input	0.09s	12	0	0	0	12	0	12	0	0	0	0	1	correct
+random/000024_000000000144.input	0.09s	22	0	0	0	22	0	22	0	0	0	0	1	correct
+random/000024_000000000240.input	0.13s	22	0	0	0	22	0	22	0	0	0	0	1	correct
+random/000026_000000000031.input	0.09s	5	0	0	0	5	0	5	0	0	0	0	1	correct
+random/000026_000000000078.input	0.13s	20	0	0	0	20	0	20	0	0	0	0	1	correct
+random/000026_000000000156.input	0.13s	23	0	0	0	23	0	23	0	0	0	0	1	correct
+random/000026_000000000260.input	0.13s	25	0	0	0	25	0	25	0	0	0	0	1	correct
+random/000028_000000000033.input	0.09s	4	0	0	0	4	0	4	0	0	0	0	1	correct
+random/000028_000000000084.input	0.09s	20	0	0	0	20	0	20	0	0	0	0	1	correct
+random/000028_000000000168.input	0.10s	26	0	0	0	26	0	26	0	0	0	0	1	correct
+random/000028_000000000280.input	0.10s	22	0	0	0	22	0	22	0	0	0	0	1	correct
+random/000030_000000000036.input	0.10s	5	0	0	0	5	0	5	0	0	0	0	1	correct
+random/000030_000000000090.input	0.10s	21	0	0	0	21	0	21	0	0	0	0	1	correct
+random/000030_000000000180.input	0.13s	27	0	0	0	27	0	27	0	0	0	0	1	correct
+random/000030_000000000300.input	0.13s	25	0	0	0	25	0	25	0	0	0	0	1	correct
+random/000035_000000000042.input	0.09s	6	0	0	0	6	0	6	0	0	0	0	1	correct
+random/000035_000000000105.input	0.09s	26	0	0	0	26	0	26	0	0	0	0	1	correct
+random/000035_000000000210.input	0.09s	26	0	0	0	26	0	26	0	0	0	0	1	correct
+random/000035_000000000350.input	0.53s	34	0	0	0	34	0	34	0	0	0	0	1	correct
+random/000040_000000000048.input	0.09s	7	0	0	0	7	0	7	0	0	0	0	1	correct
+random/000040_000000000120.input	0.09s	30	0	0	0	30	0	30	0	0	0	0	1	correct
+random/000040_000000000240.input	0.09s	35	0	0	0	35	0	35	0	0	0	0	1	correct
+random/000040_000000000400.input	0.11s	36	0	0	0	36	0	36	0	0	0	0	1	correct
+random/000045_000000000054.input	0.09s	6	0	0	0	6	0	6	0	0	0	0	1	correct
+random/000045_000000000135.input	0.09s	32	0	0	0	32	0	32	0	0	0	0	1	correct
+random/000045_000000000270.input	0.09s	39	0	0	0	39	0	39	0	0	0	0	1	correct
+random/000045_000000000450.input	0.09s	40	0	0	0	40	0	40	0	0	0	0	1	correct
+random/000050_000000000060.input	0.09s	9	0	0	0	9	0	9	0	0	0	0	1	correct
+random/000050_000000000150.input	0.09s	42	0	0	0	42	0	42	0	0	0	0	1	correct
+random/000050_000000000300.input	0.09s	46	0	0	0	46	0	46	0	0	0	0	1	correct
+random/000050_000000000500.input	0.13s	47	0	0	0	47	0	47	0	0	0	0	1	correct
+random/000055_000000000066.input	0.09s	8	0	0	0	8	0	8	0	0	0	0	1	correct
+random/000055_000000000165.input	0.09s	39	0	0	0	39	0	39	0	0	0	0	1	correct
+random/000055_000000000330.input	0.12s	48	0	0	0	48	0	48	0	0	0	0	1	correct
+random/000055_000000000550.input	0.13s	49	0	0	0	49	0	49	0	0	0	0	1	correct
+random/000060_000000000072.input	0.09s	10	0	0	0	10	0	10	0	0	0	0	1	correct
+random/000060_000000000180.input	0.09s	43	0	0	0	43	0	43	0	0	0	0	1	correct
+random/000060_000000000360.input	0.09s	50	0	0	0	50	0	50	0	0	0	0	1	correct
+random/000060_000000000600.input	0.14s	53	0	0	0	53	0	53	0	0	0	0	1	correct
+random/000065_000000000078.input	0.09s	11	0	0	0	11	0	11	0	0	0	0	1	correct
+random/000065_000000000195.input	0.13s	49	0	0	0	49	0	49	0	0	0	0	1	correct
+random/000065_000000000390.input	0.10s	59	0	0	0	59	0	59	0	0	0	0	1	correct
+random/000065_000000000650.input	0.14s	63	0	0	0	63	0	63	0	0	0	0	1	correct
+random/000070_000000000084.input	0.13s	12	0	0	0	12	0	12	0	0	0	0	1	correct
+random/000070_000000000210.input	0.09s	56	0	0	0	56	0	56	0	0	0	0	1	correct
+random/000070_000000000420.input	0.09s	60	0	0	0	60	0	60	0	0	0	0	1	correct
+random/000070_000000000700.input	0.15s	67	0	0	0	67	0	67	0	0	0	0	1	correct
+random/000075_000000000090.input	0.09s	13	0	0	0	13	0	13	0	0	0	0	1	correct
+random/000075_000000000225.input	0.13s	58	0	0	0	58	0	58	0	0	0	0	1	correct
+random/000075_000000000450.input	0.10s	68	0	0	0	68	0	68	0	0	0	0	1	correct
+random/000075_000000000750.input	0.14s	70	0	0	0	70	0	70	0	0	0	0	1	correct
+random/000080_000000000096.input	0.09s	13	0	0	0	13	0	13	0	0	0	0	1	correct
+random/000080_000000000240.input	0.11s	62	0	0	0	62	0	62	0	0	0	0	1	correct
+random/000080_000000000480.input	0.13s	73	0	0	0	73	0	73	0	0	0	0	1	correct
+random/000080_000000000800.input	0.13s	77	0	0	0	77	0	77	0	0	0	0	1	correct
+random/000085_000000000102.input	0.13s	16	0	0	0	16	0	16	0	0	0	0	1	correct
+random/000085_000000000255.input	0.10s	66	0	0	0	66	0	66	0	0	0	0	1	correct
+random/000085_000000000510.input	0.10s	76	0	0	0	76	0	76	0	0	0	0	1	correct
+random/000085_000000000850.input	0.15s	82	0	0	0	82	0	82	0	0	0	0	1	correct
+random/000090_000000000108.input	0.09s	17	0	0	0	17	0	17	0	0	0	0	1	correct
+random/000090_000000000270.input	0.13s	70	0	0	0	70	0	70	0	0	0	0	1	correct
+random/000090_000000000540.input	0.10s	78	0	0	0	78	0	78	0	0	0	0	1	correct
+random/000090_000000000900.input	0.15s	85	0	0	0	85	0	85	0	0	0	0	1	correct
+random/000095_000000000114.input	0.09s	18	0	0	0	18	0	18	0	0	0	0	1	correct
+random/000095_000000000285.input	0.09s	78	0	0	0	78	0	78	0	0	0	0	1	correct
+random/000095_000000000570.input	0.10s	86	0	0	0	86	0	86	0	0	0	0	1	correct
+random/000095_000000000950.input	0.13s	87	0	0	0	87	0	87	0	0	0	0	1	correct
+random/000100_000000000120.input	0.09s	20	0	0	0	20	0	20	0	0	0	0	1	correct
+random/000100_000000000300.input	0.13s	86	0	0	0	86	0	86	0	0	0	0	1	correct
+random/000100_000000000600.input	0.16s	95	0	0	0	95	0	95	0	0	0	0	1	correct
+random/000100_000000001000.input	0.13s	96	0	0	0	96	0	96	0	0	0	0	1	correct
+random/000200_000000000240.input	0.09s	38	0	0	0	38	0	38	0	0	0	0	1	correct
+random/000200_000000000600.input	0.10s	178	0	0	0	178	0	178	0	0	0	0	1	correct
+random/000200_000000001200.input	0.16s	194	0	0	0	194	0	194	0	0	0	0	1	correct
+random/000200_000000002000.input	0.22s	197	0	0	0	197	0	197	0	0	0	0	1	correct
+random/000300_000000000360.input	0.12s	58	0	0	0	58	0	58	0	0	0	0	1	correct
+random/000300_000000000900.input	0.14s	283	0	0	0	283	0	283	0	0	0	0	1	correct
+random/000300_000000001800.input	0.21s	296	0	0	0	296	0	296	0	0	0	0	1	correct
+random/000300_000000003000.input	0.23s	296	0	0	0	296	0	296	0	0	0	0	1	correct
+random/000400_000000000480.input	0.11s	78	0	0	0	78	0	78	0	0	0	0	1	correct
+random/000400_000000001200.input	0.18s	382	0	0	0	382	0	382	0	0	0	0	1	correct
+random/000400_000000002400.input	0.21s	392	0	0	0	392	0	392	0	0	0	0	1	correct
+random/000400_000000004000.input	0.38s	396	0	0	0	396	0	396	0	0	0	0	1	correct
+random/000500_000000000600.input	0.14s	100	0	0	0	100	0	100	0	0	0	0	1	correct
+random/000500_000000001500.input	0.21s	478	0	0	0	478	0	478	0	0	0	0	1	correct
+random/000500_000000003000.input	0.30s	498	0	0	0	498	0	498	0	0	0	0	1	correct
+random/000500_000000005000.input	0.58s	498	0	0	0	498	0	498	0	0	0	0	1	correct
+random/000600_000000000720.input	0.10s	119	0	0	0	119	0	119	0	0	0	0	1	correct
+random/000600_000000001800.input	0.24s	582	0	0	0	582	0	582	0	0	0	0	1	correct
+random/000600_000000003600.input	0.60s	593	0	0	0	593	0	593	0	0	0	0	1	correct
+random/000600_000000006000.input	0.84s	595	0	0	0	595	0	595	0	0	0	0	1	correct
+random/000700_000000000840.input	0.10s	140	0	0	0	140	0	140	0	0	0	0	1	correct
+random/000700_000000002100.input	0.25s	681	0	0	0	681	0	681	0	0	0	0	1	correct
+random/000700_000000004200.input	0.57s	692	0	0	0	692	0	692	0	0	0	0	1	correct
+random/000700_000000007000.input	1.14s	696	0	0	0	696	0	696	0	0	0	0	1	correct
+random/000800_000000000960.input	0.11s	160	0	0	0	160	0	160	0	0	0	0	1	correct
+random/000800_000000002400.input	0.31s	784	0	0	0	784	0	784	0	0	0	0	1	correct
+random/000800_000000004800.input	0.67s	795	0	0	0	795	0	795	0	0	0	0	1	correct
+random/000800_000000008000.input	1.54s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000001080.input	0.11s	180	0	0	0	180	0	180	0	0	0	0	1	correct
+random/000900_000000002700.input	4.00s	872	3	493	0	225	0	225	0	0	78	1	1	correct
+random/000900_000000005400.input	0.87s	892	0	0	0	892	0	892	0	0	0	0	1	correct
+random/000900_000000009000.input	2.14s	895	0	0	0	895	0	895	0	0	0	0	1	correct
+random/001000_000000001200.input	0.16s	199	0	0	0	199	0	199	0	0	0	0	1	correct
+random/001000_000000003000.input	5.76s	982	3	571	0	241	0	241	0	0	74	1	1	correct
+random/001000_000000006000.input	1.13s	989	0	0	0	989	0	989	0	0	0	0	1	correct
+random/001000_000000010000.input	2.62s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/karate.graph.dimacs	0.09s	14	3	1	1	12	0	11	0	0	0	1	1	correct
+dimacs/dolphins.graph.dimacs	0.22s	34	19	13	7	39	6	30	15	6	5	1	1	correct
+dimacs/chesapeake.graph.dimacs	0.13s	22	4	8	2	7	0	6	6	2	3	1	1	correct
+dimacs/adjnoun.graph.dimacs	0.33s	59	39	23	13	65	12	50	44	7	27	3	1	correct
+dimacs/polbooks.graph.dimacs	0.23s	62	21	40	8	92	5	82	22	24	2	1	1	correct
+dimacs/football.graph.dimacs	s	0											0	
+dimacs/celegans_metabolic.graph.dimacs	1.19s	249	86	193	23	1546	21	1486	605	28	11	6	1	correct
+dimacs/jazz.graph.dimacs	0.93s	158	109	99	45	183	34	126	202	422	6	7	1	correct
+dimacs/netscience.graph.dimacs	1.15s	899	18	604	0	280	0	279	206	152	0	1	1	correct
+dimacs/email.graph.dimacs	86.36s	594	7799	297	338	61571	1662	55810	47958	10290	8296	480	1	correct
+dimacs/add20.graph.dimacs	1.05s	1265	6	787	0	802	0	788	203	0	0	1	1	correct
+dimacs/power.graph.dimacs	s	0											0	
+dimacs/uk.graph.dimacs	s	0											0	
+dimacs/add32.graph.dimacs	4.03s	2674	4	2161	1	1752	0	1747	412	0	0	1	1	correct
+dimacs/3elt.graph.dimacs	s	0											0	
+dimacs/data.graph.dimacs	s	0											0	
+dimacs/polblogs.graph.dimacs	4.50s	560	104	210	110	2956	36	2865	1242	105	307	5	1	correct
+dimacs/PGPgiantcompo.graph.dimacs	s	0											0	
+dimacs/whitaker3.graph.dimacs	s	0											0	
+dimacs/crack.graph.dimacs	s	0											0	
+dimacs/fe_4elt2.graph.dimacs	s	0											0	
+dimacs/as-22july06.graph.dimacs	2.78s	3303	24	13	2	3305	4	3293	23	0	4	3	1	correct
+dimacs/cs4.graph.dimacs	s	0											0	
+dimacs/4elt.graph.dimacs	s	0											0	
+11 instances not solved. Script aborted.
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+snap/as20000102.txt.dimacs	0.42s	1052	4	4	0	1047	0	1047	1	0	0	1	1	correct
+snap/email-Eu-core.txt.dimacs	14.54s	579	444	373	131	5937	131	5684	4079	2052	774	21	1	correct
+snap/ca-GrQc.txt.dimacs	5.31s	2783	33	1366	0	1518	0	1509	428	302	4	1	1	correct
+snap/p2p-Gnutella08.txt.dimacs	0.30s	2054	4	0	1	2052	2	2051	3	0	0	1	1	correct
+snap/ca-HepTh.txt.dimacs	s	0											0	
+snap/p2p-Gnutella09.txt.dimacs	0.46s	2574	2	7	11	2550	1	2548	0	0	0	1	1	correct
+snap/p2p-Gnutella06.txt.dimacs	0.42s	3405	1	-2	1	3404	0	3403	0	0	0	1	1	correct
+snap/p2p-Gnutella05.txt.dimacs	0.45s	3428	2	0	1	3427	0	3426	0	0	0	1	1	correct
+snap/p2p-Gnutella04.txt.dimacs	0.56s	4348	2	-1	1	4346	0	4346	0	0	2	1	1	correct
+snap/p2p-Gnutella25.txt.dimacs	1.34s	6017	3	1	0	6009	0	6009	0	0	1	1	1	correct
+snap/facebook_combined.txt.dimacs	s	0											0	
+snap/ca-CondMat.txt.dimacs	s	0											0	
+snap/ca-HepPh.txt.dimacs	s	0											0	
+snap/email-Enron.txt.dimacs	s	0											0	
+snap/ca-AstroPh.txt.dimacs	s	0											0	
+snap/soc-sign-Slashdot081106.txt.dimacs	s	0											0	
+snap/soc-sign-Slashdot090216.txt.dimacs	60.76s	21305	6	157	0	21147	0	21142	58	0	3	1	1	correct
+snap/soc-sign-Slashdot090221.txt.dimacs	s	0											0	
+snap/soc-Epinions1.txt.dimacs	s	0											0	
+snap/soc-Slashdot0811.txt.dimacs	34.91s	24046	9	517	0	23541	0	23526	221	16	3	1	1	correct
+snap/soc-sign-epinions.txt.dimacs	s	0											0	
+snap/soc-Slashdot0902.txt.dimacs	s	0											0	
+11 instances not solved. Script aborted.
