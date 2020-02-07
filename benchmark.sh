@@ -31,6 +31,7 @@ run_ce_solver()
 		if [ $elapsed -le $maxSec -a $notSolved -le $maxNotSolved ]; then
 			echo $f >> $LOG
 			# start everything in a new process group such that we can kill everything if necessary
+			echo "$PROGRAMM_NAME $parameters < $f"
 			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME $parameters < $f 1> prog_out.txt 2>&1) & PID=$!
 
 			# kill processes on exit
