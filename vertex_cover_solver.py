@@ -51,7 +51,7 @@ else:
     f_lp_lb_c = 1
     lb_opt_c = True
     #if True, second method of branching is used
-    constrained_branching = False
+    constrained_branching = True
     #if True, domination rule works with flags
     dom_opt = True
 

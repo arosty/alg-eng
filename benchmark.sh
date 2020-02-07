@@ -7,8 +7,7 @@ run_ce_solver()
 	maxSec=$3
 	maxSecPerInstance=$4
 	maxNotSolved=$5
-	parameters="${@:6}"
-	
+	parameters="${@:6}"	
 	
 	FILES=$(ls random/*.input)
 
@@ -32,6 +31,7 @@ run_ce_solver()
 		if [ $elapsed -le $maxSec -a $notSolved -le $maxNotSolved ]; then
 			echo $f >> $LOG
 			# start everything in a new process group such that we can kill everything if necessary
+			echo "$PROGRAMM_NAME $parameters < $f" > check.txt
 			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME $parameters < $f 1> prog_out.txt 2>&1) & PID=$!
 
 			# kill processes on exit
@@ -116,14 +116,11 @@ maxSecPerInstance=300							# allowed time (in seconds) for one instance
 maxNotSolved=10								# no of instances the program is allowed to fail to solve. If reached, then the script is aborted
 
 echo "run random instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 0
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 0 $@
 
 echo "run dimacs instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 1
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 1 $@
 
 echo "run snap instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 2
-
-
-
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 2 $@
 
