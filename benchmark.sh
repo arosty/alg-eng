@@ -7,10 +7,7 @@ run_ce_solver()
 	maxSec=$3
 	maxSecPerInstance=$4
 	maxNotSolved=$5
-	parameters="${@:6}"
-
-	echo $parameters
-	
+	parameters="${@:6}"	
 	
 	FILES=$(ls random/*.input)
 

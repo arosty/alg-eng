@@ -6,7 +6,7 @@ file_name_path="history/$file_name.txt"
 echo $file_name > $file_name_path
 echo "benchmark.sh is running..."
 # Write output of benchmark.sh in txt file:
-bash benchmark.sh >> $file_name_path
+bash benchmark.sh $@ >> $file_name_path
 # Print output of benchmark:
 cat $file_name_path
 # Save data in csv file:
