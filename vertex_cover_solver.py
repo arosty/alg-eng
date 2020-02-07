@@ -818,7 +818,7 @@ def heuristic_processing(vertex, counter, dom_freq):
     S_one, undelete_one, _ = degree_one_rule(nb_vertices)
     S_new = [vertex] + S_one 
     undelete_new = [vertex] + undelete_one
-    if kernelization.counter%f_deg2 == 0:
+    if kernelization.counter%f_deg2_heur == 0:
         S_two, undelete_two, unmerge_new, _ = degree_two_rule(nb_vertices)
         S_new += S_two
         undelete_new += undelete_two
