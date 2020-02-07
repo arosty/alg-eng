@@ -1,0 +1,9 @@
+202002071847_run_history
+-constrained_branching 0 -dom_opt 1 -f_clique_lb 1 -f_clique_lb_c 5 -f_deg2 500 -f_deg2_heur 80000 -f_deg3 40000 -f_dom 50 -f_lp 40000 -f_lp_lb 1 -f_lp_lb_c 5 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 500 -limit_kern_start 500
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	2.74s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	124.43s	872	22	493	2	848	0	848	0	0	0	1	1	correct
+random/001000_000000010000.input	4.29s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	0.33s	34	14	13	0	32	0	31	0	0	0	2	1	correct
+dimacs/chesapeake.graph.dimacs	0.21s	22	7	8	2	13	0	13	0	0	0	1	1	correct
