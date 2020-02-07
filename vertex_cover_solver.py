@@ -40,18 +40,18 @@ else:
     #reduction rules' frequencies
     f_deg2 = 1
     f_deg2_heur = 1
-    f_dom = 2
+    f_dom = 1
     f_deg3 = 1
-    f_lp = 5
-    f_clique_lb = 4
-    f_lp_lb = 5
+    f_lp = 1
+    f_clique_lb = 1
+    f_lp_lb = 1
     lb_opt = True # True if starts with lp
     #constrained:
-    f_clique_lb_c = 2
-    f_lp_lb_c = 3
+    f_clique_lb_c = 1
+    f_lp_lb_c = 1
     lb_opt_c = True
     #if True, second method of branching is used
-    constrained_branching = False
+    constrained_branching = True
     #if True, domination rule works with flags
     dom_opt = True
 
