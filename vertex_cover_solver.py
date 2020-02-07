@@ -51,7 +51,7 @@ else:
     f_lp_lb_c = 1
     lb_opt_c = True
     #if True, second method of branching is used
-    constrained_branching = False
+    constrained_branching = True
     #if True, domination rule works with flags
     dom_opt = True
 
@@ -818,7 +818,7 @@ def heuristic_processing(vertex, counter, dom_freq):
     S_one, undelete_one, _ = degree_one_rule(nb_vertices)
     S_new = [vertex] + S_one 
     undelete_new = [vertex] + undelete_one
-    if kernelization.counter%f_deg2 == 0:
+    if kernelization.counter%f_deg2_heur == 0:
         S_two, undelete_two, unmerge_new, _ = degree_two_rule(nb_vertices)
         S_new += S_two
         undelete_new += undelete_two
