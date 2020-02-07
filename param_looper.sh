@@ -1,7 +1,6 @@
 maxSec=$1
-
 SECONDS=0
 
 while [ $SECONDS -lt $maxSec ]; do
-    echo hello
+    python3 random_config.py | bash run.sh
 done
