@@ -3,6 +3,7 @@ SECONDS=0
 
 while [ $SECONDS -lt $maxSec ]; do
     python3 random_config.py > params.txt
-    cat params.txt | echo
+    parameters=$(<params.txt)
+    bash run.sh $parameters
     # rm -f params.txt
 done
