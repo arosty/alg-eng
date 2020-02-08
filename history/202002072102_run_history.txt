@@ -1,0 +1,31 @@
+202002072102_run_history
+-constrained_branching 1 -dom_opt 1 -f_clique_lb 10 -f_clique_lb_c 1 -f_deg2 40000 -f_deg2_heur 1 -f_deg3 1 -f_dom 3 -f_lp 5 -f_lp_lb 10 -f_lp_lb_c 1 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 1 -limit_kern_start 3
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	2.02s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	12.36s	872	0	460	0	596	0	580	215	0	78	1	1	correct
+random/001000_000000010000.input	4.37s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	0.21s	34	0	14	0	13	0	13	11	0	2	2	1	correct
+dimacs/chesapeake.graph.dimacs	0.22s	22	0	8	1	10	0	9	11	7	5	2	1	correct
+dimacs/football.graph.dimacs	86.98s	94	0	67	0	4990	0	3880	23259	2121	625	1743	1	correct
+dimacs/jazz.graph.dimacs	1.97s	158	0	99	0	148	0	144	458	100	7	28	1	correct
+dimacs/email.graph.dimacs	17.45s	594	0	288	0	3425	0	3271	5288	332	253	131	1	correct
+dimacs/add20.graph.dimacs	3.01s	1265	0	787	0	846	0	831	216	0	0	3	1	correct
+dimacs/polblogs.graph.dimacs	2.43s	560	0	199	0	554	0	535	333	79	59	2	1	correct
+dimacs/as-22july06.graph.dimacs	6.04s	3303	0	12	0	3348	0	3333	54	4	3	10	1	correct
+dimacs/cond-mat.graph.dimacs	245.88s	9436	0	6479	0	5483	0	5381	2279	2048	18	3	1	correct
+dimacs/astro-ph.graph.dimacs	s	0											0	
+dimacs/fe_tooth.graph.dimacs	s	0											0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+snap/as20000102.txt.dimacs	0.55s	1052	0	4	0	1045	0	1045	3	0	0	3	1	correct
+snap/ca-GrQc.txt.dimacs	8.61s	2783	0	1366	0	1565	0	1544	461	0	4	3	1	correct
+snap/p2p-Gnutella09.txt.dimacs	0.95s	2574	0	-2	0	2562	0	2560	8	0	8	1	1	correct
+snap/p2p-Gnutella05.txt.dimacs	0.73s	3428	0	0	0	3427	0	3427	0	0	0	1	1	correct
+snap/p2p-Gnutella25.txt.dimacs	2.22s	6017	0	1	0	6013	0	6013	2	0	1	1	1	correct
+snap/ca-HepPh.txt.dimacs	s	0											0	
+snap/email-Enron.txt.dimacs	s	0											0	
+snap/soc-sign-Slashdot081106.txt.dimacs	97.69s	19614	0	116	0	19505	0	19502	60	0	2	3	1	correct
+snap/soc-sign-Slashdot090216.txt.dimacs	102.45s	21305	0	157	0	21168	0	21156	81	0	3	3	1	correct
+snap/soc-Slashdot0811.txt.dimacs	47.59s	24046	0	517	0	23567	0	23531	251	0	3	3	1	correct
+snap/soc-sign-epinions.txt.dimacs	s	0											0	
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	

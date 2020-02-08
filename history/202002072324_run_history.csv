@@ -1,0 +1,27 @@
+file,time_in_seconds,solution_size,recursive_steps,first_lower_bound_difference,high_degree_rules,degree_zero_rules,extreme_reduction_rules,degree one rules,degree two rules,domination rules,lower_bounds,finished,solution_size_verified
+random/000800_000000008000.input,2.31s,796,0,0,0,796,0,796,0,0,0,0,1,correct
+random/000900_000000002700.input,1.61s,872,0,0,0,225,0,225,0,0,0,0,1,correct
+random/001000_000000010000.input,3.12s,997,0,0,0,997,0,997,0,0,0,0,1,correct
+dimacs/dolphins.graph.dimacs,0.21s,34,0,9,0,22,0,22,0,5,3,3,1,correct
+dimacs/chesapeake.graph.dimacs,0.17s,22,0,6,0,13,0,13,0,3,1,3,1,correct
+dimacs/football.graph.dimacs,66.02s,94,0,67,0,22427,0,21903,8,2542,557,1495,1,correct
+dimacs/jazz.graph.dimacs,0.98s,158,0,45,0,328,0,327,0,104,2,16,1,correct
+dimacs/email.graph.dimacs,5.01s,594,0,165,0,2596,0,2586,0,231,129,38,1,correct
+dimacs/add20.graph.dimacs,0.54s,1265,0,91,0,986,0,986,0,140,0,3,1,correct
+dimacs/polblogs.graph.dimacs,1.53s,560,0,92,0,794,0,793,0,63,44,9,1,correct
+dimacs/as-22july06.graph.dimacs,6.87s,3303,0,5,0,3378,0,3367,0,2,0,22,1,correct
+dimacs/cond-mat.graph.dimacs,35.18s,9436,0,2790,0,5895,0,5895,0,2201,7,3,1,correct
+dimacs/astro-ph.graph.dimacs,s,0,,0
+dimacs/fe_tooth.graph.dimacs,s,0,,0
+snap/as20000102.txt.dimacs,0.56s,1052,0,4,0,1048,0,1048,0,0,0,3,1,correct
+snap/ca-GrQc.txt.dimacs,4.96s,2783,0,754,0,1959,0,1959,0,384,0,3,1,correct
+snap/p2p-Gnutella09.txt.dimacs,0.60s,2574,0,0,0,2570,0,2570,0,4,0,0,1,correct
+snap/p2p-Gnutella05.txt.dimacs,0.84s,3428,0,0,0,3427,0,3427,0,0,0,2,1,correct
+snap/p2p-Gnutella25.txt.dimacs,2.57s,6017,0,0,0,6008,0,6008,0,0,0,0,1,correct
+snap/ca-HepPh.txt.dimacs,129.27s,7012,0,2109,0,4209,0,4209,0,1472,11,3,1,correct
+snap/email-Enron.txt.dimacs,s,0,,0
+snap/soc-sign-Slashdot081106.txt.dimacs,81.07s,19614,0,60,0,19538,0,19538,0,15,0,3,1,correct
+snap/soc-sign-Slashdot090216.txt.dimacs,78.95s,21305,0,84,0,21208,0,21208,0,19,0,3,1,correct
+snap/soc-Slashdot0811.txt.dimacs,45.45s,24046,0,350,0,23757,0,23757,0,67,0,3,1,correct
+snap/soc-sign-epinions.txt.dimacs,s,0,,0
+snap/loc-gowalla_edges.txt.dimacs,s,0,,0

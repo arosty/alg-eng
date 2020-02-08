@@ -1,0 +1,27 @@
+file,time_in_seconds,solution_size,recursive_steps,first_lower_bound_difference,high_degree_rules,degree_zero_rules,extreme_reduction_rules,degree one rules,degree two rules,domination rules,lower_bounds,finished,solution_size_verified
+random/000800_000000008000.input,2.61s,796,0,0,0,796,0,796,0,0,0,0,1,correct
+random/000900_000000002700.input,1.62s,872,0,0,0,225,0,225,0,0,0,0,1,correct
+random/001000_000000010000.input,4.56s,997,0,0,0,997,0,997,0,0,0,0,1,correct
+dimacs/dolphins.graph.dimacs,0.35s,34,0,13,0,69,0,65,0,0,0,4,1,correct
+dimacs/chesapeake.graph.dimacs,0.28s,22,0,8,1,30,0,29,0,0,0,2,1,correct
+dimacs/football.graph.dimacs,s,0,,0
+dimacs/jazz.graph.dimacs,145.39s,158,0,99,0,72969,0,69739,0,92,0,2664,1,correct
+dimacs/email.graph.dimacs,s,0,,0
+dimacs/add20.graph.dimacs,s,0,,0
+dimacs/polblogs.graph.dimacs,5.62s,560,0,193,0,4412,0,4371,0,0,0,26,1,correct
+dimacs/as-22july06.graph.dimacs,7.71s,3303,0,7,0,3463,0,3438,0,0,0,10,1,correct
+dimacs/cond-mat.graph.dimacs,s,0,,0
+dimacs/astro-ph.graph.dimacs,s,0,,0
+dimacs/fe_tooth.graph.dimacs,s,0,,0
+snap/as20000102.txt.dimacs,0.74s,1052,0,4,0,1070,0,1065,0,0,0,6,1,correct
+snap/ca-GrQc.txt.dimacs,s,0,,0
+snap/p2p-Gnutella09.txt.dimacs,0.72s,2574,0,0,0,2523,0,2523,0,0,0,0,1,correct
+snap/p2p-Gnutella05.txt.dimacs,0.81s,3428,0,0,0,3428,0,3428,0,0,0,1,1,correct
+snap/p2p-Gnutella25.txt.dimacs,2.95s,6017,0,0,0,6008,0,6008,0,0,0,0,1,correct
+snap/ca-HepPh.txt.dimacs,s,0,,0
+snap/email-Enron.txt.dimacs,s,0,,0
+snap/soc-sign-Slashdot081106.txt.dimacs,s,0,,0
+snap/soc-sign-Slashdot090216.txt.dimacs,s,0,,0
+snap/soc-Slashdot0811.txt.dimacs,s,0,,0
+snap/soc-sign-epinions.txt.dimacs,s,0,,0
+snap/loc-gowalla_edges.txt.dimacs,s,0,,0
