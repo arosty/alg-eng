@@ -23,9 +23,10 @@ def transfer_data(current_history_file):
             'high_degree_rules',
             'degree_zero_rules',
             'extreme_reduction_rules',
-            'degree one rules',
-            'degree two rules',
-            'domination rules',
+            'degree_one_rules',
+            'degree_two_rules',
+            'domination_rules',
+            'degree_three_rules',
             'lower_bounds',
             'finished',
             'solution_size_verified'
@@ -41,7 +42,7 @@ def transfer_data(current_history_file):
                     writer = csv.writer(sheet)
                     line_values = line.split()
                     if len(line_values) < len(header):
-                        line_values.insert(3,'')
+                        line_values = [line_values[0],'']
                     writer.writerow(line_values)
                 break
 
