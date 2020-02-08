@@ -3,7 +3,7 @@ import pandas as pd
 
 def give_par10(path_file_name):
     stats = pd.read_csv(path_file_name + '.csv')
-    return stats
+    return stats.loc['snap/loc-gowalla_edges.txt.dimacs']
     
 
 current_path = sys.path[0] + "/"
