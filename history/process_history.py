@@ -23,9 +23,10 @@ def transfer_data(current_history_file):
             'high_degree_rules',
             'degree_zero_rules',
             'extreme_reduction_rules',
-            'degree one rules',
-            'degree two rules',
-            'domination rules',
+            'deg1_rules',
+            'deg2_rules',
+            'dom_rules',
+            'deg3_rules',
             'lower_bounds',
             'finished',
             'solution_size_verified'
