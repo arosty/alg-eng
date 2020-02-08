@@ -42,7 +42,7 @@ def transfer_data(current_history_file):
                     writer = csv.writer(sheet)
                     line_values = line.split()
                     if len(line_values) < len(header):
-                        line_values = ['','']
+                        line_values = [line_values[0],'']
                     writer.writerow(line_values)
                 break
 
