@@ -25,3 +25,7 @@ snap/p2p-Gnutella25.txt.dimacs	2.59s	6017	2	1	1	6010	0	6010	1	0	0	1	1	correct
 snap/ca-HepPh.txt.dimacs	s	0											0	
 snap/email-Enron.txt.dimacs	s	0											0	
 snap/soc-sign-Slashdot081106.txt.dimacs	167.69s	19614	3976	116	6	23582	1323	21577	18695	0	0	175	1	correct
+snap/soc-sign-Slashdot090216.txt.dimacs	101.28s	21305	2	157	0	21168	0	21159	80	3	0	1	1	correct
+snap/soc-Slashdot0811.txt.dimacs	52.70s	24046	8	517	0	23568	0	23534	248	16	0	1	1	correct
+snap/soc-sign-epinions.txt.dimacs	s	0											0	
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	
