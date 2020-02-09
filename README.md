@@ -38,7 +38,7 @@ The second version included the following changes:
 
 ## Download of test instances
 
-The following command needs to be run in the "alg-eng-rosty-binetruy-1" directory.
+The following command needs to be run in the "alg-eng-rosty-binetruy-5" directory.
 
 ```bash
 curl -O http://fpt.akt.tu-berlin.de/alg-eng-data/data.zip
