@@ -1,0 +1,31 @@
+202002090735_run_history
+-constrained_branching 0 -dom_opt 1 -f_clique_lb 10 -f_clique_lb_c 5 -f_deg2 500 -f_deg2_heur 1 -f_deg3 1 -f_dom 3 -f_lp 40000 -f_lp_lb 1 -f_lp_lb_c 5 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 5 -limit_kern_start 500
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	2.58s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	243.90s	872	179	457	28	524	0	524	0	115	293	1	1	correct
+random/001000_000000010000.input	4.18s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	0.22s	34	5	14	1	18	0	18	0	11	7	1	1	correct
+dimacs/chesapeake.graph.dimacs	0.21s	22	4	8	4	6	0	5	0	7	6	1	1	correct
+dimacs/football.graph.dimacs	s	0											0	
+dimacs/jazz.graph.dimacs	8.75s	158	693	99	34	1598	30	1265	2	585	137	36	1	correct
+dimacs/email.graph.dimacs	238.81s	594	12162	286	65	80879	60	74802	557	31436	18078	699	1	correct
+dimacs/add20.graph.dimacs	2.05s	1265	46	787	0	1047	0	1047	0	173	0	1	1	correct
+dimacs/polblogs.graph.dimacs	5.67s	560	97	200	12	2312	5	2275	0	844	428	6	1	correct
+dimacs/as-22july06.graph.dimacs	3.17s	3303	44	12	12	3338	4	3321	0	9	4	1	1	correct
+dimacs/cond-mat.graph.dimacs	s	0											0	
+dimacs/astro-ph.graph.dimacs	s	0											0	
+dimacs/fe_tooth.graph.dimacs	s	0											0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+snap/as20000102.txt.dimacs	0.54s	1052	5	4	0	1048	0	1048	0	0	0	1	1	correct
+snap/ca-GrQc.txt.dimacs	43.02s	2783	332	1366	0	1999	0	1999	0	453	6	1	1	correct
+snap/p2p-Gnutella09.txt.dimacs	0.67s	2574	1	-2	3	2534	0	2533	0	0	8	1	1	correct
+snap/p2p-Gnutella05.txt.dimacs	0.49s	3428	2	0	1	3427	0	3426	0	0	0	1	1	correct
+snap/p2p-Gnutella25.txt.dimacs	1.90s	6017	3	1	1	6010	0	6010	0	1	1	1	1	correct
+snap/ca-HepPh.txt.dimacs	s	0											0	
+snap/email-Enron.txt.dimacs	s	0											0	
+snap/soc-sign-Slashdot081106.txt.dimacs	s	0											0	
+snap/soc-sign-Slashdot090216.txt.dimacs	111.09s	21305	57	157	0	21224	0	21224	0	25	5	1	1	correct
+snap/soc-Slashdot0811.txt.dimacs	68.60s	24046	197	517	0	23774	0	23774	0	76	4	1	1	correct
+snap/soc-sign-epinions.txt.dimacs	s	0											0	
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	
