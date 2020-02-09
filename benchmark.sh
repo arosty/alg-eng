@@ -111,9 +111,9 @@ run_ce_solver()
 
 PROGRAMM_NAME="python3 vertex_cover_solver.py"  	# insert your program here
 LOG=log.txt									# specify the name of the log file
-maxSec=10800									# overall allowed time for the whole script
+maxSec=43200									# overall allowed time for the whole script
 maxSecPerInstance=300							# allowed time (in seconds) for one instance
-maxNotSolved=30								# no of instances the program is allowed to fail to solve. If reached, then the script is aborted
+maxNotSolved=10								# no of instances the program is allowed to fail to solve. If reached, then the script is aborted
 
 echo "run random instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
 run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 0 $@
