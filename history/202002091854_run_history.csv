@@ -179,10 +179,6 @@ snap/soc-sign-Slashdot090221.txt.dimacs,63.47s,21314,0,164,0,21144,0,21143,93,14
 snap/soc-Epinions1.txt.dimacs,26.00s,22280,0,570,0,21485,0,21483,289,240,0,1,1,correct
 snap/soc-Slashdot0902.txt.dimacs,36.62s,25770,0,890,0,24993,0,24989,418,181,0,2,1,correct
 snap/amazon0302.txt.dimacs,
-snap/com-amazon.ungraph.txt.dimacs,
 snap/com-dblp.ungraph.txt.dimacs,
-snap/web-NotreDame.txt.dimacs,
 snap/twitter_combined.txt.dimacs,
-snap/roadNet-PA.txt.dimacs,
-snap/web-Stanford.txt.dimacs,
 snap/roadNet-TX.txt.dimacs,
