@@ -4,15 +4,26 @@ The project's goal is to solve the VERTEX COVER problem in the best computationa
 
 ## What is new ?
 
-This third version includes the following changes among many small improvements:
+The final version includes the following changes among many others:
+* Reduction Rules:
+    - Implementation of degree three reduction rule
+    - Implementation of LP reduction rule
+* Lower Bounds:
+    - Implementation of LP lower bound
+* Branching Strategy:
+    - Implementation of Constrained Branching
+The algorithm is now very flexible and many different parameters can be set.
+
+The third version included the following changes among many small improvements:
 * Reduction Rules:
     - Implementation of degree zero reduction rule
+    - Implementation of high degree reduction rule
     - Updating degree one reduction rule
     - Implementation of 'extreme reduction rule'
     - Implementation of degree two reduction rule
     - Implementation of domination rule
-* Benchmark:
-    - Many new columns about usage of reduction rules and lower bound
+* Lower Bound:
+    - Implementation of clique cover lower bound
 
 The second version included the following changes:
 * Data structure :
@@ -36,9 +47,9 @@ unzip data.zip
 ## Usage
 
 ```bash
-bash run.sh
+python3 vertex_cover_solver.py < instance.file
 ```
 
-The benchmark.sh file is being called and its console output is saved into two timestamped files:
- - ./history/yyyymmddHHMM_run_history.txt
- - ./history/yyyymmddHHMM_run_history.csv
+## Special Requirements
+
+CPLEX needs to be installed locally.
