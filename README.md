@@ -12,6 +12,7 @@ The final version includes the following changes among many others:
     - Implementation of LP lower bound
 * Branching Strategy:
     - Implementation of Constrained Branching
+
 The algorithm is now very flexible and many different parameters can be set.
 
 The third version included the following changes among many small improvements:
