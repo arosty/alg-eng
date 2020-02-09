@@ -11,6 +11,7 @@ vc-test/training-instances/cond-mat-2005.graph.dimacs
 vc-test/training-instances/crack.graph.dimacs
 vc-test/training-instances/email-Eu-core.txt.dimacs
 vc-test/training-instances/fe_ocean.graph.dimacs
+vc-test/training-instances/football.graph.dimacs
 vc-test/training-instances/karate.graph.dimacs
 vc-test/training-instances/memplus.graph.dimacs
 vc-test/training-instances/netscience.graph.dimacs
