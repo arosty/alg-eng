@@ -68,5 +68,6 @@ for file_name in file_names:
     print('-------------------------\n')
 
 if save_csv:
+    print('Saving into CSV file...')
     new_file_name = 'params_par10_' + datetime.now().strftime("%Y%m%d%H%M")
     list_of_runs.to_csv(current_path + new_file_name + '.csv')
