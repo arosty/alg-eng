@@ -176,3 +176,13 @@ snap/p2p-Gnutella08.txt.dimacs	0.42s	2054	0	0	0	2051	0	2051	3	0	0	0	1	correct
 snap/ca-HepTh.txt.dimacs	1.83s	4981	0	7	0	3335	0	3277	756	205	0	2	1	correct
 snap/p2p-Gnutella06.txt.dimacs	0.42s	3405	0	0	0	3404	0	3404	1	0	0	0	1	correct
 snap/p2p-Gnutella04.txt.dimacs	0.59s	4348	0	0	0	4345	0	4345	0	0	0	0	1	correct
+snap/facebook_combined.txt.dimacs	s	0											0	
+snap/ca-CondMat.txt.dimacs	6.76s	13521	0	4	0	5553	0	5409	3116	1921	0	2	1	correct
+snap/ca-AstroPh.txt.dimacs	39.62s	12012	0	19	0	3297	0	3222	3039	2876	0	3	1	correct
+snap/soc-sign-Slashdot090221.txt.dimacs	61.78s	21314	0	2	0	21140	0	21133	104	0	0	3	1	correct
+snap/soc-Epinions1.txt.dimacs	26.13s	22280	0	4	0	21395	0	21316	454	82	0	3	1	correct
+snap/soc-Slashdot0902.txt.dimacs	36.66s	25770	0	0	0	24936	0	24833	566	31	0	2	1	correct
+snap/amazon0302.txt.dimacs	s	0											0	
+snap/com-dblp.ungraph.txt.dimacs	s	0											0	
+snap/twitter_combined.txt.dimacs	s	0											0	
+snap/roadNet-TX.txt.dimacs	s	0											0	
