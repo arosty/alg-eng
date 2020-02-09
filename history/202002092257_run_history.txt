@@ -1,0 +1,7 @@
+202002092257_run_history
+-constrained_branching 1 -dom_opt 1 -f_clique_lb 1 -f_clique_lb_c 5 -f_deg2 2 -f_deg2_heur 80000 -f_deg3 3 -f_dom 1 -f_lp 5 -f_lp_lb 1 -f_lp_lb_c 3 -lb_opt 1 -lb_opt_c 0 -limit_kern_branch 2 -limit_kern_start 500
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/cond-mat-2005.graph.dimacs	23.12s	23106	0	5752	0	11789	0	11786	2638	6047	0	2	1	correct
+dimacs/fe_ocean.graph.dimacs	s	0											0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
