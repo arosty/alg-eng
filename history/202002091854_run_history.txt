@@ -153,7 +153,6 @@ random/001000_000000006000.input	1.06s	989	0	0	0	989	0	989	0	0	0	0	1	correct
 run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
 dimacs/karate.graph.dimacs	0.09s	14	0	1	0	11	0	11	2	0	0	1	1	correct
 dimacs/adjnoun.graph.dimacs	0.13s	59	0	22	0	48	0	46	24	7	4	1	1	correct
-dimacs/polbooks.graph.dimacs	0.13s	62	0	13	0	29	0	26	10	20	0	1	1	correct
 dimacs/celegans_metabolic.graph.dimacs	0.16s	249	0	83	0	172	0	172	23	39	0	1	1	correct
 dimacs/netscience.graph.dimacs	0.17s	899	0	357	0	336	0	336	179	191	0	2	1	correct
 dimacs/power.graph.dimacs	0.21s	2203	0	179	0	2044	0	2044	110	12	0	1	1	correct
@@ -169,10 +168,6 @@ dimacs/cs4.graph.dimacs	s	0											0
 dimacs/4elt.graph.dimacs	s	0											0	
 dimacs/cti.graph.dimacs	s	0											0	
 dimacs/memplus.graph.dimacs	8.81s	10072	0	3728	0	6462	0	6462	1130	1350	0	1	1	correct
-dimacs/fe_sphere.graph.dimacs	s	0											0	
-dimacs/wing_nodal.graph.dimacs	s	0											0	
-dimacs/t60k.graph.dimacs	s	0											0	
-11 instances not solved. Script aborted.
 run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
 snap/email-Eu-core.txt.dimacs	0.38s	579	0	209	0	285	0	282	121	156	3	2	1	correct
 snap/p2p-Gnutella08.txt.dimacs	0.28s	2054	0	0	0	2051	0	2051	3	0	0	1	1	correct
@@ -186,7 +181,6 @@ snap/soc-sign-Slashdot090221.txt.dimacs	63.47s	21314	0	164	0	21144	0	21143	93	14
 snap/soc-Epinions1.txt.dimacs	26.00s	22280	0	570	0	21485	0	21483	289	240	0	1	1	correct
 snap/soc-Slashdot0902.txt.dimacs	36.62s	25770	0	890	0	24993	0	24989	418	181	0	2	1	correct
 snap/amazon0302.txt.dimacs	s	0											0	
-snap/com-amazon.ungraph.txt.dimacs	s	0											0	
 snap/com-dblp.ungraph.txt.dimacs	s	0											0	
 snap/web-NotreDame.txt.dimacs	s	0											0	
 snap/twitter_combined.txt.dimacs	s	0											0	
