@@ -26,6 +26,7 @@ arguments = sys.argv[1:]
 # If csv in function call: save results in csv file
 save_csv = 'csv' in sys.argv
 if save_csv: arguments.remove('csv')
+print(save_csv)
 
 if sys.stdin.isatty(): file_names = arguments
 else: file_names = list(sys.stdin)
@@ -45,5 +46,6 @@ for file_name in file_names:
     print('-------------------------\n')
 
 if save_csv:
+    print('Saving into CSV file...')
     new_file_name = 'params_par10_' + datetime.now().strftime("%Y%m%d%H%M")
     list_of_runs.to_csv(current_path + new_file_name + '.csv')
