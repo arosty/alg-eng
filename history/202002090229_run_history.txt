@@ -1,5 +1,0 @@
-202002090229_run_history
--constrained_branching 1 -dom_opt 1 -f_clique_lb 1 -f_clique_lb_c 5 -f_deg2 3 -f_deg2_heur 1 -f_deg3 5 -f_dom 500 -f_lp 1 -f_lp_lb 1 -f_lp_lb_c 5 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 5 -limit_kern_start 3
-run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
-random/000800_000000008000.input	2.94s	796	0	0	0	796	0	796	0	0	0	0	1	correct
-random/000900_000000002700.input	1.65s	872	0	0	0	225	0	225	0	0	0	0	1	correct
