@@ -26,7 +26,6 @@ arguments = sys.argv[1:]
 # If csv in function call: save results in csv file
 save_csv = 'csv' in sys.argv
 if save_csv: arguments.remove('csv')
-print(save_csv)
 
 if sys.stdin.isatty(): file_names = arguments
 else: file_names = list(sys.stdin)
