@@ -1,0 +1,15 @@
+202002091832_run_history
+-constrained_branching 1 -dom_opt 1 -f_clique_lb 40000 -f_clique_lb_c 5 -f_deg2 2 -f_deg2_heur 80000 -f_deg3 10 -f_dom 2 -f_lp 1 -f_lp_lb 10 -f_lp_lb_c 5 -lb_opt 1 -lb_opt_c 0 -limit_kern_branch 2 -limit_kern_start 500
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	1.54s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	1.05s	872	0	0	0	225	0	225	0	0	0	0	1	correct
+random/001000_000000010000.input	2.67s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	0.14s	34	0	13	0	14	0	13	12	3	0	1	1	correct
+dimacs/chesapeake.graph.dimacs	0.24s	22	0	8	1	18	0	18	0	3	0	2	1	correct
+dimacs/football.graph.dimacs	s	0											0	
+dimacs/jazz.graph.dimacs	0.32s	158	0	99	0	12	0	12	28	100	0	1	1	correct
+dimacs/email.graph.dimacs	0.49s	594	0	281	0	291	0	290	189	28	0	1	1	correct
+dimacs/add20.graph.dimacs	0.89s	1265	0	755	0	822	0	808	210	0	0	2	1	correct
+dimacs/polblogs.graph.dimacs	0.53s	560	0	193	0	409	0	407	100	0	0	1	1	correct
+dimacs/as-22july06.graph.dimacs	2.74s	3303	0	7	0	3283	0	3282	7	0	0	1	1	correct

@@ -27,3 +27,5 @@ snap/email-Enron.txt.dimacs	107.38s	14437	0	8805	0	7687	0	7496	2987	1126	0	20	1	
 snap/soc-sign-Slashdot081106.txt.dimacs	94.75s	19614	0	116	0	19503	0	19499	64	2	0	1	1	correct
 snap/soc-sign-Slashdot090216.txt.dimacs	73.66s	21305	0	157	0	21168	0	21160	80	3	0	1	1	correct
 snap/soc-Slashdot0811.txt.dimacs	47.07s	24046	0	517	0	23568	0	23534	249	16	1	2	1	correct
+snap/soc-sign-epinions.txt.dimacs	178.93s	28184	0	453	0	27821	0	27799	201	24	1	2	1	correct
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	
