@@ -1,3 +1,26 @@
+"""
+USAGE:
+examples:
+python3 par10.py 202002081459_run_history 202002081541_run_history 202002081649_run_history
+--> prints the parameter settings and the resulting par10 values.
+python3 par10.py 202002081459_run_history 202002081541_run_history 202002081649_run_history csv
+--> prints the parameter settings and the resulting par10 values and saves those values into a csv file.
+python3 par10.py csv 202002081459_run_history 202002081541_run_history 202002081649_run_history
+--> prints the parameter settings and the resulting par10 values and saves those values into a csv file.
+.....Let's say list.txt looks as follows.....
+202002081459_run_history
+202002081541_run_history
+202002081649_run_history
+.............................................
+python3 par10.py < list.txt
+--> prints the parameter settings and the resulting par10 values.
+python3 par10.py csv < list.txt
+--> prints the parameter settings and the resulting par10 values and saves those values into a csv file.
+
+IMPORTANT: Corresponding txt and csv file needs to be in the same directory as par10.py!!!
+"""
+
+
 import sys
 import pandas as pd
 from datetime import datetime
