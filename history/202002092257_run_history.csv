@@ -1,3 +1,0 @@
-file,time_in_seconds,solution_size,recursive_steps,first_lower_bound_difference,high_degree_rules,degree_zero_rules,extreme_reduction_rules,degree_one_rules,degree_two_rules,domination_rules,degree_three_rules,lower_bounds,finished,solution_size_verified
-dimacs/cond-mat-2005.graph.dimacs,23.12s,23106,0,5752,0,11789,0,11786,2638,6047,0,2,1,correct
-dimacs/fe_ocean.graph.dimacs,

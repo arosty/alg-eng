@@ -150,7 +150,6 @@ random/001000_000000003000.input,10.55s,982,0,571,0,1413,0,1411,148,0,54,2,1,cor
 random/001000_000000006000.input,1.06s,989,0,0,0,989,0,989,0,0,0,0,1,correct
 dimacs/karate.graph.dimacs,0.09s,14,0,1,0,11,0,11,2,0,0,1,1,correct
 dimacs/adjnoun.graph.dimacs,0.13s,59,0,22,0,48,0,46,24,7,4,1,1,correct
-dimacs/polbooks.graph.dimacs,0.13s,62,0,13,0,29,0,26,10,20,0,1,1,correct
 dimacs/celegans_metabolic.graph.dimacs,0.16s,249,0,83,0,172,0,172,23,39,0,1,1,correct
 dimacs/netscience.graph.dimacs,0.17s,899,0,357,0,336,0,336,179,191,0,2,1,correct
 dimacs/power.graph.dimacs,0.21s,2203,0,179,0,2044,0,2044,110,12,0,1,1,correct
@@ -166,9 +165,8 @@ dimacs/cs4.graph.dimacs,
 dimacs/4elt.graph.dimacs,
 dimacs/cti.graph.dimacs,
 dimacs/memplus.graph.dimacs,8.81s,10072,0,3728,0,6462,0,6462,1130,1350,0,1,1,correct
-dimacs/fe_sphere.graph.dimacs,
-dimacs/wing_nodal.graph.dimacs,
-dimacs/t60k.graph.dimacs,
+dimacs/cond-mat-2005.graph.dimacs,23.12s,23106,0,5752,0,11789,0,11786,2638,6047,0,2,1,correct
+dimacs/fe_ocean.graph.dimacs,
 snap/email-Eu-core.txt.dimacs,0.38s,579,0,209,0,285,0,282,121,156,3,2,1,correct
 snap/p2p-Gnutella08.txt.dimacs,0.28s,2054,0,0,0,2051,0,2051,3,0,0,1,1,correct
 snap/ca-HepTh.txt.dimacs,0.84s,4981,0,1021,0,3612,0,3609,429,496,0,2,1,correct
