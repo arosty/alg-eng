@@ -26,3 +26,6 @@ snap/ca-HepPh.txt.dimacs	s	0											0
 snap/email-Enron.txt.dimacs	s	0											0	
 snap/soc-sign-Slashdot081106.txt.dimacs	s	0											0	
 snap/soc-sign-Slashdot090216.txt.dimacs	s	0											0	
+snap/soc-Slashdot0811.txt.dimacs	s	0											0	
+snap/soc-sign-epinions.txt.dimacs	s	0											0	
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	

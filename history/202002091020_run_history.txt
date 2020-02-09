@@ -1,0 +1,11 @@
+202002091020_run_history
+-constrained_branching 1 -dom_opt 1 -f_clique_lb 1 -f_clique_lb_c 5 -f_deg2 3 -f_deg2_heur 1 -f_deg3 1 -f_dom 1 -f_lp 5 -f_lp_lb 1 -f_lp_lb_c 5 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 1 -limit_kern_start 500
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	2.35s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	10.48s	872	0	455	0	595	0	580	267	3	78	2	1	correct
+random/001000_000000010000.input	4.37s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	0.14s	34	0	9	0	16	0	16	19	5	3	2	1	correct
+dimacs/chesapeake.graph.dimacs	0.15s	22	0	6	1	12	0	10	18	4	1	2	1	correct
+dimacs/football.graph.dimacs	145.78s	94	0	67	0	33813	0	25721	84324	27579	5152	4045	1	correct
+dimacs/jazz.graph.dimacs	0.12s	158	0	33	0	17	0	17	46	103	2	2	1	correct
