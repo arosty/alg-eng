@@ -15,3 +15,17 @@ dimacs/polblogs.graph.dimacs	0.82s	560	0	193	0	409	0	407	100	0	0	1	1	correct
 dimacs/as-22july06.graph.dimacs	5.04s	3303	0	7	0	3283	0	3282	7	0	0	1	1	correct
 dimacs/cond-mat.graph.dimacs	125.95s	9436	0	6106	0	3836	0	3783	2189	1281	0	3	1	correct
 dimacs/astro-ph.graph.dimacs	s	0											0	
+dimacs/fe_tooth.graph.dimacs	s	0											0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+snap/as20000102.txt.dimacs	0.53s	1052	0	4	0	1044	0	1044	4	0	0	1	1	correct
+snap/ca-GrQc.txt.dimacs	8.87s	2783	0	1270	0	1522	0	1511	437	185	0	3	1	correct
+snap/p2p-Gnutella09.txt.dimacs	0.67s	2574	0	0	0	2523	0	2523	0	0	0	0	1	correct
+snap/p2p-Gnutella05.txt.dimacs	0.73s	3428	0	0	0	3427	0	3427	1	0	0	1	1	correct
+snap/p2p-Gnutella25.txt.dimacs	1.78s	6017	0	0	0	6008	0	6008	0	0	0	0	1	correct
+snap/ca-HepPh.txt.dimacs	s	0											0	
+snap/email-Enron.txt.dimacs	244.79s	14437	0	8275	0	7703	0	7528	6838	1199	0	6	1	correct
+snap/soc-sign-Slashdot081106.txt.dimacs	84.65s	19614	0	86	0	19487	0	19485	48	0	0	2	1	correct
+snap/soc-sign-Slashdot090216.txt.dimacs	113.87s	21305	0	112	0	21142	0	21140	58	0	0	2	1	correct
+snap/soc-Slashdot0811.txt.dimacs	62.45s	24046	0	440	0	23530	0	23513	220	15	0	3	1	correct
+snap/soc-sign-epinions.txt.dimacs	175.95s	28184	0	330	0	27751	0	27736	164	27	0	3	1	correct
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	
