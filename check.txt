@@ -1,0 +1,1 @@
+python3 vertex_cover_solver.py 2 -constrained_branching 0 -dom_opt 0 -f_clique_lb 13 -f_clique_lb_c 8 -f_deg2 63 -f_deg2_heur 38 -f_deg3 28 -f_dom 96 -f_lp 49 -f_lp_lb 41 -f_lp_lb_c 10 -lb_opt 1 -lb_opt_c 1 -limit_kern_branch 150 -limit_kern_start 215 < snap/loc-gowalla_edges.txt.dimacs
