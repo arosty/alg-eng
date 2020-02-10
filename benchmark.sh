@@ -7,7 +7,7 @@ run_ce_solver()
 	maxSec=$3
 	maxSecPerInstance=$4
 	maxNotSolved=$5
-	
+	parameters="${@:6}"	
 	
 	FILES=$(ls random/*.input)
 
@@ -31,7 +31,7 @@ run_ce_solver()
 		if [ $elapsed -le $maxSec -a $notSolved -le $maxNotSolved ]; then
 			echo $f >> $LOG
 			# start everything in a new process group such that we can kill everything if necessary
-			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME< $f 1> prog_out.txt 2>&1) & PID=$!
+			(setsid /usr/bin/time -f "%e" -a -o time.txt $PROGRAMM_NAME $parameters < $f 1> prog_out.txt 2>&1) & PID=$!
 
 			# kill processes on exit
 			trap "{ kill -$PID 2>/dev/null; }" TERM
@@ -57,6 +57,15 @@ run_ce_solver()
 		
 			k=$(grep -ve "^#" prog_out.txt | wc -l)
 			recursiveSteps=$(grep -e "#recursive steps:" prog_out.txt | sed -e 's/.*recursive steps: \([0-9]*\).*/\1/' )
+			firstLowerBoundDifference=$(grep -e "#first lower bound difference:" prog_out.txt | sed -e 's/.*first lower bound difference: \(-\?[0-9]*\).*/\1/' )
+			highDegreeRules=$(grep -e "#high degree rules:" prog_out.txt | sed -e 's/.*high degree rules: \([0-9]*\).*/\1/' )
+			degreeZeroRules=$(grep -e "#degree zero rules:" prog_out.txt | sed -e 's/.*degree zero rules: \([0-9]*\).*/\1/' )
+			extremeReductionRules=$(grep -e "#extreme reduction rules:" prog_out.txt | sed -e 's/.*extreme reduction rules: \([0-9]*\).*/\1/' )
+			degreeOneRules=$(grep -e "#degree one rules:" prog_out.txt | sed -e 's/.*degree one rules: \([0-9]*\).*/\1/' )
+			degreeTwoRules=$(grep -e "#degree two rules:" prog_out.txt | sed -e 's/.*degree two rules: \([0-9]*\).*/\1/' )
+			dominationRules=$(grep -e "#domination rules:" prog_out.txt | sed -e 's/.*domination rules: \([0-9]*\).*/\1/' )
+			degreeThreeRules=$(grep -e "#degree three rules:" prog_out.txt | sed -e 's/.*degree three rules: \([0-9]*\).*/\1/' )
+			lowerBounds=$(grep -e "#lower bounds:" prog_out.txt | sed -e 's/.*lower bounds: \([0-9]*\).*/\1/' )
 			cat prog_out.txt >> $LOG
 
 			rm -f prog_out.txt
@@ -78,7 +87,7 @@ run_ce_solver()
 				fi
 			fi
 			
-			echo -e $f"\t"$time"s\t"$k"\t"$recursiveSteps"\t"$finished"\t"$verify
+			echo -e $f"\t"$time"s\t"$k"\t"$recursiveSteps"\t"$firstLowerBoundDifference"\t"$highDegreeRules"\t"$degreeZeroRules"\t"$extremeReductionRules"\t"$degreeOneRules"\t"$degreeTwoRules"\t"$dominationRules"\t"$degreeThreeRules"\t"$lowerBounds"\t"$finished"\t"$verify
 			echo "" >> $LOG
 			
 			rm -f time.txt
@@ -101,19 +110,15 @@ run_ce_solver()
 
 PROGRAMM_NAME="python3 vertex_cover_solver.py"  	# insert your program here
 LOG=log.txt									# specify the name of the log file
-maxSec=10800									# overall allowed time for the whole script
+maxSec=15000									# overall allowed time for the whole script
 maxSecPerInstance=300							# allowed time (in seconds) for one instance
 maxNotSolved=10								# no of instances the program is allowed to fail to solve. If reached, then the script is aborted
 
-echo "run random instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 0
+echo "run random instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 0 $@
 
-echo "run dimacs instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 1
+echo "run dimacs instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 1 $@
 
-echo "run snap instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, finished, solution size verified)"
-run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 2
-
-
-
-
+echo "run snap instances $PROGRAMM_NAME (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)"
+run_ce_solver "$PROGRAMM_NAME" $LOG $maxSec $maxSecPerInstance $maxNotSolved 2 $@
