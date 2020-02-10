@@ -1,0 +1,31 @@
+202002101708_run_history
+--constrained_branching 0 -dom_opt 0 -f_clique_lb 9 -f_clique_lb_c 1 -f_deg2 5 -f_deg2_heur 3 -f_deg3 2 -f_dom 5 -f_lp 4 -f_lp_lb 11 -f_lp_lb_c 7 -lb_opt 0 -lb_opt_c 0 -limit_kern_branch 329 -limit_kern_start 10
+run random instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+random/000800_000000008000.input	2.70s	796	0	0	0	796	0	796	0	0	0	0	1	correct
+random/000900_000000002700.input	Command exited with non-zero status 1 6.57s	6											1	>>INCORRECT<<
+random/001000_000000010000.input	4.12s	997	0	0	0	997	0	997	0	0	0	0	1	correct
+run dimacs instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+dimacs/dolphins.graph.dimacs	Command exited with non-zero status 1 0.29s	6											1	>>INCORRECT<<
+dimacs/chesapeake.graph.dimacs	Command exited with non-zero status 1 0.28s	6											1	>>INCORRECT<<
+dimacs/football.graph.dimacs	Command exited with non-zero status 1 0.30s	6											1	>>INCORRECT<<
+dimacs/jazz.graph.dimacs	Command exited with non-zero status 1 0.32s	6											1	>>INCORRECT<<
+dimacs/email.graph.dimacs	Command exited with non-zero status 1 0.42s	6											1	>>INCORRECT<<
+dimacs/add20.graph.dimacs	Command exited with non-zero status 1 0.89s	6											1	>>INCORRECT<<
+dimacs/polblogs.graph.dimacs	Command exited with non-zero status 1 0.51s	6											1	>>INCORRECT<<
+dimacs/as-22july06.graph.dimacs	Command exited with non-zero status 1 4.42s	6											1	>>INCORRECT<<
+dimacs/cond-mat.graph.dimacs	Command exited with non-zero status 1 34.73s	6											1	>>INCORRECT<<
+dimacs/astro-ph.graph.dimacs	Command exited with non-zero status 1 35.26s	6											1	>>INCORRECT<<
+dimacs/fe_tooth.graph.dimacs	s	0											0	
+run snap instances python3 vertex_cover_solver.py (Tab-separated columns: File, Time in seconds, solution size, recursive steps, first lower bound difference, high degree rules, degree zero rules, extreme reduction rules, degree one rules, degree two rules, domination rules, degree three rules, lower bounds, finished, solution size verified)
+snap/as20000102.txt.dimacs	Command exited with non-zero status 1 0.82s	6											1	>>INCORRECT<<
+snap/ca-GrQc.txt.dimacs	Command exited with non-zero status 1 0.80s	6											1	>>INCORRECT<<
+snap/p2p-Gnutella09.txt.dimacs	Command exited with non-zero status 1 0.58s	6											1	>>INCORRECT<<
+snap/p2p-Gnutella05.txt.dimacs	Command exited with non-zero status 1 0.57s	6											1	>>INCORRECT<<
+snap/p2p-Gnutella25.txt.dimacs	Command exited with non-zero status 1 1.39s	6											1	>>INCORRECT<<
+snap/ca-HepPh.txt.dimacs	Command exited with non-zero status 1 8.52s	6											1	>>INCORRECT<<
+snap/email-Enron.txt.dimacs	Command exited with non-zero status 1 70.93s	6											1	>>INCORRECT<<
+snap/soc-sign-Slashdot081106.txt.dimacs	Command exited with non-zero status 1 54.09s	6											1	>>INCORRECT<<
+snap/soc-sign-Slashdot090216.txt.dimacs	Command exited with non-zero status 1 60.73s	6											1	>>INCORRECT<<
+snap/soc-Slashdot0811.txt.dimacs	Command exited with non-zero status 1 33.31s	6											1	>>INCORRECT<<
+snap/soc-sign-epinions.txt.dimacs	Command exited with non-zero status 1 122.37s	6											1	>>INCORRECT<<
+snap/loc-gowalla_edges.txt.dimacs	s	0											0	
