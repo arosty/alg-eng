@@ -1,4 +1,4 @@
-mv random_test random_test
+mv random_test random
 mv dimacs_test dimacs
 mv snap_test snap
 
