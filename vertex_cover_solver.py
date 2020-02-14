@@ -928,7 +928,7 @@ def vc():
     print('#------------------#')
     print_result(S)
     print("#solution size: %s" % len(S))
-    print("#recursive steps: %s" % vc_branch.counter)
+    print("#recursive steps: %s" % (vc_branch.counter + vc_branch_constrained.counter))
     print("#recursive steps (constrained): %s" % vc_branch_constrained.counter)
     print("#first lower bound difference: %s" % first_lower_bound_difference)
     print("#high degree rules: %s" % high_degree_rule.counter)
